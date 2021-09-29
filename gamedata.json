@@ -3,7 +3,7 @@
         "showFallenTributes": true,
         "betrayTeammates": false,
         "shuffleTributes": true,
-        "districts": 4,
+        "districts": 12,
         "playersPerDistrict": 0,
         "districtsAreTeammates": true,
         "districtCanWinTogether": true
