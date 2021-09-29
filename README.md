@@ -1,0 +1,17 @@
+Inspired by the hunger games simulator (http://brantsteele.net/hungergames/disclaimer.php)
+In this simulator the actions of the tributes have consequences for their next events. 
+
+
+# Initialize project
+-------------------
+* Install Python
+
+# Customize simulations
+* Replace names in tributes.txt with your own names (any amount)
+* Add, Update, and/or Remove any options, statuses or events in gamedata.json
+
+# Run project
+--------------
+```shellsession
+python index.py
+```
