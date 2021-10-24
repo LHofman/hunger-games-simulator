@@ -6,7 +6,8 @@
         "districts": 12,
         "playersPerDistrict": 0,
         "districtsAreTeammates": true,
-        "districtCanWinTogether": true
+        "districtCanWinTogether": true,
+        "1SponsorPerTribute": true
     },
     "statuses": {
         "cold": {
@@ -74,12 +75,17 @@
         },
         "retrieveTrident": {
             "text": "(Player1) retrieves a trident from inside the cornucopia.",
-            "addItem": "trident"
+            "addItem": "trident",
+            "time": ["bloodbath", "feast"]
         },
         "grabMace": {
             "text": "(Player1) grabs a mace.",
             "addItem": "mace",
             "time": ["bloodbath", "feast"]
+        },
+        "receiveMace": {
+            "text": "(Player1) receives a mace from (Sponsor).",
+            "addItem": "mace"
         },
         "takeItem": {
             "text": "(Player2) rips a (item) out of (Player1)'s hands.",

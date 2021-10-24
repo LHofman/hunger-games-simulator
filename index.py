@@ -2,18 +2,20 @@ import json
 import random
 import re
 
-def readGameData():
-    file = open("gamedata.json", "r")
-    gameData = json.load(file)
-    return gameData
+def readFile(fileName, type = "text"):
+    file = open(fileName, "r")
+    
+    if (type == 'json'):
+        return json.load(file)
+
+    lines = file.readlines()
+    return list(map(lambda line: line.rstrip(), lines))
 
 def readTributes():
     global gameData
 
     file = open("tributes.txt", "r")
     lines = file.readlines()
-
-    if (gameData["options"]["shuffleTributes"]): random.shuffle(lines)
 
     if (gameData["options"]["districts"] > 0):
         playersPerDistrict = len(lines) / gameData["options"]["districts"]
@@ -27,6 +29,7 @@ def readTributes():
         players += 1
         name = line.rstrip()
         tributes[name] = {
+            "index": players,
             "name": name, 
             "district": int(((players-1)/playersPerDistrict)+1) if (playersPerDistrict > 0) else 0,
             "items": [],
@@ -118,6 +121,7 @@ def getEvent(tribute, playersRemaining, time, playStandardEvents):
 
 def canPlayEvent(tribute, playersRemaining, time, playStandardEvents):
     global gameData
+    global sponsors
 
     def canPlayEvent(event):
         if ("players" in event and event["players"] > len(playersRemaining)+1): return False
@@ -176,6 +180,12 @@ def checkEveryoneInTheSameGroup():
     print("The remaining tributes realize they are the only ones left and split up")
 
 def getEventTextAndPlayers(event, tribute, playersRemaining):
+    global gameData
+    global sponsors
+    global totalTributes
+    global tributes
+    
+    # Find players grouped with tribute needed for event
     if ("requireGroupSize" in event):
         aoGroupPlayersRequired = event["requireGroupSize"]["amount"]
 
@@ -185,6 +195,7 @@ def getEventTextAndPlayers(event, tribute, playersRemaining):
                 groupedWithPlayers[name] = player
     else: aoGroupPlayersRequired = 0
 
+    # Set players' names in event
     text = event["text"]
     players = []
     while (text.find("(Player") > -1):
@@ -200,6 +211,18 @@ def getEventTextAndPlayers(event, tribute, playersRemaining):
         
         players.append(player)
         text = text.replace("(Player%d)" % len(players), player["name"])
+
+    # Set sponsor's name in event
+    if (text.find("(Sponsor)") > -1):
+        if (len(sponsors) > 0):
+            isFixedSponsor = gameData["options"]["1SponsorPerTribute"]
+            if (isFixedSponsor and len(sponsors) == totalTributes):
+                sponsor = sponsors[tribute["index"] - 1]
+            else:
+                sponsor = random.choice(sponsors)
+        else: sponsor = "an unknown sponsor"
+
+        text = text.replace("(Sponsor)", sponsor)
 
     return (text, players)
 
@@ -273,11 +296,11 @@ def playGame():
 def playRound(text, time, playStandardEvents):
     if (isGameOver()): return
 
+    shuffleTributes()
     readInput()
     print(text)
     playList(time, playStandardEvents)
     print('\n---')
-    shuffleTributes()
 
 def isGameOver():
     global gameData
@@ -361,13 +384,10 @@ def printWinner():
 
 def printRankings():
     global deaths
+    global totalTributes
     global tributes
 
     print("\n\n\n---\nFinal Rankings")
-
-    totalTributes = len(tributes)
-    for playerDeaths in deaths:
-        totalTributes += len(playerDeaths)
 
     for playerDeaths in deaths:
         for (player, district) in playerDeaths:
@@ -378,8 +398,10 @@ def printRankings():
         print("1. %s from district %d" % (name, tribute["district"]))
 
 print('----------------------------------------------------------------------------------------------------------------')
-gameData = readGameData()
+gameData = readFile("gamedata.json", "json")
 tributes = readTributes()
+totalTributes = len(tributes)
+sponsors = readFile("sponsors.txt")
 deaths = []
 recentDeaths = []
 
