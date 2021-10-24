@@ -7,7 +7,9 @@
         "playersPerDistrict": 0,
         "districtsAreTeammates": true,
         "districtCanWinTogether": true,
-        "1SponsorPerTribute": true
+        "1SponsorPerTribute": true,
+        "": "Speed: 1-10, defines how often deaths occur",
+        "speed": 5
     },
     "statuses": {
         "cold": {

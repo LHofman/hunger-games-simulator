@@ -90,25 +90,37 @@ def getEvent(tribute, playersRemaining, time, playStandardEvents):
     eventOptions = list(gameData["events"].values())
 
     #(In/De)crease event odds
+    increaseEvents = []
     for (name, value) in list(tribute["statuses"].items()):
         if (
             name not in gameData["statuses"] or
             "increaseEventOdds" not in gameData["statuses"][name]
         ): continue
 
-        for increaseEvent in gameData["statuses"][name]["increaseEventOdds"]:
-            percentage = increaseEvent["percentage"]
-            if (percentage > 0):
-                while (percentage >= 100):
-                    eventOptions.append(gameData["events"][increaseEvent["event"]])
-                    percentage -= 100
-                rnd = random.random()
-                if (rnd < (percentage/100)):
-                    eventOptions.append(gameData["events"][increaseEvent["event"]])
-            else:
-                rnd = random.random()
-                if (rnd < (abs(percentage)/100)):
-                    eventOptions.remove(gameData["events"][increaseEvent["event"]])
+        increaseEvents.extend(gameData["statuses"][name]["increaseEventOdds"])
+
+    gameSpeed = int(gameData["options"]["speed"])
+    if (gameSpeed > 0 and gameSpeed < 11 and gameSpeed != 5):
+        diff = abs(gameSpeed - 5)
+        multiplier = diff / 5
+        percentage = (1 if gameSpeed > 5 else -1) * 100 * multiplier
+        for (name, event) in list(gameData["events"].items()):
+            if ("deaths" in event):
+                increaseEvents.append({"event": name, "percentage": percentage})
+
+    for increaseEvent in increaseEvents:
+        percentage = increaseEvent["percentage"]
+        if (percentage > 0):
+            while (percentage >= 100):
+                eventOptions.append(gameData["events"][increaseEvent["event"]])
+                percentage -= 100
+            rnd = random.random()
+            if (rnd < (percentage/100)):
+                eventOptions.append(gameData["events"][increaseEvent["event"]])
+        else:
+            rnd = random.random()
+            if (rnd < (abs(percentage)/100)):
+                eventOptions.remove(gameData["events"][increaseEvent["event"]])
 
     eventOptions = list(filter(
         canPlayEvent(tribute, playersRemaining, time, playStandardEvents),
