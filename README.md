@@ -15,5 +15,5 @@ In this simulator the actions of the tributes have consequences for their next e
 # Run project
 --------------
 ```shellsession
-python index.py
+python src/index.py
 ```

@@ -5,8 +5,8 @@
         "shuffleTributes": true,
         "districts": 12,
         "playersPerDistrict": 0,
-        "districtsAreTeammates": true,
-        "districtCanWinTogether": true,
+        "districtsAreTeammates": false,
+        "districtCanWinTogether": false,
         "1SponsorPerTribute": true,
         "": "Speed: 1-10, defines how often deaths occur",
         "speed": 5
