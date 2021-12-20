@@ -32,7 +32,6 @@ def readTributes():
       "index": players,
       "name": name, 
       "district": int(((players-1)/playersPerDistrict)+1) if (playersPerDistrict > 0) else 0,
-      "statuses": {},
       "groupedWith": [],
       "possessions": {}
     }

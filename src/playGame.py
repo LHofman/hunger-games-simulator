@@ -117,18 +117,14 @@ def showFallenTributes():
 
 def printStatus():
   for (name, tribute) in vars.tributes.items():
-    print("%s from district %d is still alive%s%s%s" % (
-      name,
-      tribute["district"],
-      "" if (len(tribute["statuses"]) == 0) else (
-        ", is: " + ", ".join(list(tribute["statuses"].keys()))
-      ),
-      "" if (not hasPossession(tribute, "item", "any")) else (
-        ", has: " + ", ".join(tribute["possessions"]["item"])
-      ),
-      "" if (len(tribute["groupedWith"]) == 0) else (
-        ", is in a group with: " + ", ".join(tribute["groupedWith"])
-      ),
-    ))
+    possessions = ''
+    for (type, values) in tribute["possessions"].items():
+      if (hasPossession(tribute, type, "any")):
+        possessions = "%s%s: %s, " % (possessions, type, ", ".join(values))
+
+    if (possessions):
+      possessions = ", has %s" % possessions[0: -2]
+
+    print("%s from district %d is still alive%s" % (name, tribute["district"], possessions))
 
   print("\n---")

@@ -13,11 +13,6 @@ def canPlayEvent(tribute, playersRemaining, time, playStandardEvents):
     if (not checkCanRemovePossessions(tribute, event)): return False
     if (not checkHasRequiredPossessions(tribute, event)): return False
 
-    if ("requiresStatus" in event and (
-      event["requiresStatus"] not in tribute["statuses"] or
-      not tribute["statuses"][event["requiresStatus"]]
-    )): return False
-
     if ("time" in event):
       timesList = event["time"]
       if (not isinstance(timesList, list)):

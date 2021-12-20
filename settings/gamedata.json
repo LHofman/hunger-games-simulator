@@ -11,14 +11,16 @@
     "": "Speed: 1-10, defines how often deaths occur",
     "speed": 5
   },
-  "statuses": {
-    "cold": {
-      "increaseEventOdds": [
-        {
-          "event": "dieFromHypothermia",
-          "percentage": 200
-        }
-      ]
+  "increaseEventOdds": {
+    "possessions": {
+      "status": {
+        "cold": [
+          {
+            "event": "dieFromHypothermia",
+            "percentage": 100000
+          }
+        ]
+      }
     }
   },
   "events": {
@@ -54,11 +56,7 @@
     "criesToSleep": {
       "text": "(Player1) cries theirself to sleep.",
       "time": "night",
-      "setStatus": {
-        "status": "tired",
-        "players": ["Player1"],
-        "value": false
-      }
+      "removePossessions": [{ "player": 1, "type": "status", "value": "tired" }]
     },
     "huddleForWarmth": {
       "text": "(Player1) and (Player2) huddle for warmth.",
@@ -105,64 +103,40 @@
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident"}]
     },
     "injureSelf": {
-      "text": "(Player1) injures theirself.",
-      "setStatus": {
-        "status": "injured",
-        "players": ["Player1"],
-        "value": true
-      }
+      "text": "(Player1) injures themselves.",
+      "addPossessions": [{ "player": 1, "type": "status", "value": "injured" }]
     },
     "triesToTendToWounds": {
       "text": "(Player1) tries to treat their infection, but was unsuccessful.",
-      "requiresStatus": "injured"
+      "requiresPossessions": [{ "player": 1, "type": "status", "value": "injured" }]
     },
     "tendsToWounds": {
       "text": "(Player1) tends to their wounds",
-      "requiresStatus": "injured",
-      "setStatus": {
-        "status": "injured",
-        "players": ["Player1"],
-        "value": false
-      }
+      "requiresPossessions": [{ "player": 1, "type": "status", "value": "injured" }],
+      "removePossessions": [{ "player": 1, "type": "status", "value": "injured" }]
     },
     "fallsInLake": {
       "text": "(Player1) is overpowered while fishing and falls in a lake",
-      "setStatus": {
-        "status": "cold",
-        "players": ["Player1"],
-        "value": true
-      }
+      "addPossessions": [{ "player": 1, "type": "status", "value": "cold" }]
     },
     "startFire": {
       "text": "(Player1) starts a fire.",
       "time": "night",
-      "setStatus": {
-        "status": "cold",
-        "players": ["Player1"],
-        "value": false
-      }
+      "removePossessions": [{ "player": 1, "type": "status", "value": "cold" }]
     },
     "stayAwake": {
       "text": "(Player1) stays awake all night.",
       "time": "night",
-      "setStatus": {
-        "status": "tired",
-        "players": ["Player1"],
-        "value": true
-      }
+      "addPossessions": [{ "player": 1, "type": "status", "value": "tired" }]
     },
     "sleep1": {
       "text": "(Player1) goes to sleep.",
       "time": "night",
-      "setStatus": {
-        "status": "tired",
-        "players": ["Player1"],
-        "value": false
-      }
+      "removePossessions": [{ "player": 1, "type": "status", "value": "tired" }]
     },
     "passOutFromExhaustion": {
       "text": "(Player1) passes out from exhaustion.",
-      "requiresStatus": "tired"
+      "requiresPossessions": [{ "player": 1, "type": "status", "value": "tired" }]
     },
     "workWithOtherPlayer": {
       "text": "(Player1) and (Player2) work together for the day.",
@@ -177,11 +151,10 @@
       "text": "(Player1) convinces (Player2) to snuggle with them.",
       "time": "night",
       "players": 2,
-      "setStatus": {
-        "status": "tired",
-        "players": ["Player1", "Player2"],
-        "value": false
-      },
+      "removePossessions": [
+        { "player": 1, "type": "status", "value": "tired" },
+        { "player": 2, "type": "status", "value": "tired" }
+      ],
       "requireGroupSize": {
         "type": "exact",
         "amount": 1
@@ -206,17 +179,13 @@
     "tendToPlayerTwosWounds": {
       "text": "(Player2) tends to (Player1)'s wounds.",
       "players": 2,
-      "requiresStatus": "injured",
+      "requiresPossessions": [{ "player": 1, "type": "status", "value": "injured" }],
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
         "groupedWith": ["Player2"]
       },
-      "setStatus": {
-        "status": "injured",
-        "players": ["Player1"],
-        "value": false
-      }
+      "removePossessions": [{ "player": 1, "type": "status", "value": "injured" }]
     },
     "ignoreFeast": {
       "text": "(Player1) decides not to go to The Feast.",
@@ -240,7 +209,7 @@
 
     "dieFromHypothermia": {
       "text": "(Player1) dies from hypothermia.",
-      "requiresStatus": "cold",
+      "requiresPossessions": [{ "player": 1, "type": "status", "value": "cold" }],
       "deaths": ["Player1"]
     },
     "killOnePlayer1": {
@@ -312,7 +281,7 @@
     },
     "diesFromInjury": {
       "text": "(Player1) bleeds out due to untreated injuries.",
-      "requiresStatus": "injured",
+      "requiresPossessions": [{ "player": 1, "type": "status", "value": "injured" }],
       "deaths": ["Player1"]
     },
     "fightTwoVersusTwo": {

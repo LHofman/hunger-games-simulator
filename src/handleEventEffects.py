@@ -12,11 +12,19 @@ def handleEventEffects(event, players, text):
 
   if ("addPossessions" in event):
     for possession in event["addPossessions"]:
-      addPossession(vars.tributes[tribute["name"]], possession["type"], possession["value"])
+      addPossession(
+        vars.tributes[players[possession["player"] - 1]["name"]],
+        possession["type"],
+        possession["value"]
+      )
 
   if ("removePossessions" in event):
     for possession in event["removePossessions"]:
-      addPossession(vars.tributes[tribute["name"]], possession["type"], possession["value"])
+      removePossession(
+        vars.tributes[players[possession["player"] - 1]["name"]],
+        possession["type"],
+        possession["value"]
+      )
 
   if ("stealItem" in event):
     item = random.choice(vars.tributes[tribute["name"]]["possessions"]["item"])
@@ -24,11 +32,6 @@ def handleEventEffects(event, players, text):
     index = int(re.search(r'\d+', event["stealItem"]).group()) - 1
     addPossession(vars.tributes[players[index]["name"]], "item", item)
     text = text.replace("(item)", item)
-
-  if ("setStatus" in event):
-    for player in event["setStatus"]["players"]:
-      index = int(re.search(r'\d+', player).group()) - 1
-      vars.tributes[players[index]["name"]]["statuses"][event["setStatus"]["status"]] = event["setStatus"]["value"]
 
   if ("formGroup" in event):
     for player in players:

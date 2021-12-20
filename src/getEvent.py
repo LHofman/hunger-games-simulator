@@ -8,25 +8,54 @@ def getEvent(tribute, playersRemaining, time, playStandardEvents):
   eventOptions = list(vars.gameData["events"].values())
 
   #(In/De)crease event odds
-  increaseEvents = []
-  for (name, value) in list(tribute["statuses"].items()):
-    if (
-      name not in vars.gameData["statuses"] or
-      "increaseEventOdds" not in vars.gameData["statuses"][name]
-    ): continue
+  increaseOddsEvents = []
+  increaseOddsEvents.extend(getIncreasedOddsEventsFromPossessions(tribute))
+  increaseOddsEvents.extend(getIncreasedOddsEventsFromGameSpeed())
 
-    increaseEvents.extend(vars.gameData["statuses"][name]["increaseEventOdds"])
+  updateEventsOptionsBasedOnOdds(increaseOddsEvents, eventOptions)
+
+  #Remove events unable to occur at this moment
+  eventOptions = list(filter(
+    canPlayEvent(tribute, playersRemaining, time, playStandardEvents),
+    eventOptions
+  ))
+
+  #Get random event
+  event = random.choice(eventOptions)
+
+  return event
+
+def getIncreasedOddsEventsFromPossessions(tribute):
+  increasedOddsEventsOptions = vars.gameData["increaseEventOdds"]["possessions"]
+
+  increasedOddsEvents = []
+  for (type, values) in tribute["possessions"].items():
+    if (type not in increasedOddsEventsOptions): continue
+
+    for value in values:
+      if (value in increasedOddsEventsOptions[type]):
+        increasedOddsEvents.extend(increasedOddsEventsOptions[type][value])
+
+  return increasedOddsEvents
+
+def getIncreasedOddsEventsFromGameSpeed():
+  increasedOddsEvents = []
 
   gameSpeed = int(vars.gameData["options"]["speed"])
-  if (gameSpeed > 0 and gameSpeed < 11 and gameSpeed != 5):
-    diff = abs(gameSpeed - 5)
-    multiplier = diff / 5
-    percentage = (1 if gameSpeed > 5 else -1) * 100 * multiplier
-    for (name, event) in list(vars.gameData["events"].items()):
-      if ("deaths" in event):
-        increaseEvents.append({"event": name, "percentage": percentage})
+  if (gameSpeed < 1 or gameSpeed > 10 or gameSpeed == 5):
+    return []
 
-  for increaseEvent in increaseEvents:
+  diff = abs(gameSpeed - 5)
+  multiplier = diff / 5
+  percentage = (1 if gameSpeed > 5 else -1) * 100 * multiplier
+  for (name, event) in list(vars.gameData["events"].items()):
+    if ("deaths" in event):
+      increasedOddsEvents.append({"event": name, "percentage": percentage})
+  
+  return increasedOddsEvents
+
+def updateEventsOptionsBasedOnOdds(increasedOddsEvents, eventOptions):
+  for increaseEvent in increasedOddsEvents:
     percentage = increaseEvent["percentage"]
     if (percentage > 0):
       while (percentage >= 100):
@@ -39,12 +68,3 @@ def getEvent(tribute, playersRemaining, time, playStandardEvents):
       rnd = random.random()
       if (rnd < (abs(percentage)/100)):
         eventOptions.remove(vars.gameData["events"][increaseEvent["event"]])
-
-  eventOptions = list(filter(
-    canPlayEvent(tribute, playersRemaining, time, playStandardEvents),
-    eventOptions
-  ))
-
-  event = random.choice(eventOptions)
-
-  return event
