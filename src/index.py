@@ -32,9 +32,9 @@ def readTributes():
       "index": players,
       "name": name, 
       "district": int(((players-1)/playersPerDistrict)+1) if (playersPerDistrict > 0) else 0,
-      "items": [],
       "statuses": {},
-      "groupedWith": []
+      "groupedWith": [],
+      "possessions": {}
     }
 
   if (vars.gameData["options"]["districtsAreTeammates"]):

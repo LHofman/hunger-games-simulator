@@ -68,40 +68,41 @@
     "grabBow": {
       "text": "(Player1) finds a bow, some arrows, and a quiver.",
       "time": ["bloodbath", "feast"],
-      "addItem": "bow"
+      "addPossessions": [{ "player": 1, "type": "item", "value": "bow" }]
     },
     "grabKnives": {
       "text": "(Player1) takes a handful of throwing knives.",
       "time": ["bloodbath", "feast"],
-      "addItem": "knives"
+      "addPossessions": [{ "player": 1, "type": "item", "value": "knives" }]
     },
     "retrieveTrident": {
       "text": "(Player1) retrieves a trident from inside the cornucopia.",
-      "addItem": "trident",
+      "addPossessions": [{ "player": 1, "type": "item", "value": "trident" }],
       "time": ["bloodbath", "feast"]
     },
     "grabMace": {
       "text": "(Player1) grabs a mace.",
-      "addItem": "mace",
+      "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }],
       "time": ["bloodbath", "feast"]
     },
     "receiveMace": {
       "text": "(Player1) receives a mace from (Sponsor).",
-      "addItem": "mace"
+      "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }]
     },
     "takeItem": {
       "text": "(Player2) rips a (item) out of (Player1)'s hands.",
       "time": ["bloodbath", "feast"],
       "players": 2,
-      "requiresItem": "anyItem"
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "any"}],
+      "stealItem": "Player2"
     },
     "practiceArchery": {
       "text": "(Player1) practices their archery.",
-      "requiresItem": "bow"
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow"}]
     },
     "fishWithTrident": {
       "text": "(Player1) tries to spear fish with a trident.",
-      "requiresItem": "trident"
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident"}]
     },
     "injureSelf": {
       "text": "(Player1) injures theirself.",
@@ -235,7 +236,7 @@
       "time": "feast"
     },
 
-    "": "Events with deaths",
+    "": { "comment": "Events with deaths", "ignore": true },
 
     "dieFromHypothermia": {
       "text": "(Player1) dies from hypothermia.",
@@ -255,32 +256,32 @@
     "shootArrowLethal": {
       "text": "(Player1) shoots an arrow into (Player2)'s head.",
       "players": 2,
-      "requiresItem": "bow",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow"}],
       "deaths": ["Player2"]
     },
     "shootArrowKillWrongPerson": {
       "text": "(Player1) shoots an arrow at (Player2), but misses and kills (Player3) instead.",
       "players": 3,
-      "requiresItem": "bow",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow"}],
       "deaths": ["Player3"],
       "killTeammates": true
     },
     "throwKnifeLethal": {
       "text": "(Player1) throws a knife into (Player2)'s head.",
       "players": 2,
-      "requiresItem": "knives",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives"}],
       "deaths": ["Player2"]
     },
     "killOnePlayerWithTrident": {
       "text": "(Player1) stabs (Player2) in the back with a trident.",
       "players": 2,
-      "requiresItem": "trident",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident"}],
       "deaths": ["Player2"]
     },
     "killWithMace": {
       "text": "(Player1) bashes (Player2)'s head in with a mace.",
       "players": 2,
-      "requiresItem": "mace",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace"}],
       "deaths": ["Player2"]
     },
     "stepOnLandmine": {

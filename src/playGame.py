@@ -5,6 +5,7 @@ import vars
 from getEvent import *
 from getEventTextAndPlayers import *
 from handleEventEffects import *
+from utils.possessionUtils import *
 
 def playGame():
   playRound("The Bloodbath", "bloodbath", False)
@@ -122,8 +123,8 @@ def printStatus():
       "" if (len(tribute["statuses"]) == 0) else (
         ", is: " + ", ".join(list(tribute["statuses"].keys()))
       ),
-      "" if (len(tribute["items"]) == 0) else (
-        ", has: " + ", ".join(tribute["items"])
+      "" if (not hasPossession(tribute, "item", "any")) else (
+        ", has: " + ", ".join(tribute["possessions"]["item"])
       ),
       "" if (len(tribute["groupedWith"]) == 0) else (
         ", is in a group with: " + ", ".join(tribute["groupedWith"])

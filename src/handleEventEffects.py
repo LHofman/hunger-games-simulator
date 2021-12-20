@@ -3,19 +3,26 @@ import re
 
 import vars;
 
+from utils.possessionUtils import *
+
 def handleEventEffects(event, players, text):
   global recentDeaths
 
   tribute = players[0]
 
-  if ("addItem" in event):
-    vars.tributes[tribute["name"]]["items"].append(event["addItem"])
+  if ("addPossessions" in event):
+    for possession in event["addPossessions"]:
+      addPossession(vars.tributes[tribute["name"]], possession["type"], possession["value"])
+
+  if ("removePossessions" in event):
+    for possession in event["removePossessions"]:
+      addPossession(vars.tributes[tribute["name"]], possession["type"], possession["value"])
 
   if ("stealItem" in event):
-    item = random.choice(vars.tributes[tribute["name"]]["items"])
-    vars.tributes[tribute["name"]]["items"].remove(item)
+    item = random.choice(vars.tributes[tribute["name"]]["possessions"]["item"])
+    removePossession(vars.tributes[tribute["name"]], "item", item)
     index = int(re.search(r'\d+', event["stealItem"]).group()) - 1
-    vars.tributes[players[index]["name"]]["items"].append(item)
+    addPossession(vars.tributes[players[index]["name"]], "item", item)
     text = text.replace("(item)", item)
 
   if ("setStatus" in event):
