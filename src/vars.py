@@ -1,4 +1,6 @@
 deaths = []
+events = {}
+eventsOccured = {}
 gameData = {}
 recentDeaths = []
 sponsors = []

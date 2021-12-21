@@ -15,13 +15,10 @@
   "increaseEventOdds": {
     "possessions": {
       "item": {
-        "bodypaint": [{ "event": "camouflageWithBodypaint", "percentage": 400 }],
-        "map": [{ "event": "getLots", "percentage": -95 }],
-        "writingUtensils": [{ "event": "drawsMap", "percentage": 300 }]
+        "map": [{ "event": "getLost", "percentage": -95 }]
       },
       "status": {
         "cold": [
-          { "event": "dieFromHypothermia", "percentage": 300 },
           { "event": "snuggle", "percentage": 200 },
           { "event": "snuggleAndCaught", "percentage": 200 },
           { "event": "triesToSnuggleButFail", "percentage": 300 }
@@ -271,6 +268,7 @@
         { "player": 1, "type": "item", "value": "bodypaint" },
         { "player": 1, "type": "status", "value": "hidden", "not": true }
       ],
+      "percentage": 400,
       "addPossessions": [{ "player": 1, "type": "status", "value": "hidden" }]
     },
     "makePlanForTomorrow": {
@@ -300,10 +298,14 @@
     },
     "drawsMap": {
       "text": "(Player1) starts drawing a map",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "writingUtensils" }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "map" }],
+      "requiresPossessions": [
+        { "player": 1, "type": "item", "value": "writingUtensils" },
+        { "player": 1, "type": "item", "value": "map", "not": true }
+      ],
+      "percentage": 400,
+      "addPossessions": [{ "player": 1, "type": "item", "value": "map" }]
     },
-    "getLots": {
+    "getLost": {
       "text": "(Player1) gets lost in the woods"
     },
     "findAnimalButItRunsAway": {
@@ -340,6 +342,7 @@
     "dieFromHypothermia": {
       "text": "(Player1) dies from hypothermia.",
       "requiresPossessions": [{ "player": 1, "type": "status", "value": "cold" }],
+      "percentage": 300,
       "deaths": ["Player1"]
     },
     "killOnePlayer1": {
@@ -386,6 +389,8 @@
     "stepOnLandmine": {
       "text": "(Player1) accidentally steps on a landmine.",
       "time": ["bloodbath", "day", "night", "feast"],
+      "percentage": 4,
+      "maxOccurances": 2,
       "deaths": ["Player1"]
     },
     "twoPlayersDrownOnePlayer": {

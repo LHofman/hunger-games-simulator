@@ -44,6 +44,14 @@ def readTributes():
 
   return tributes
 
+def getEvents():
+  events = {}
+
+  for (name, event) in vars.gameData["events"].items():
+    events[name] = { "name": name } | event
+
+  return events
+
 
 def printWinner():
   if (len(vars.tributes) == 1): print("The winner is %s" % list(vars.tributes.keys())[0])
@@ -63,6 +71,7 @@ def printRankings():
 
 print('----------------------------------------------------------------------------------------------------------------')
 vars.gameData = readFile("gameData.json", "json")
+vars.events = getEvents()
 vars.tributes = readTributes()
 vars.totalTributes = len(vars.tributes)
 vars.sponsors = readFile("sponsors.txt")
@@ -73,14 +82,3 @@ vars.recentDeaths = []
 playGame()
 printWinner()
 printRankings()
-
-# import re
-
-# text = "testing some things (Hello:Hi1) more text"
-# index = text.find("(Hello:")
-# numberIndex = re.search(r"\d", text[index:]).start()
-# type = text[(index + len("(Hello:")) : (index + numberIndex)]
-
-# print(text.find("(Hello:", index+1))
-
-# print(type)

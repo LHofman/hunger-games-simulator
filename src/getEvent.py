@@ -5,12 +5,13 @@ import vars
 from canPlayEvent import *
 
 def getEvent(tribute, playersRemaining, time, playStandardEvents):
-  eventOptions = list(vars.gameData["events"].values())
+  eventOptions = list(vars.events.values())
 
   #(In/De)crease event odds
   increaseOddsEvents = []
   increaseOddsEvents.extend(getIncreasedOddsEventsFromPossessions(tribute))
   increaseOddsEvents.extend(getIncreasedOddsEventsFromGameSpeed())
+  increaseOddsEvents.extend(getDefaultIncreasedOddsEvents())
 
   updateEventsOptionsBasedOnOdds(increaseOddsEvents, eventOptions)
 
@@ -22,6 +23,11 @@ def getEvent(tribute, playersRemaining, time, playStandardEvents):
 
   #Get random event
   event = random.choice(eventOptions)
+  
+  if (event["name"] in vars.eventsOccured):
+    vars.eventsOccured[event["name"]] = vars.eventsOccured[event["name"]] + 1
+  else:
+    vars.eventsOccured[event["name"]] = 1
 
   return event
 
@@ -48,10 +54,24 @@ def getIncreasedOddsEventsFromGameSpeed():
   diff = abs(gameSpeed - 5)
   multiplier = diff / 5
   percentage = (1 if gameSpeed > 5 else -1) * 100 * multiplier
-  for (name, event) in list(vars.gameData["events"].items()):
+  for (name, event) in list(vars.events.items()):
     if ("deaths" in event):
       increasedOddsEvents.append({"event": name, "percentage": percentage})
   
+  return increasedOddsEvents
+
+def getDefaultIncreasedOddsEvents():
+  increasedOddsEvents = []
+
+  for (name, event) in vars.events.items():
+    if (
+      "maxOccurances" in event and
+      name in vars.eventsOccured and
+      event["maxOccurances"] == vars.eventsOccured[name]
+    ): increasedOddsEvents.append({ "event": name, "percentage": -100 })
+    elif ("percentage" in event):
+      increasedOddsEvents.append({ "event": name, "percentage": event["percentage"] })
+
   return increasedOddsEvents
 
 def updateEventsOptionsBasedOnOdds(increasedOddsEvents, eventOptions):
@@ -59,12 +79,12 @@ def updateEventsOptionsBasedOnOdds(increasedOddsEvents, eventOptions):
     percentage = increaseEvent["percentage"]
     if (percentage > 0):
       while (percentage >= 100):
-        eventOptions.append(vars.gameData["events"][increaseEvent["event"]])
+        eventOptions.append(vars.events[increaseEvent["event"]])
         percentage -= 100
       rnd = random.random()
       if (rnd < (percentage/100)):
-        eventOptions.append(vars.gameData["events"][increaseEvent["event"]])
+        eventOptions.append(vars.events[increaseEvent["event"]])
     else:
       rnd = random.random()
       if (rnd < (abs(percentage)/100)):
-        eventOptions.remove(vars.gameData["events"][increaseEvent["event"]])
+        eventOptions.remove(vars.events[increaseEvent["event"]])
