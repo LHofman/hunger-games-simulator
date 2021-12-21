@@ -78,9 +78,19 @@
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow", "not": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "bow" }]
     },
+    "receiveBow": {
+      "text": "(Player1) receives a bow, some arrows, and a quiver from (Sponsor).",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow", "not": true }],
+      "addPossessions": [{ "player": 1, "type": "item", "value": "bow" }]
+    },
     "grabKnives": {
       "text": "(Player1) takes a handful of throwing knives.",
       "time": ["bloodbath", "feast"],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives", "not": true }],
+      "addPossessions": [{ "player": 1, "type": "item", "value": "knives" }]
+    },
+    "findKnives": {
+      "text": "(Player1) finds a handful of throwing knives.",
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives", "not": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "knives" }]
     },
@@ -89,6 +99,11 @@
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident", "not": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "trident" }],
       "time": ["bloodbath", "feast"]
+    },
+    "receiveTrident": {
+      "text": "(Player1) receives a trident from (Sponsor)",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident", "not": true }],
+      "addPossessions": [{ "player": 1, "type": "item", "value": "trident" }]
     },
     "grabMace": {
       "text": "(Player1) grabs a mace.",
@@ -108,6 +123,19 @@
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "any"}],
       "removePossessions": [{ "player": 1, "type": "item", "value": "(Possession:item1)"}],
       "addPossessions": [{ "player": 2, "type": "item", "value": "(Possession:item1)"}]
+    },
+    "indecisiveAtBloodbath": {
+      "text": "(Player1) is indecisive, watches the other tributes for a bit, but ultimately decides to just leave",
+      "time": ["bloodbath"]
+    },
+    "fleeBloodbath": {
+      "text": "(Player1) flees the cornocopia hastely",
+      "time": ["bloodbath"]
+    },
+    "grabCamouflageFromBloodbath": {
+      "text": "(Player1) grabs a backpack and continues running, it contained some camouflage bodypaint",
+      "time": ["bloodbath"],
+      "addPossessions": [{ "player": 1, "type": "item", "value": "bodypaint" }]
     },
     "practiceArchery": {
       "text": "(Player1) practices their archery.",
@@ -477,6 +505,13 @@
     "fallsFromTreeAndDies": {
       "text": "(Player1) falls from a tree while climbing it and dies",
       "deaths": ["Player1"]
+    },
+    "killByPet": {
+      "text": "(Player1)'s pet (Possession:pet1) attacks and kills (Player2).",
+      "players": 2,
+      "requiresPossessions": [{ "player": 1, "type": "pet", "value": "any"}],
+      "deaths": ["Player2"],
+      "percentage": 250
     }
   },
   "replaceTerms": {
