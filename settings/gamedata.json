@@ -14,12 +14,23 @@
   },
   "increaseEventOdds": {
     "possessions": {
+      "item": {
+        "bodypaint": [{ "event": "camouflageWithBodypaint", "percentage": 400 }],
+        "map": [{ "event": "getLots", "percentage": -95 }],
+        "writingUtensils": [{ "event": "drawsMap", "percentage": 300 }]
+      },
       "status": {
         "cold": [
-          {
-            "event": "dieFromHypothermia",
-            "percentage": 200
-          }
+          { "event": "dieFromHypothermia", "percentage": 300 },
+          { "event": "snuggle", "percentage": 200 },
+          { "event": "snuggleAndCaught", "percentage": 200 },
+          { "event": "triesToSnuggleButFail", "percentage": 300 }
+        ],
+        "hidden": [
+          { "event": "startFire", "percentage": -80 },
+          { "event": "awakesCuddlingWithAnimal", "percentage": -95 },
+          { "event": "killOnePlayer1", "percentage": -70 },
+          { "event": "fightTwoVersusTwo", "percentage": -70 }
         ]
       }
     }
@@ -124,7 +135,8 @@
     },
     "fallsInLake": {
       "text": "(Player1) is overpowered while fishing and falls in a lake",
-      "addPossessions": [{ "player": 1, "type": "status", "value": "cold" }]
+      "addPossessions": [{ "player": 1, "type": "status", "value": "cold" }],
+      "removePossessions": [{ "player": 1, "type": "status", "value": "hidden" }]
     },
     "startFire": {
       "text": "(Player1) starts a fire.",
@@ -160,13 +172,35 @@
       "players": 2,
       "removePossessions": [
         { "player": 1, "type": "status", "value": "tired" },
-        { "player": 2, "type": "status", "value": "tired" }
+        { "player": 1, "type": "status", "value": "cold" },
+        { "player": 2, "type": "status", "value": "tired" },
+        { "player": 2, "type": "status", "value": "cold" }
       ],
       "requireGroupSize": {
         "type": "exact",
         "amount": 1
       },
       "formGroup": ["Player1", "Player2"]
+    },
+    "snuggleAndCaught": {
+      "text": "(Player1) convinces (Player2) to snuggle with them. (Player3) catches them and watches them for a bit jealously",
+      "time": "night",
+      "players": 3,
+      "removePossessions": [
+        { "player": 1, "type": "status", "value": "tired" },
+        { "player": 1, "type": "status", "value": "cold" },
+        { "player": 2, "type": "status", "value": "tired" },
+        { "player": 2, "type": "status", "value": "cold" }
+      ],
+      "requireGroupSize": {
+        "type": "exact",
+        "amount": 1
+      },
+      "formGroup": ["Player1", "Player2"]
+    },
+    "triesToSnuggleButFail": {
+      "text": "(Player1) is unable to convince (Player2) to snuggle with them, and is forced to sleep alone",
+      "players": 2
     },
     "splitUpAndLookForResources": {
       "text": "(Player1) and (Player2) split up to search for resources.",
@@ -211,6 +245,95 @@
       "players": 3,
       "time": "feast"
     },
+    "playCheckers": {
+      "text": "(Player1) and (Player2) play Checkers with sticks and stones",
+      "players": 2,
+      "requireGroupSize": {
+        "type": "min",
+        "amount": 2,
+        "groupedWith": ["Player2"]
+      }
+    },
+    "awokenByNightmares": {
+      "text": "(Player1) is woken up by nightmares",
+      "time": "night"
+    },
+    "kickTumbleWeed": {
+      "text": "(Player1) kicks around a tumble weed"
+    },
+    "receivesBodyPaint": {
+      "text": "(Player1) receives bodypaint from (Sponsor)",
+      "addPossessions": [{ "player": 1, "type": "item", "value": "bodypaint" }]
+    },
+    "camouflageWithBodypaint": {
+      "text": "(Player1) camouflages themselves with bodypaint",
+      "requiresPossessions": [
+        { "player": 1, "type": "item", "value": "bodypaint" },
+        { "player": 1, "type": "status", "value": "hidden", "not": true }
+      ],
+      "addPossessions": [{ "player": 1, "type": "status", "value": "hidden" }]
+    },
+    "makePlanForTomorrow": {
+      "text": "(Player1) makes a plan for the following day"
+    },
+    "makePlanWithTeam": {
+      "text": "(Player1) and (Player2) make plans for the following day together",
+      "requireGroupSize": {
+        "type": "min",
+        "amount": 2,
+        "groupedWith": ["Player2"]
+      }
+    },
+    "beginsToStink": {
+      "text": "(Player1) begins to stink",
+      "addPossessions": [{ "player": 1, "type": "status", "value": "stink" }]
+    },
+    "buildsHammock": {
+      "text": "(Player1) builds a hammock in a tree"
+    },
+    "fallsFromTreeAndGetInjured": {
+      "text": "(Player1) falls from a tree while climbing it and gets injured"
+    },
+    "getsPencils": {
+      "text": "(Player1) receives writing utensils from (Sponsor)",
+      "addPossessions": [{ "player": 1, "type": "item", "value": "writingUtensils" }]
+    },
+    "drawsMap": {
+      "text": "(Player1) starts drawing a map",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "writingUtensils" }],
+      "addPossessions": [{ "player": 1, "type": "item", "value": "map" }],
+    },
+    "getLots": {
+      "text": "(Player1) gets lost in the woods"
+    },
+    "findAnimalButItRunsAway": {
+      "text": "(Player1) finds a (Animal1), it runs away scared"
+    },
+    "findAnimalAndGainsPet": {
+      "text": "(Player1) finds a (Animal1), They pet it and the (Animal1) follows them around",
+      "addPossessions": [{ "player": 1, "type": "pet", "value": "(Animal1)" }]
+    },
+    "findAnimalButRunsAway": {
+      "text": "(Player1) finds a (Animal1), they get scared and run away"
+    },
+    "findAnimalAndGetsBitten": {
+      "text": "(Player1) finds a (Animal1), the (Animal1) bites (Player1) which injures them",
+      "addPossessions": [{ "player": 1, "type": "status", "value": "injured" }]
+    },
+    "findAnimalAndKillForFood": {
+      "text": "(Player1) finds a (Animal1), it let itself getting pet by (Player1). (Player1) kills the (Animal1) for food"
+    },
+    "findAnimalButTeammatesKillsIt": {
+      "text": "(Player1) finds a (Animal1), it let itself getting pet by (Player1). (Player2) kills the (Animal1), because they thought it was a danger to (Player1)",
+      "requireGroupSize": {
+        "type": "min",
+        "amount": 2,
+        "groupedWith": ["Player2"]
+      }
+    },
+    "awakesCuddlingWithAnimal": {
+      "text": "(Player1) wakes up cuddling with a (Animal1)"
+    },
 
     "": { "comment": "Events with deaths", "ignore": true },
 
@@ -220,9 +343,9 @@
       "deaths": ["Player1"]
     },
     "killOnePlayer1": {
-      "text": "(Player1) catches (Player2) off guard and kills them.",
+      "text": "(Player2) catches (Player1) off guard and kills them.",
       "players": 2,
-      "deaths": ["Player2"]
+      "deaths": ["Player1"]
     },
     "explodeThreePlayers": {
       "text": "(Player1) sets an explosive off, killing (Player2), (Player3), and (Player4).",
@@ -292,10 +415,10 @@
       "deaths": ["Player1"]
     },
     "fightTwoVersusTwo": {
-      "text": "(Player1) and (Player2) fight (Player3) and (Player4). (Player1) and (Player2) survive.",
+      "text": "(Player2) and (Player3) fight (Player1) and (Player4). (Player2) and (Player3) survive.",
       "players": 4,
-      "formGroup": ["Player1", "Player2"],
-      "deaths": ["Player3", "Player4"]
+      "formGroup": ["Player2", "Player3"],
+      "deaths": ["Player1", "Player4"]
     },
     "argumentAndKill": {
       "text": "While hunting as a group, (Player1) and (Player2) have an argument. (Player3) and (Player4) side with (Player1), and work together to kill (Player2)",
@@ -335,6 +458,34 @@
       "text": "(Player1) falls into a pit and dies.",
       "time": "feast",
       "deaths": ["Player1"]
+    },
+    "snuggleButGetKilled": {
+      "text": "(Player1) convinces (Player2) to snuggle with them. (Player3) catches them and kills them both",
+      "time": "night",
+      "players": 3,
+      "requireGroupSize": {
+        "type": "exact",
+        "amount": 1
+      },
+      "deaths": ["Player1", "Player2"]
+    },
+    "fallsFromTreeAndDies": {
+      "text": "(Player1) falls from a tree while climbing it and dies",
+      "deaths": ["Player1"]
     }
+  },
+  "replaceTerms": {
+    "Animal": [
+      "chimpanzee",
+      "deer",
+      "fox",
+      "lizard",
+      "koala",
+      "parrot",
+      "raccoon",
+      "sloth",
+      "squirrel",
+      "tiger"
+    ]
   }
 }

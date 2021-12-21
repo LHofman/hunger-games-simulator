@@ -22,6 +22,8 @@ def getEventTextPlayersAndTerms(event, tribute, playersRemaining):
   )
 
   (text, terms) = setPossessionsTerms(event, tribute, text)
+  (text, otherTerms) = setOtherTerms(event, text)
+  terms.update(otherTerms)
 
   text = setSponsorsNames(tribute, text)
 
@@ -62,7 +64,6 @@ def setPossessionsTerms(event, tribute, text):
   terms = {}
   index = text.find("(Possession:")
   while (index > -1):
-    index = text.find("(Possession:")
     match = re.search(r"\d", text[index:])
     number = int(match.group())
     numberIndex = match.start()
@@ -71,10 +72,27 @@ def setPossessionsTerms(event, tribute, text):
     possession = random.choice(tribute["possessions"][type])
     term = "(Possession:%s%d)" % (type, number)
     terms[term] = possession
-    
+
     text = text.replace(term, possession)
 
     index = text.find("(Possession:")
+
+  return (text, terms)
+
+def setOtherTerms(event, text):
+  terms = {}
+  for (key, values) in vars.gameData["replaceTerms"].items():
+    index = text.find("(%s" % key)
+    while (index > -1):
+      number = int(re.search(r"\d", text[index:]).group())
+      term = "(%s%d)" % (key, number)
+
+      value = random.choice(values)
+      terms[term] = value
+
+      text = text.replace(term, value)
+
+      index = text.find("(%s" % key)
 
   return (text, terms)
 
