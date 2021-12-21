@@ -17,7 +17,7 @@
         "cold": [
           {
             "event": "dieFromHypothermia",
-            "percentage": 100000
+            "percentage": 200
           }
         ]
       }
@@ -88,11 +88,12 @@
       "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }]
     },
     "takeItem": {
-      "text": "(Player2) rips a (item) out of (Player1)'s hands.",
+      "text": "(Player2) rips a (Possession:item1) out of (Player1)'s hands.",
       "time": ["bloodbath", "feast"],
       "players": 2,
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "any"}],
-      "stealItem": "Player2"
+      "removePossessions": [{ "player": 1, "type": "item", "value": "(Possession:item1)"}],
+      "addPossessions": [{ "player": 2, "type": "item", "value": "(Possession:item1)"}]
     },
     "practiceArchery": {
       "text": "(Player1) practices their archery.",

@@ -5,47 +5,44 @@ import vars;
 
 from utils.possessionUtils import *
 
-def handleEventEffects(event, players, text):
+def handleEventEffects(event, players, text, terms):
   global recentDeaths
 
-  handleAddPossessions(event, players)
-  handleRemovePossessions(event, players)
-  text = handleStealItem(event, players, text)
+  handleAddPossessions(event, players, terms)
+  handleRemovePossessions(event, players, terms)
   handleFormGroup(event, players)
   handleSplitGroup(event, players)
   handleDeaths(event, players)
 
   return text
 
-def handleAddPossessions(event, players):
+def handleAddPossessions(event, players, terms):
   if ("addPossessions" not in event): return
 
   for possession in event["addPossessions"]:
+    value = possession["value"]
+    if (value in terms):
+      value = terms[value]
+
     addPossession(
       vars.tributes[players[possession["player"] - 1]["name"]],
       possession["type"],
-      possession["value"]
+      value
     )
 
-def handleRemovePossessions(event, players):
+def handleRemovePossessions(event, players, terms):
   if ("removePossessions" not in event): return
 
   for possession in event["removePossessions"]:
+    value = possession["value"]
+    if (value in terms):
+      value = terms[value]
+
     removePossession(
       vars.tributes[players[possession["player"] - 1]["name"]],
       possession["type"],
-      possession["value"]
+      value
     )
-
-def handleStealItem(event, players, text):
-  if ("stealItem" not in event): return text
-
-  tribute = players[0]
-  item = random.choice(vars.tributes[tribute["name"]]["possessions"]["item"])
-  removePossession(vars.tributes[tribute["name"]], "item", item)
-  index = int(re.search(r'\d+', event["stealItem"]).group()) - 1
-  addPossession(vars.tributes[players[index]["name"]], "item", item)
-  return text.replace("(item)", item)
 
 def handleFormGroup(event, players):
   if ("formGroup" not in event): return

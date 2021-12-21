@@ -73,3 +73,14 @@ vars.recentDeaths = []
 playGame()
 printWinner()
 printRankings()
+
+# import re
+
+# text = "testing some things (Hello:Hi1) more text"
+# index = text.find("(Hello:")
+# numberIndex = re.search(r"\d", text[index:]).start()
+# type = text[(index + len("(Hello:")) : (index + numberIndex)]
+
+# print(text.find("(Hello:", index+1))
+
+# print(type)

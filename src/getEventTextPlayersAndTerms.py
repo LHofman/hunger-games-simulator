@@ -1,8 +1,10 @@
+from os import replace
 import random
+import re
 
 import vars
 
-def getEventTextAndPlayers(event, tribute, playersRemaining):
+def getEventTextPlayersAndTerms(event, tribute, playersRemaining):
   # Find players grouped with tribute needed for event
   (aoGroupPlayersRequired, groupedWithPlayers) = getGroupRequiredSizeAndPlayers(
     event,
@@ -19,9 +21,11 @@ def getEventTextAndPlayers(event, tribute, playersRemaining):
     groupedWithPlayers
   )
 
+  (text, terms) = setPossessionsTerms(event, tribute, text)
+
   text = setSponsorsNames(tribute, text)
 
-  return (text, players)
+  return (text, players, terms)
 
 def getGroupRequiredSizeAndPlayers(event, tribute, playersRemaining):
   if ("requireGroupSize" not in event): return (0, {})
@@ -53,6 +57,26 @@ def setPlayersNames(event, tribute, playersRemaining, aoGroupPlayersRequired, gr
     text = text.replace("(Player%d)" % len(players), player["name"])
 
   return (players, text)
+
+def setPossessionsTerms(event, tribute, text):
+  terms = {}
+  index = text.find("(Possession:")
+  while (index > -1):
+    index = text.find("(Possession:")
+    match = re.search(r"\d", text[index:])
+    number = int(match.group())
+    numberIndex = match.start()
+
+    type = text[(index + len("(Possession:")) : (index + numberIndex)]
+    possession = random.choice(tribute["possessions"][type])
+    term = "(Possession:%s%d)" % (type, number)
+    terms[term] = possession
+    
+    text = text.replace(term, possession)
+
+    index = text.find("(Possession:")
+
+  return (text, terms)
 
 def setSponsorsNames(tribute, text):
   if (text.find("(Sponsor)") == -1): return text

@@ -3,7 +3,7 @@ import random
 import vars
 
 from getEvent import *
-from getEventTextAndPlayers import *
+from getEventTextPlayersAndTerms import *
 from handleEventEffects import *
 from utils.possessionUtils import *
 
@@ -49,9 +49,9 @@ def playList(time, playStandardEvents):
 def playTribute(tribute, playersRemaining, time, playStandardEvents):
   event = getEvent(tribute, playersRemaining, time, playStandardEvents)
 
-  (text, players) = getEventTextAndPlayers(event, tribute, playersRemaining)
+  (text, players, terms) = getEventTextPlayersAndTerms(event, tribute, playersRemaining)
   
-  text = handleEventEffects(event, players, text)
+  text = handleEventEffects(event, players, text, terms)
   
   print(text)
 
@@ -116,7 +116,7 @@ def showFallenTributes():
   vars.recentDeaths.clear()
 
 def printStatus():
-  for (name, tribute) in vars.tributes.items():
+  for (name, tribute) in sorted(list(vars.tributes.items())):
     possessions = ''
     for (type, values) in tribute["possessions"].items():
       if (hasPossession(tribute, type, "any")):
