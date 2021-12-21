@@ -9,7 +9,8 @@
     "districtCanWinTogether": false,
     "1SponsorPerTribute": true,
     "": "Speed: 1-10, defines how often deaths occur",
-    "speed": 5
+    "speed": 5,
+    "possessionsWithoutDuplicates": ["status"]
   },
   "increaseEventOdds": {
     "possessions": {
@@ -66,25 +67,30 @@
     "grabBow": {
       "text": "(Player1) finds a bow, some arrows, and a quiver.",
       "time": ["bloodbath", "feast"],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow", "not": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "bow" }]
     },
     "grabKnives": {
       "text": "(Player1) takes a handful of throwing knives.",
       "time": ["bloodbath", "feast"],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives", "not": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "knives" }]
     },
     "retrieveTrident": {
       "text": "(Player1) retrieves a trident from inside the cornucopia.",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident", "not": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "trident" }],
       "time": ["bloodbath", "feast"]
     },
     "grabMace": {
       "text": "(Player1) grabs a mace.",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace", "not": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }],
       "time": ["bloodbath", "feast"]
     },
     "receiveMace": {
       "text": "(Player1) receives a mace from (Sponsor).",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace", "not": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }]
     },
     "takeItem": {

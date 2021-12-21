@@ -1,6 +1,9 @@
+import vars
+
 def addPossession(tribute, type, value):
   if (type in tribute["possessions"]):
-    tribute["possessions"][type].append(value)
+    if (type not in vars.gameData["options"]["possessionsWithoutDuplicates"]):
+      tribute["possessions"][type].append(value)
   else:
     tribute["possessions"][type] = [value]
 

@@ -22,7 +22,11 @@ def checkHasRequiredPossessions(tribute, event):
   if ("requiresPossessions" not in event): return True
 
   for possession in event["requiresPossessions"]:
-    if (not hasPossession(tribute, possession["type"], possession["value"])): return False
+    playerHasPossession = hasPossession(tribute, possession["type"], possession["value"])
+    if ("not" in possession and possession["not"]):
+      if (playerHasPossession): return False
+    else:
+      if (not playerHasPossession): return False
 
   return True
 
