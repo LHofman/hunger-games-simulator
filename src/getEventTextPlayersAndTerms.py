@@ -97,14 +97,16 @@ def setOtherTerms(event, text):
   return (text, terms)
 
 def setSponsorsNames(tribute, text):
-  if (text.find("(Sponsor)") == -1): return text
+  if (text.find("(Sponsor") == -1): return text
 
-  if (len(vars.sponsors) > 0):
-    isFixedSponsor = vars.gameData["options"]["1SponsorPerTribute"]
-    if (isFixedSponsor and len(vars.sponsors) == vars.totalTributes):
-      sponsor = vars.sponsors[tribute["index"] - 1]
-    else:
-      sponsor = random.choice(vars.sponsors)
-  else: sponsor = "an unknown sponsor"
+  if (len(vars.sponsors) <= 0): return text.replace("(Sponsor)", "an unknown sponsor")
 
-  return text.replace("(Sponsor)", sponsor)
+  isFixedSponsor = vars.gameData["options"]["1SponsorPerTribute"]
+  if (not isFixedSponsor or  len(vars.sponsors) != vars.totalTributes):
+    return text.replace("(Sponsor)", random.choice(vars.sponsors))
+
+  if (text.find("(Sponsor::opposing)") == -1): return text.replace("(Sponsor)", vars.sponsors[tribute["index"] - 1])
+  
+  sponsorIndex = tribute["index"] - 1
+  otherSponsors = vars.sponsors[:sponsorIndex] + vars.sponsors[sponsorIndex+1:]
+  return text.replace("(Sponsor::opposing)", random.choice(otherSponsors))

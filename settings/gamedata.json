@@ -18,6 +18,14 @@
         "map": [{ "event": "getLost", "percentage": -95 }]
       },
       "status": {
+        "beggedSponsor": [
+          { "event": "receiveBow", "percentage": 100 },
+          { "event": "receiveTrident", "percentage": 100 },
+          { "event": "receiveMace", "percentage": 100 },
+          { "event": "receivesBodyPaint", "percentage": 100 },
+          { "event": "getsPencils", "percentage": 100 },
+          { "event": "receivesPoisonFromOpposingSponsor", "percentage": 100 }
+        ],
         "cold": [
           { "event": "snuggle", "percentage": 200 },
           { "event": "snuggleAndCaught", "percentage": 200 },
@@ -27,7 +35,9 @@
           { "event": "startFire", "percentage": -80 },
           { "event": "awakesCuddlingWithAnimal", "percentage": -95 },
           { "event": "killOnePlayer1", "percentage": -70 },
-          { "event": "fightTwoVersusTwo", "percentage": -70 }
+          { "event": "fightTwoVersusTwo", "percentage": -70 },
+          { "event": "injureWithBranch", "percentage": -70 },
+          { "event": "killWithBranch", "percentage": -70 }
         ]
       }
     }
@@ -81,7 +91,8 @@
     "receiveBow": {
       "text": "(Player1) receives a bow, some arrows, and a quiver from (Sponsor).",
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow", "not": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "bow" }]
+      "addPossessions": [{ "player": 1, "type": "item", "value": "bow" }],
+      "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "grabKnives": {
       "text": "(Player1) takes a handful of throwing knives.",
@@ -103,7 +114,8 @@
     "receiveTrident": {
       "text": "(Player1) receives a trident from (Sponsor)",
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident", "not": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "trident" }]
+      "addPossessions": [{ "player": 1, "type": "item", "value": "trident" }],
+      "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "grabMace": {
       "text": "(Player1) grabs a mace.",
@@ -114,7 +126,8 @@
     "receiveMace": {
       "text": "(Player1) receives a mace from (Sponsor).",
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace", "not": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }]
+      "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }],
+      "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "takeItem": {
       "text": "(Player2) rips a (Possession:item1) out of (Player1)'s hands.",
@@ -288,7 +301,8 @@
     },
     "receivesBodyPaint": {
       "text": "(Player1) receives bodypaint from (Sponsor)",
-      "addPossessions": [{ "player": 1, "type": "item", "value": "bodypaint" }]
+      "addPossessions": [{ "player": 1, "type": "item", "value": "bodypaint" }],
+      "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "camouflageWithBodypaint": {
       "text": "(Player1) camouflages themselves with bodypaint",
@@ -322,7 +336,8 @@
     },
     "getsPencils": {
       "text": "(Player1) receives writing utensils from (Sponsor)",
-      "addPossessions": [{ "player": 1, "type": "item", "value": "writingUtensils" }]
+      "addPossessions": [{ "player": 1, "type": "item", "value": "writingUtensils" }],
+      "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "drawsMap": {
       "text": "(Player1) starts drawing a map",
@@ -363,6 +378,19 @@
     },
     "awakesCuddlingWithAnimal": {
       "text": "(Player1) wakes up cuddling with a (Animal1)"
+    },
+    "grabsBranchFromTree": {
+      "text": "(Player1) breaks a branch from a tree, hoping to use it as a weapon.",
+      "addPossessions": [{ "player": 1, "type": "item", "value": "branch" }]
+    },
+    "pokesWasphive": {
+      "text": "(Player1) accidentally pokes at a wasp-hive, gets attacked and runs away injured",
+      "addPossessions": [{ "player": 1, "type": "status", "value": "injured" }]
+    },
+    "begsSponsorForSupplies": {
+      "text": "(Player1) begs their sponsor for supplies",
+      "requiresPossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor", "not": true }],
+      "addPossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor" }]
     },
 
     "": { "comment": "Events with deaths", "ignore": true },
@@ -512,6 +540,37 @@
       "requiresPossessions": [{ "player": 1, "type": "pet", "value": "any"}],
       "deaths": ["Player2"],
       "percentage": 250
+    },
+    "injureWithBranch": {
+      "text": "(Player1) tries to stabs (Player2) with a tree branch, injuring them. (Player2) then runs away leaving a blood trail behind them",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "branch"}],
+      "addPossessions": [{ "player": 2, "type": "status", "value": "injured" }]
+    },
+    "killWithBranch": {
+      "text": "(Player1) stabs (Player2) with a tree branch, killing them",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "branch"}],
+      "deaths": ["Player2"]
+    },
+    "fallsFromTreeKillingSelfAndPlayer2": {
+      "text": "(Player1) falls from a tree and lands on (Player2), killing them both.",
+      "deaths": ["Player1", "Player2"]
+    },
+    "setsFireToTreeAndDies": {
+      "text": "(Player1) accidentally sets a tree on fire and burns to a crisp",
+      "deaths": ["Player1"]
+    },
+    "getsStrangledByTreeVine": {
+      "text": "(Player1) gets tangled in the vines of a tree and suffocates from one around their neck.",
+      "deaths": ["Player1"]
+    },
+    "stabsPerson2WithPencil": {
+      "text": "(Player1) stabs a pencil through (Player2)s eye",
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "writingUtensils"}],
+      "deaths": ["Player2"]
+    },
+    "receivesPoisonFromOpposingSponsor": {
+      "text": "(Player1) unknowingly receives poisoned food from (Sponsor::opposing), they eat it and die",
+      "deaths": ["Player1"]
     }
   },
   "replaceTerms": {
