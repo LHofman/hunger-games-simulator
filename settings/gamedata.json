@@ -150,7 +150,7 @@
       "text": "(Player1) grabs a backpack and continues running, it contained some camouflage bodypaint",
       "time": ["bloodbath"],
       "addPossessions": [{ "player": 1, "type": "item", "value": "bodypaint" }],
-      "percentage": 10
+      "percentage": -50
     },
     "practiceArchery": {
       "text": "(Player1) practices their archery.",
@@ -304,7 +304,7 @@
         { "player": 1, "type": "item", "value": "bodypaint" },
         { "player": 1, "type": "status", "value": "hidden", "not": true }
       ],
-      "percentage": 400,
+      "percentage": 1000,
       "addPossessions": [{ "player": 1, "type": "status", "value": "hidden" }]
     },
     "makePlanForTomorrow": {

@@ -64,7 +64,8 @@ def printRankings():
 
   for playerDeaths in vars.deaths:
     for (player, district) in playerDeaths:
-      printOutput("%d. %s from district %d" % (vars.totalTributes, player, district))
+      tributeData = vars.tributesData[player]
+      printOutput("%d. %s from district %d, died during %s, has %d kills" % (vars.totalTributes, player, district, tributeData["time of death"], tributeData["kills"] if "kills" in tributeData else 0))
       vars.totalTributes -= 1
   
   for name, tribute in list(vars.tributes.items()):
@@ -87,4 +88,3 @@ printOutput('-------------------------------------------------------------------
 playGame()
 printWinner()
 printRankings()
-printOutput(vars.tributesData)

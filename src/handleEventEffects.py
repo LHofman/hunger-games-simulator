@@ -87,6 +87,7 @@ def handleDeaths(event, players, exactTime):
     playerName = players[index]["name"]
     vars.recentDeaths.append((playerName, players[index]["district"]))
     updateTributesData(players[index], "time of death", "", exactTime)
+    updateTributesData(players[index], "district", "", players[index]["district"])
 
     for (name, _tribute) in vars.tributes.items():
       if playerName in _tribute["groupedWith"]:
