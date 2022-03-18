@@ -86,5 +86,5 @@ def updateEventsOptionsBasedOnOdds(increasedOddsEvents, eventOptions):
         eventOptions.append(vars.events[increaseEvent["event"]])
     else:
       rnd = random.random()
-      if (rnd < (abs(percentage)/100)):
+      if (rnd < (abs(percentage)/100)) and vars.events[increaseEvent["event"]] in eventOptions:
         eventOptions.remove(vars.events[increaseEvent["event"]])

@@ -1,18 +1,19 @@
-import random
 import re
 
 import vars;
 
 from utils.possessionUtils import *
+from utils.tributesDataUtils import *
 
-def handleEventEffects(event, players, text, terms):
+def handleEventEffects(event, players, text, terms, exactTime):
   global recentDeaths
 
   handleAddPossessions(event, players, terms)
+  handleAddData(event, players)
   handleRemovePossessions(event, players, terms)
   handleFormGroup(event, players)
   handleSplitGroup(event, players)
-  handleDeaths(event, players)
+  handleDeaths(event, players, exactTime)
 
   return text
 
@@ -28,6 +29,17 @@ def handleAddPossessions(event, players, terms):
       vars.tributes[players[possession["player"] - 1]["name"]],
       possession["type"],
       value
+    )
+
+def handleAddData(event, players):
+  if ("updateTributesData" not in event): return
+
+  for dataToAdd in event["updateTributesData"]:
+    updateTributesData(
+      vars.tributes[players[dataToAdd["player"] - 1]["name"]],
+      dataToAdd["type"],
+      dataToAdd["operation"] if ("operation" in dataToAdd) else "",
+      dataToAdd["value"]
     )
 
 def handleRemovePossessions(event, players, terms):
@@ -67,13 +79,14 @@ def handleSplitGroup(event, players):
       if (playerToSplit != player["name"]):
         vars.tributes[player["name"]]["groupedWith"].remove(playerToSplit)
 
-def handleDeaths(event, players):
+def handleDeaths(event, players, exactTime):
   if ("deaths" not in event): return
 
   for death in event["deaths"]:
     index = int(re.search(r'\d+', death).group()) - 1
     playerName = players[index]["name"]
     vars.recentDeaths.append((playerName, players[index]["district"]))
+    updateTributesData(players[index], "time of death", "", exactTime)
 
     for (name, _tribute) in vars.tributes.items():
       if playerName in _tribute["groupedWith"]:

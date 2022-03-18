@@ -10,7 +10,8 @@
     "1SponsorPerTribute": true,
     "": "Speed: 1-10, defines how often deaths occur",
     "speed": 5,
-    "possessionsWithoutDuplicates": ["status"]
+    "possessionsWithoutDuplicates": ["status"],
+    "autoPlay": true
   },
   "increaseEventOdds": {
     "possessions": {
@@ -142,13 +143,14 @@
       "time": ["bloodbath"]
     },
     "fleeBloodbath": {
-      "text": "(Player1) flees the cornocopia hastely",
+      "text": "(Player1) flees the cornocopia hastily",
       "time": ["bloodbath"]
     },
     "grabCamouflageFromBloodbath": {
       "text": "(Player1) grabs a backpack and continues running, it contained some camouflage bodypaint",
       "time": ["bloodbath"],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "bodypaint" }]
+      "addPossessions": [{ "player": 1, "type": "item", "value": "bodypaint" }],
+      "percentage": 10
     },
     "practiceArchery": {
       "text": "(Player1) practices their archery.",
@@ -205,7 +207,7 @@
       "formGroup": ["Player1", "Player2"]
     },
     "snuggle": {
-      "text": "(Player1) convinces (Player2) to snuggle with them.",
+      "text": "(Player1) convinces (Player2) to snuggle with them. They continue to work together the next day.",
       "time": "night",
       "players": 2,
       "removePossessions": [
@@ -214,14 +216,10 @@
         { "player": 2, "type": "status", "value": "tired" },
         { "player": 2, "type": "status", "value": "cold" }
       ],
-      "requireGroupSize": {
-        "type": "exact",
-        "amount": 1
-      },
       "formGroup": ["Player1", "Player2"]
     },
     "snuggleAndCaught": {
-      "text": "(Player1) convinces (Player2) to snuggle with them. (Player3) catches them and watches them for a bit jealously",
+      "text": "(Player1) convinces (Player2) to snuggle with them. (Player3) catches them and watches them for a bit jealously. (Player1) and (Player2) continue to work together the next day.",
       "time": "night",
       "players": 3,
       "removePossessions": [
@@ -230,10 +228,6 @@
         { "player": 2, "type": "status", "value": "tired" },
         { "player": 2, "type": "status", "value": "cold" }
       ],
-      "requireGroupSize": {
-        "type": "exact",
-        "amount": 1
-      },
       "formGroup": ["Player1", "Player2"]
     },
     "triesToSnuggleButFail": {
@@ -251,7 +245,7 @@
       "splitGroup": ["Player1", "Player2"]
     },
     "singSongsInGroup": {
-      "text": "(Player1), (Player2), and (Player3) cheerfully sing songs together.",
+      "text": "(Player1), (Player2), and (Player3) cheerfully sing songs together. They continue to work together the next day.",
       "players": 3,
       "formGroup": ["Player1", "Player2", "Player3"]
     },
@@ -318,6 +312,7 @@
     },
     "makePlanWithTeam": {
       "text": "(Player1) and (Player2) make plans for the following day together",
+      "players": 2,
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
@@ -356,7 +351,8 @@
     },
     "findAnimalAndGainsPet": {
       "text": "(Player1) finds a (Animal1), They pet it and the (Animal1) follows them around",
-      "addPossessions": [{ "player": 1, "type": "pet", "value": "(Animal1)" }]
+      "addPossessions": [{ "player": 1, "type": "pet", "value": "(Animal1)" }],
+      "percentage": 250
     },
     "findAnimalButRunsAway": {
       "text": "(Player1) finds a (Animal1), they get scared and run away"
@@ -366,10 +362,11 @@
       "addPossessions": [{ "player": 1, "type": "status", "value": "injured" }]
     },
     "findAnimalAndKillForFood": {
-      "text": "(Player1) finds a (Animal1), it let itself getting pet by (Player1). (Player1) kills the (Animal1) for food"
+      "text": "(Player1) finds a (Animal1), it lets itself getting pet by (Player1). (Player1) kills the (Animal1) for food"
     },
     "findAnimalButTeammatesKillsIt": {
-      "text": "(Player1) finds a (Animal1), it let itself getting pet by (Player1). (Player2) kills the (Animal1), because they thought it was a danger to (Player1)",
+      "text": "(Player1) finds a (Animal1), it lets itself getting pet by (Player1). (Player2) kills the (Animal1), because they thought it was a danger to (Player1)",
+      "players": 2,
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
@@ -398,66 +395,82 @@
     "dieFromHypothermia": {
       "text": "(Player1) dies from hypothermia.",
       "requiresPossessions": [{ "player": 1, "type": "status", "value": "cold" }],
-      "percentage": 300,
+      "percentage": 250,
       "deaths": ["Player1"]
     },
     "killOnePlayer1": {
       "text": "(Player2) catches (Player1) off guard and kills them.",
       "players": 2,
-      "deaths": ["Player1"]
+      "deaths": ["Player1"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }]
     },
     "explodeThreePlayers": {
       "text": "(Player1) sets an explosive off, killing (Player2), (Player3), and (Player4).",
       "players": 4,
-      "deaths": ["Player2", "Player3", "Player4"]
+      "deaths": ["Player2", "Player3", "Player4"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 3 }]
     },
     "shootArrowLethal": {
       "text": "(Player1) shoots an arrow into (Player2)'s head.",
       "players": 2,
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow"}],
-      "deaths": ["Player2"]
+      "deaths": ["Player2"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "percentage": 200
     },
     "shootArrowKillWrongPerson": {
       "text": "(Player1) shoots an arrow at (Player2), but misses and kills (Player3) instead.",
       "players": 3,
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow"}],
       "deaths": ["Player3"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "percentage": 200,
       "killTeammates": true
     },
     "throwKnifeLethal": {
       "text": "(Player1) throws a knife into (Player2)'s head.",
       "players": 2,
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives"}],
-      "deaths": ["Player2"]
+      "deaths": ["Player2"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "percentage": 200
     },
     "killOnePlayerWithTrident": {
       "text": "(Player1) stabs (Player2) in the back with a trident.",
       "players": 2,
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident"}],
-      "deaths": ["Player2"]
+      "deaths": ["Player2"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "percentage": 200
     },
     "killWithMace": {
       "text": "(Player1) bashes (Player2)'s head in with a mace.",
       "players": 2,
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace"}],
-      "deaths": ["Player2"]
+      "deaths": ["Player2"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "percentage": 200
     },
     "stepOnLandmine": {
       "text": "(Player1) accidentally steps on a landmine.",
       "time": ["bloodbath", "day", "night", "feast"],
-      "percentage": 4,
+      "percentage": 3,
       "maxOccurances": 2,
       "deaths": ["Player1"]
     },
     "twoPlayersDrownOnePlayer": {
-      "text": "(Player1) and (Player2) work together to drown (Player3).",
+      "text": "(Player1) and (Player2) work together to drown (Player3). They continue to work together the next day.",
       "players": 3,
       "requireGroupSize": {
         "type": "exact",
         "amount": 1
       },
       "formGroup": ["Player1", "Player2"],
-      "deaths": ["Player3"]
+      "deaths": ["Player3"],
+      "updateTributesData": [
+        { "player": 1, "type": "kills", "operation": "add", "value": 1 },
+        { "player": 2, "type": "kills", "operation": "add", "value": 1 }
+      ]
     },
     "doubleSuicide": {
       "text": "(Player1) and (Player2) threaten a double suicide. It fails and they die.",
@@ -468,21 +481,27 @@
         "groupedWith": ["Player2"]
       },
       "deaths": ["Player1", "Player2"],
+      "percentage": 33,
       "killTeammates": true
     },
     "diesFromInjury": {
       "text": "(Player1) bleeds out due to untreated injuries.",
       "requiresPossessions": [{ "player": 1, "type": "status", "value": "injured" }],
-      "deaths": ["Player1"]
+      "deaths": ["Player1"],
+      "percentage": 50
     },
     "fightTwoVersusTwo": {
-      "text": "(Player2) and (Player3) fight (Player1) and (Player4). (Player2) and (Player3) survive.",
+      "text": "(Player2) and (Player3) fight (Player1) and (Player4). (Player2) and (Player3) survive. They continue to work together the next day.",
       "players": 4,
       "formGroup": ["Player2", "Player3"],
-      "deaths": ["Player1", "Player4"]
+      "deaths": ["Player1", "Player4"],
+      "updateTributesData": [
+        { "player": 2, "type": "kills", "operation": "add", "value": 2 },
+        { "player": 3, "type": "kills", "operation": "add", "value": 2 }
+      ]
     },
     "argumentAndKill": {
-      "text": "While hunting as a group, (Player1) and (Player2) have an argument. (Player3) and (Player4) side with (Player1), and work together to kill (Player2)",
+      "text": "While hunting as a group, (Player1) and (Player2) have an argument. (Player3) and (Player4) side with (Player1), and work together to kill (Player2). They continue to work together the next day.",
       "players": 4,
       "requireGroupSize": {
         "type": "min",
@@ -491,6 +510,11 @@
       },
       "formGroup": ["Player1", "Player3", "Player4"],
       "deaths": ["Player2"],
+      "updateTributesData": [
+        { "player": 1, "type": "kills", "operation": "add", "value": 1 },
+        { "player": 3, "type": "kills", "operation": "add", "value": 1 },
+        { "player": 4, "type": "kills", "operation": "add", "value": 1 }
+      ],
       "killTeammates": true
     },
     "twoPlayerTrackDownAndKillPlayerThree": {
@@ -501,34 +525,38 @@
         "amount": 2,
         "groupedWith": ["Player2"]
       },
-      "deaths": ["Player3"]
+      "deaths": ["Player3"],
+      "updateTributesData": [
+        { "player": 1, "type": "kills", "operation": "add", "value": 1 },
+        { "player": 2, "type": "kills", "operation": "add", "value": 1 }
+      ]
     },
     "fightDuringFeast1": {
       "text": "(Player1), (Player2), and (Player3) start fighting, but (Player2) runs away as (Player1) kills (Player3).",
       "time": "feast",
       "players": 3,
-      "deaths": ["Player3"]
+      "deaths": ["Player3"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }]
     },
     "bashHeadIntoRock": {
       "text": "(Player1) bashes (Player2)'s head against a rock several times.",
-      "time": "feast",
+      "time": ["feast", "day", "night"],
       "players": 2,
-      "deaths": ["Player2"]
+      "deaths": ["Player2"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }]
     },
     "fallIntoPitAndDie": {
       "text": "(Player1) falls into a pit and dies.",
       "time": "feast",
-      "deaths": ["Player1"]
+      "deaths": ["Player1"],
+      "percentage": 25
     },
     "snuggleButGetKilled": {
       "text": "(Player1) convinces (Player2) to snuggle with them. (Player3) catches them and kills them both",
       "time": "night",
       "players": 3,
-      "requireGroupSize": {
-        "type": "exact",
-        "amount": 1
-      },
-      "deaths": ["Player1", "Player2"]
+      "deaths": ["Player1", "Player2"],
+      "updateTributesData": [{ "player": 3, "type": "kills", "operation": "add", "value": 2 }]
     },
     "fallsFromTreeAndDies": {
       "text": "(Player1) falls from a tree while climbing it and dies",
@@ -539,50 +567,71 @@
       "players": 2,
       "requiresPossessions": [{ "player": 1, "type": "pet", "value": "any"}],
       "deaths": ["Player2"],
-      "percentage": 250
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "percentage": 300
     },
     "injureWithBranch": {
-      "text": "(Player1) tries to stabs (Player2) with a tree branch, injuring them. (Player2) then runs away leaving a blood trail behind them",
+      "text": "(Player1) tries to stabs (Player2) with a tree branch, injuring them. (Player2) then runs away leaving a trail of blood behind them",
+      "players": 2,
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "branch"}],
       "addPossessions": [{ "player": 2, "type": "status", "value": "injured" }]
     },
     "killWithBranch": {
       "text": "(Player1) stabs (Player2) with a tree branch, killing them",
+      "players": 2,
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "branch"}],
-      "deaths": ["Player2"]
+      "deaths": ["Player2"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }]
     },
     "fallsFromTreeKillingSelfAndPlayer2": {
       "text": "(Player1) falls from a tree and lands on (Player2), killing them both.",
+      "players": 2,
       "deaths": ["Player1", "Player2"]
     },
     "setsFireToTreeAndDies": {
       "text": "(Player1) accidentally sets a tree on fire and burns to a crisp",
-      "deaths": ["Player1"]
+      "deaths": ["Player1"],
+      "percentage": 20
     },
     "getsStrangledByTreeVine": {
       "text": "(Player1) gets tangled in the vines of a tree and suffocates from one around their neck.",
-      "deaths": ["Player1"]
+      "deaths": ["Player1"],
+      "percentage": 20
     },
     "stabsPerson2WithPencil": {
       "text": "(Player1) stabs a pencil through (Player2)s eye",
+      "players": 2,
       "requiresPossessions": [{ "player": 1, "type": "item", "value": "writingUtensils"}],
-      "deaths": ["Player2"]
+      "deaths": ["Player2"],
+      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "percentage": 200
     },
     "receivesPoisonFromOpposingSponsor": {
       "text": "(Player1) unknowingly receives poisoned food from (Sponsor::opposing), they eat it and die",
-      "deaths": ["Player1"]
+      "deaths": ["Player1"],
+      "percentage": 25
+    },
+    "begToBeKilledAndHappilyOblige": {
+      "text": "(Player1) begs for (Player2) to kill them. They happily oblige.",
+      "players": 2,
+      "deaths": ["Player1"],
+      "updateTributesData": [{ "player": 2, "type": "kills", "operation": "add", "value": 1 }]
     }
   },
   "replaceTerms": {
     "Animal": [
+      "capybara",
       "chimpanzee",
       "deer",
       "fox",
       "lizard",
       "koala",
+      "otter",
       "parrot",
       "raccoon",
+      "red panda",
       "sloth",
+      "snek",
       "squirrel",
       "tiger"
     ]

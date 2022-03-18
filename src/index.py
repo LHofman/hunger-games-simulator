@@ -3,9 +3,10 @@ import json
 import vars
 
 from playGame import *
+from utils.generalUtils import *
 
 def readFile(fileName, type = "text"):
-  file = open("settings/%s" % fileName, "r")
+  file = open("settings/%s" % fileName, "r", encoding="utf-8")
   
   if (type == 'json'):
     return json.load(file)
@@ -14,7 +15,7 @@ def readFile(fileName, type = "text"):
   return list(map(lambda line: line.rstrip(), lines))
 
 def readTributes():
-  file = open("settings/tributes.txt", "r")
+  file = open("settings/tributes.txt", "r", encoding="utf-8")
   lines = file.readlines()
 
   if (vars.gameData["options"]["districts"] > 0):
@@ -54,22 +55,21 @@ def getEvents():
 
 
 def printWinner():
-  if (len(vars.tributes) == 1): print("The winner is %s" % list(vars.tributes.keys())[0])
-  elif (len(vars.tributes) > 1): print("The winners are %s" % ", ".join(list(vars.tributes.keys())))
-  else: print("There are no winners today")
+  if (len(vars.tributes) == 1): printOutput("The winner is %s" % list(vars.tributes.keys())[0])
+  elif (len(vars.tributes) > 1): printOutput("The winners are %s" % ", ".join(list(vars.tributes.keys())))
+  else: printOutput("There are no winners today")
 
 def printRankings():
-  print("\n\n\n---\nFinal Rankings")
+  printOutput("\n\n\n---\nFinal Rankings")
 
   for playerDeaths in vars.deaths:
     for (player, district) in playerDeaths:
-      print("%d. %s from district %d" % (vars.totalTributes, player, district))
+      printOutput("%d. %s from district %d" % (vars.totalTributes, player, district))
       vars.totalTributes -= 1
   
   for name, tribute in list(vars.tributes.items()):
-    print("1. %s from district %d" % (name, tribute["district"]))
+    printOutput("1. %s from district %d" % (name, tribute["district"]))
 
-print('----------------------------------------------------------------------------------------------------------------')
 vars.gameData = readFile("gameData.json", "json")
 vars.events = getEvents()
 vars.tributes = readTributes()
@@ -78,7 +78,13 @@ vars.sponsors = readFile("sponsors.txt")
 vars.deaths = []
 vars.recentDeaths = []
 
+if (vars.gameData["options"]["autoPlay"]):
+  outputFile = open("resources/output.txt", "w")
+  outputFile.write("")
+  outputFile.close()
 
+printOutput('----------------------------------------------------------------------------------------------------------------')
 playGame()
 printWinner()
 printRankings()
+printOutput(vars.tributesData)

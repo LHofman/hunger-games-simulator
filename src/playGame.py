@@ -5,7 +5,9 @@ import vars
 from getEvent import *
 from getEventTextPlayersAndTerms import *
 from handleEventEffects import *
+from utils.generalUtils import *
 from utils.possessionUtils import *
+from utils.tributesDataUtils import *
 
 def playGame():
   playRound("The Bloodbath", "bloodbath", False)
@@ -22,11 +24,11 @@ def playRound(text, time, playStandardEvents):
 
   shuffleTributes()
   readInput()
-  print(text)
-  playList(time, playStandardEvents)
-  print('\n---')
+  printOutput(text)
+  playList(time, playStandardEvents, text)
+  printOutput('\n---')
 
-def playList(time, playStandardEvents):
+def playList(time, playStandardEvents, exactTime):
   tributesLeft = vars.tributes.copy()
   played = 0
   total = amountLeft = len(tributesLeft)
@@ -38,26 +40,31 @@ def playList(time, playStandardEvents):
     percentage = percentageOfPlaying(total, time)
     rnd = random.random()
     if (rnd < percentage):
-      playTribute(tribute, tributesLeft, time, playStandardEvents)
+      playTribute(tribute, tributesLeft, time, playStandardEvents, exactTime)
       played += 1
       
     amountLeft = len(tributesLeft)
 
   if (played == 0):
-    playList(vars.tributes)
+    playList(vars.tributes, playStandardEvents, exactTime)
 
-def playTribute(tribute, playersRemaining, time, playStandardEvents):
+def playTribute(tribute, playersRemaining, time, playStandardEvents, exactTime):
   event = getEvent(tribute, playersRemaining, time, playStandardEvents)
 
   (text, players, terms) = getEventTextPlayersAndTerms(event, tribute, playersRemaining)
   
-  text = handleEventEffects(event, players, text, terms)
+  text = handleEventEffects(event, players, text, terms, exactTime)
   
-  print(text)
+  printOutput(text)
 
 def readInput():
+  if (vars.gameData["options"]["autoPlay"]):
+    printOutput("")
+    printStatus()
+    return
+
   userInput = input("Press Enter to continue, or type status to see the current status of all tributes: ")
-  print("")
+  printOutput("")
 
   if (userInput == "stop"): exit()
 
@@ -102,15 +109,15 @@ def checkEveryoneInTheSameGroup():
   for name, _ in vars.tributes.items():
     vars.tributes[name]["groupedWith"].clear()
 
-  print("The remaining tributes realize they are the only ones left and split up")
+  printOutput("The remaining tributes realize they are the only ones left and split up")
 
 def showFallenTributes():
   if (len(vars.recentDeaths) > 0 and vars.gameData["options"]["showFallenTributes"]):
     if (not isGameOver()): readInput()
-    print("%d cannon shots can be heard in the distance." % len(vars.recentDeaths))
+    printOutput("%d cannon shots can be heard in the distance." % len(vars.recentDeaths))
     for playerName, district in vars.recentDeaths:
-      print ("%s from district %d" % (playerName, district))
-    print("---")
+      printOutput("%s from district %d" % (playerName, district))
+    printOutput("---")
   
   vars.deaths.append(vars.recentDeaths.copy())
   vars.recentDeaths.clear()
@@ -125,6 +132,6 @@ def printStatus():
     if (possessions):
       possessions = ", has %s" % possessions[0: -2]
 
-    print("%s from district %d is still alive%s" % (name, tribute["district"], possessions))
+    printOutput("%s from district %d is still alive%s" % (name, tribute["district"], possessions))
 
-  print("\n---")
+  printOutput("\n---")
