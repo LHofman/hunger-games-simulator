@@ -9,5 +9,5 @@ class Tribute:
   def playRound(self, events: Events) -> None:
     event = events.chooseEvent()
 
-    event.print()
+    event.print(self.__name)
     

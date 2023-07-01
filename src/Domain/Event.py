@@ -12,6 +12,10 @@ class Event:
     self.__name = name
     self.__text = text
 
-  def print(self) -> None:
-    self.__printer.print(self.__text)
+  def print(self, tributeName: str) -> None:
+    text = self.__text
+
+    text = text.replace("(Player1)", tributeName)
+
+    self.__printer.print(text)
     
