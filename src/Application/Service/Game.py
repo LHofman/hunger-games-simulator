@@ -27,7 +27,7 @@ class Game:
       self.__playTribute(tribute)
     
   def __playTribute(self, tribute: Tribute) -> None:
-    event = self.__events.chooseEvent()
+    event = self.__events.chooseEvent(tribute, self.__tributes)
 
     amountOfPlayers = event.getAmountOfPlayers()
     otherTributes = self.__tributes.getNext(amountOfPlayers)

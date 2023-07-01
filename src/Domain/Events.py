@@ -1,5 +1,7 @@
 from Application.Port.IRandomizer import IRandomizer
 from Domain.Event import Event
+from Domain.Tribute import Tribute
+from Domain.Tributes import Tributes
 
 class Events:
 
@@ -11,6 +13,11 @@ class Events:
     self.__randomizer = randomizer
     self.__events = events
 
-  def chooseEvent(self) -> Event:
-    return self.__randomizer.chooseOne(self.__events)
+  def chooseEvent(self, tribute: Tribute, tributes: Tributes) -> Event:
+    eventsFiltered = list(filter(
+      lambda event: event.canPlayEvent(tribute, tributes),
+      self.__events
+    ))
+
+    return self.__randomizer.chooseOne(eventsFiltered)
     

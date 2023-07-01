@@ -1,6 +1,5 @@
 import random
 
-from Domain.Events import Events
 from Domain.Tribute import Tribute
 
 class Tributes:
@@ -12,6 +11,9 @@ class Tributes:
     self.__tributesLeft = self.__tributes
     random.shuffle(self.__tributesLeft)
   
+  def getTributesLeft(self) -> int:
+    return self.__tributesLeft
+
   def isRoundOver(self) -> bool:
     return len(self.__tributesLeft) == 0
 
