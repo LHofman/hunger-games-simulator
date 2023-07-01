@@ -1,3 +1,4 @@
+from Domain.Tribute import Tribute
 from Domain.Repository.IEventRepository import IEventRepository
 from Domain.Repository.ITributeRepository import ITributeRepository
 
@@ -16,4 +17,19 @@ class Game:
     self.__tributes = self.__tributeRepository.getAll()
 
   def start(self) -> None:
-    self.__tributes.playRound(self.__events)
+    self.__playRound()
+
+  def __playRound(self) -> None:
+    self.__tributes.nextRound()
+    
+    while (not self.__tributes.isRoundOver()):
+      tribute = self.__tributes.getNext(1)[0]
+      self.__playTribute(tribute)
+    
+  def __playTribute(self, tribute: Tribute) -> None:
+    event = self.__events.chooseEvent()
+
+    amountOfPlayers = event.getAmountOfPlayers()
+    otherTributes = self.__tributes.getNext(amountOfPlayers)
+
+    event.print([tribute] + otherTributes)

@@ -8,8 +8,16 @@ class Tributes:
   def __init__(self, tributes: list[Tribute]) -> None:
     self.__tributes = tributes
 
-  def playRound(self, events: Events) -> None:
-    random.shuffle(self.__tributes)
+  def nextRound(self) -> None:
+    self.__tributesLeft = self.__tributes
+    random.shuffle(self.__tributesLeft)
+  
+  def isRoundOver(self) -> bool:
+    return len(self.__tributesLeft) == 0
 
-    for tribute in self.__tributes:
-      tribute.playRound(events)
+  def getNext(self, amount: int) -> list[Tribute]:
+    next = self.__tributes[:amount]
+    
+    del self.__tributes[:amount]
+    
+    return next

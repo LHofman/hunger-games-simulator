@@ -22,7 +22,8 @@ class EventRepository(IEventRepository):
       event = Event(
         self.__printer,
         name,
-        event["text"]
+        event["text"],
+        event.get("players", 1)
       )
 
       events.append(event)
