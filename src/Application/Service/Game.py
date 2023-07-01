@@ -14,3 +14,6 @@ class Game:
   def init(self) -> None:
     self.__events = self.__eventRepository.getAll()
     self.__tributes = self.__tributeRepository.getAll()
+
+  def start(self) -> None:
+    self.__tributes.playRound(self.__events)

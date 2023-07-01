@@ -11,3 +11,4 @@ game = Game(
 )
 
 game.init()
+game.start()
