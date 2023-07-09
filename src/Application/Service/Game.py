@@ -31,4 +31,4 @@ class Game:
 
     otherTributes = self.__tributes.getOtherTributes(event)
 
-    event.print([tribute] + otherTributes)
+    self.__tributes.printEvent(event)
