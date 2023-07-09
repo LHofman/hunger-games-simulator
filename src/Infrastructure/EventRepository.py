@@ -20,7 +20,8 @@ class EventRepository(IEventRepository):
       event = Event(
         name,
         event["text"],
-        event.get("players", 1)
+        event.get("players", 1),
+        event.get("deaths", [])
       )
 
       events.append(event)

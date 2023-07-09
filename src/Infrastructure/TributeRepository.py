@@ -13,7 +13,7 @@ class TributeRepository(ITributeRepository):
   def getAll(self) -> Tributes:
     names = self.__fileReader.read('tributes.txt')
 
-    tributes = []
+    tributes = dict()
     index = 0
     for name in names:      
       index += 1
@@ -22,7 +22,7 @@ class TributeRepository(ITributeRepository):
         name
       )
 
-      tributes.append(tribute)
+      tributes[index] = tribute
 
     return Tributes(self.__printer, tributes)
     

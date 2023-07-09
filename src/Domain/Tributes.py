@@ -9,33 +9,42 @@ class Tributes:
   def __init__(
     self,
     printer: IPrinter,
-    tributes: list[Tribute]
+    tributes: dict[int, Tribute]
   ) -> None:
     self.__printer = printer
     self.__tributes = tributes
 
   # Methods for Game round
   def nextRound(self) -> None:
-    self.__tributesLeft = self.__tributes
+    self.__tributesLeft = list(self.__tributes.values())
     random.shuffle(self.__tributesLeft)
+
+  def isGameOver(self) -> bool:
+    return len(self.__tributes) <= 1
   
   def isRoundOver(self) -> bool:
-    return len(self.__tributesLeft) == 0
+    return len(self.__tributesLeft) == 0 or self.isGameOver()
 
   def getNextActiveTribute(self) -> Tribute:
-    self.__activeTribute = self.__tributes.pop(0)
+    self.__activeTribute = self.__tributesLeft.pop(0)
     self.__otherTributes = []
 
     return self.__activeTribute
+
+  def printEnding(self) -> None:
+    if (len(self.__tributes) == 1): text = "%s has won!" % list(self.__tributes.values())[0].getName()
+    else: text = 'Everyone has died, the game is over'
+
+    self.__printer.print(text)
 
 
 
   # Methods for Event
   def getOtherTributes(self, event: Event) -> list[Tribute]:
     amount = event.getAmountOfPlayers() - 1
-    self.__otherTributes = self.__tributes[:amount]
+    self.__otherTributes = self.__tributesLeft[:amount]
     
-    del self.__tributes[:amount]
+    del self.__tributesLeft[:amount]
     
     return self.__otherTributes
 
@@ -43,6 +52,14 @@ class Tributes:
     if (event.getAmountOfPlayers() > (len(self.__tributesLeft) + 1)): return False
     
     return True
+
+  def handleEventEffects(self, event: Event) -> None:
+    self.__handleDeaths(event.getDeaths())
+
+  def __handleDeaths(self, deaths: list[str]) -> None:
+    for player in deaths:
+      tribute = self.__getTributeFromEventText(player)
+      del self.__tributes[tribute.getIndex()]
 
   def printEvent(self, event: Event) -> None:
     text = event.getText()

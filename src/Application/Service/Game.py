@@ -17,7 +17,11 @@ class Game:
     self.__tributes = self.__tributeRepository.getAll()
 
   def start(self) -> None:
-    self.__playRound()
+    while (not self.__tributes.isGameOver()):
+      self.__playRound()
+      print('--------------------------------')
+    
+    self.__tributes.printEnding()
 
   def __playRound(self) -> None:
     self.__tributes.nextRound()
@@ -31,4 +35,5 @@ class Game:
 
     otherTributes = self.__tributes.getOtherTributes(event)
 
+    self.__tributes.handleEventEffects(event)
     self.__tributes.printEvent(event)
