@@ -15,7 +15,7 @@ class Events:
 
   def chooseEvent(self, tribute: Tribute, tributes: Tributes) -> Event:
     eventsFiltered = list(filter(
-      lambda event: event.canPlayEvent(tribute, tributes),
+      lambda event: tributes.canPlayEvent(tribute, event),
       self.__events
     ))
 

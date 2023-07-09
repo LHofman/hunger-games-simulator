@@ -1,5 +1,6 @@
 import random
 
+from Domain.Event import Event
 from Domain.Tribute import Tribute
 
 class Tributes:
@@ -11,9 +12,6 @@ class Tributes:
     self.__tributesLeft = self.__tributes
     random.shuffle(self.__tributesLeft)
   
-  def getTributesLeft(self) -> int:
-    return self.__tributesLeft
-
   def isRoundOver(self) -> bool:
     return len(self.__tributesLeft) == 0
 
@@ -23,3 +21,8 @@ class Tributes:
     del self.__tributes[:amount]
     
     return next
+
+  def canPlayEvent(self, tribute: Tribute, event: Event) -> bool:
+    if (event.getAmountOfPlayers() > (len(self.__tributesLeft) + 1)): return False
+    
+    return True

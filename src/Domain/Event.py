@@ -1,6 +1,5 @@
 from Application.Port.IPrinter import IPrinter
 from Domain.Tribute import Tribute
-from Domain.Tributes import Tributes
 
 class Event:
   
@@ -18,11 +17,6 @@ class Event:
 
   def getAmountOfPlayers(self) -> int:
     return self.__amountOfPlayers
-
-  def canPlayEvent(self, tribute: Tribute, tributes: Tributes) -> bool:
-    if (self.__amountOfPlayers > (len(tributes.getTributesLeft()) + 1)): return False
-    
-    return True
 
   def print(self, tributes: list[Tribute]) -> None:
     text = self.__text
