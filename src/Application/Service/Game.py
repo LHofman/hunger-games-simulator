@@ -23,13 +23,12 @@ class Game:
     self.__tributes.nextRound()
     
     while (not self.__tributes.isRoundOver()):
-      tribute = self.__tributes.getNext(1)[0]
+      tribute = self.__tributes.getNextActiveTribute()
       self.__playTribute(tribute)
     
   def __playTribute(self, tribute: Tribute) -> None:
     event = self.__events.chooseEvent(tribute, self.__tributes)
 
-    amountOfPlayers = event.getAmountOfPlayers()
-    otherTributes = self.__tributes.getNext(amountOfPlayers)
+    otherTributes = self.__tributes.getOtherTributes(event)
 
     event.print([tribute] + otherTributes)

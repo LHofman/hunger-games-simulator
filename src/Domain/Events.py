@@ -14,10 +14,7 @@ class Events:
     self.__events = events
 
   def chooseEvent(self, tribute: Tribute, tributes: Tributes) -> Event:
-    eventsFiltered = list(filter(
-      lambda event: tributes.canPlayEvent(tribute, event),
-      self.__events
-    ))
+    eventsFiltered = list(filter(tributes.canPlayEvent, self.__events))
 
     return self.__randomizer.chooseOne(eventsFiltered)
     
