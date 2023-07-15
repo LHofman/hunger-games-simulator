@@ -13,6 +13,8 @@ class Tributes:
   ) -> None:
     self.__printer = printer
     self.__tributes = tributes
+    self.__allDeaths = []
+    self.__recentDeaths = []
 
   # Methods for Game round
   def nextRound(self) -> None:
@@ -37,6 +39,14 @@ class Tributes:
   def getTributes(self) -> dict[int, Tribute]:
     return self.__tributes
 
+  def getRecentDeaths(self) -> list[str]:
+    recentDeaths = self.__recentDeaths.copy()
+
+    self.__allDeaths.append(recentDeaths.copy())
+    self.__recentDeaths.clear()
+
+    return recentDeaths
+
   # Methods for Event
   def getOtherTributes(self, event: Event) -> list[Tribute]:
     amount = event.getAmountOfPlayers() - 1
@@ -47,7 +57,9 @@ class Tributes:
     return self.__otherTributes
 
   def removeTribute(self, tribute: Tribute) -> None:
-    del self.__tributes[tribute.getIndex()]
+    tribute = self.__tributes.pop(tribute.getIndex())
+
+    self.__recentDeaths.append(tribute.getName())
 
   def getTributeFromEventText(self, player: str) -> Tribute:
     playerNumber = int(player[-1])

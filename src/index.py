@@ -2,6 +2,7 @@ from Application.Service.Game import Game
 from Application.Service.GameUtils.EventEffectHandler import EventEffectHandler
 from Application.Service.GameUtils.EventPrinter import EventPrinter
 from Application.Service.GameUtils.EventValidator import EventValidator
+from Application.Service.GameUtils.GamePrinter import GamePrinter
 from Application.Service.Utils.FileReader import FileReader
 from Application.Service.Utils.Printer import Printer
 from Application.Service.Utils.Randomizer import Randomizer
@@ -16,6 +17,7 @@ randomizer = Randomizer()
 eventEffectHandler = EventEffectHandler()
 eventPrinter = EventPrinter(printer)
 eventValidator = EventValidator()
+gamePrinter = GamePrinter(printer)
 
 eventRepository = EventRepository(fileReader)
 tributeRepository = TributeRepository(fileReader)
@@ -25,6 +27,7 @@ game = Game(
   eventPrinter,
   eventRepository,
   eventValidator,
+  gamePrinter,
   printer,
   randomizer,
   tributeRepository
