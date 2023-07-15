@@ -48,10 +48,19 @@ class Tributes:
     
     return self.__otherTributes
 
-  def canPlayEvent(self, event: Event) -> bool:
+  def canPlayEvent(self, event: Event, time: str, playStandardEvents: bool) -> bool:
     if (event.getAmountOfPlayers() > (len(self.__tributesLeft) + 1)): return False
+    if (not self.__canPlayTimedEvent(event, time, playStandardEvents)): return False
     
     return True
+
+  def __canPlayTimedEvent(self, event: Event, time: str, playStandardEvents: bool) -> bool:
+    allowedTimes = event.getAllowedTimes()
+
+    if (len(allowedTimes) == 0):
+      return playStandardEvents
+    else:
+      return time in allowedTimes
 
   def handleEventEffects(self, event: Event) -> None:
     self.__handleDeaths(event.getDeaths())
@@ -77,3 +86,4 @@ class Tributes:
     
     if (playerNumber == 1): return self.__activeTribute
     else: return self.__otherTributes[playerNumber - 2]
+    

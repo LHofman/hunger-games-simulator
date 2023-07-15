@@ -7,12 +7,14 @@ class Event:
     name: str,
     text: str,
     amountOfPlayers: int,
-    deaths: list[str]
+    deaths: list[str],
+    allowedTimes: list[str]
   ) -> None:
     self.__name = name
     self.__text = text
     self.__amountOfPlayers = amountOfPlayers
     self.__deaths = deaths
+    self.__allowedTimes = allowedTimes
 
   def getAmountOfPlayers(self) -> int:
     return self.__amountOfPlayers
@@ -22,3 +24,7 @@ class Event:
 
   def getDeaths(self) -> list[str]:
     return self.__deaths
+
+  def getAllowedTimes(self) -> list[str]:
+    return self.__allowedTimes
+    

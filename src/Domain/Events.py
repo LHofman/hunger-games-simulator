@@ -13,8 +13,11 @@ class Events:
     self.__randomizer = randomizer
     self.__events = events
 
-  def chooseEvent(self, tribute: Tribute, tributes: Tributes) -> Event:
-    eventsFiltered = list(filter(tributes.canPlayEvent, self.__events))
+  def chooseEvent(self, tribute: Tribute, tributes: Tributes, time: str, playStandardEvents: bool) -> Event:
+    eventsFiltered = list(filter(
+      lambda event : tributes.canPlayEvent(event, time, playStandardEvents),
+      self.__events
+    ))
 
     return self.__randomizer.chooseOne(eventsFiltered)
     

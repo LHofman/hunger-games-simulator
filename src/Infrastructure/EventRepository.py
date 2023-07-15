@@ -16,14 +16,19 @@ class EventRepository(IEventRepository):
     events = []
     for (name, event) in eventsInput.items():
       if ("ignore" in event): continue
+
+      allowedTimes = event.get("time", [])
+      allowedTimes = allowedTimes if isinstance(allowedTimes, list) else [allowedTimes]
       
       event = Event(
         name,
         event["text"],
         event.get("players", 1),
-        event.get("deaths", [])
+        event.get("deaths", []),
+        allowedTimes
       )
 
       events.append(event)
 
     return Events(self.__randomizer, events)
+    
