@@ -1,14 +1,12 @@
-from Application.Service.FileReader import FileReader
-from Application.Service.Printer import Printer
+from Application.Port.IFileReader import IFileReader
 from Domain.Tribute import Tribute
 from Domain.Tributes import Tributes
 from Domain.Repository.ITributeRepository import ITributeRepository
 
 class TributeRepository(ITributeRepository):
 
-  def __init__(self) -> None:
-    self.__fileReader = FileReader()
-    self.__printer = Printer()
+  def __init__(self, fileReader: IFileReader) -> None:
+    self.__fileReader = fileReader
   
   def getAll(self) -> Tributes:
     names = self.__fileReader.read('tributes.txt')
@@ -24,5 +22,5 @@ class TributeRepository(ITributeRepository):
 
       tributes[index] = tribute
 
-    return Tributes(self.__printer, tributes)
+    return tributes
     

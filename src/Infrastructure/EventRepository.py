@@ -1,14 +1,12 @@
-from Application.Service.FileReader import FileReader
-from Application.Service.Randomizer import Randomizer
+from Application.Port.IFileReader import IFileReader
 from Domain.Event import Event
 from Domain.Events import Events
 from Domain.Repository.IEventRepository import IEventRepository
 
 class EventRepository(IEventRepository):
 
-  def __init__(self) -> None:
-    self.__fileReader = FileReader()
-    self.__randomizer = Randomizer()
+  def __init__(self, fileReader: IFileReader) -> None:
+    self.__fileReader = fileReader
   
   def getAll(self) -> Events:
     eventsInput = self.__fileReader.read('events.json', 'json')
@@ -30,5 +28,4 @@ class EventRepository(IEventRepository):
 
       events.append(event)
 
-    return Events(self.__randomizer, events)
-    
+    return events
