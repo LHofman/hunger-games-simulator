@@ -7,8 +7,8 @@ from canPlayEvent import canPlayEvent
 def test_mock(mocker):
   mocker.patch.object(
     vars,
-    "gameData",
-    { "tributes": [ "Player1", "Player2", "Player3" ] }
+    "tributes",
+    [ "Player1", "Player2", "Player3" ]
   )
   mocker.patch( "canPlayEvent.checkHasRequiredPossessions", return_value=True )
   mocker.patch( "canPlayEvent.checkCanPlayTimedEvents", return_value=True )

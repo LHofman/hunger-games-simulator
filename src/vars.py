@@ -7,3 +7,4 @@ sponsors = []
 totalTributes = 0
 tributes = {}
 tributesData = {}
+outputForTests = []

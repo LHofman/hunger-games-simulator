@@ -1,0 +1,33 @@
+{
+  "options": {
+    "showFallenTributes": true,
+    "betrayTeammates": false,
+    "shuffleTributes": true,
+    "districts": 2,
+    "playersPerDistrict": 0,
+    "districtsAreTeammates": false,
+    "districtCanWinTogether": false,
+    "1SponsorPerTribute": true,
+    "": "Speed: 1-10, defines how often deaths occur",
+    "speed": 5,
+    "possessionsWithoutDuplicates": ["status"],
+    "autoPlay": true,
+    "collectOutputForTests": true
+  },
+  "increaseEventOdds": {
+    "possessions": {}
+  },
+  "events": {
+    "fleeBloodbath": {
+      "text": "(Player1) flees the cornocopia hastily",
+      "time": ["bloodbath"]
+    },
+    "killOnePlayer1": {
+      "text": "(Player2) catches (Player1) off guard and kills them.",
+      "players": 2,
+      "deaths": ["Player1"],
+      "updateTributesData": [{ "player": 2, "type": "kills", "operation": "add", "value": 1 }]
+    }
+  },
+  "replaceTerms": {}
+}

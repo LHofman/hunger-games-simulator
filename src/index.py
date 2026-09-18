@@ -6,7 +6,7 @@ from playGame import *
 from utils.generalUtils import *
 
 def readFile(fileName, type = "text"):
-  file = open("settings/%s" % fileName, "r", encoding="utf-8")
+  file = open(fileName, "r", encoding="utf-8")
   
   if (type == 'json'):
     return json.load(file)
@@ -14,8 +14,8 @@ def readFile(fileName, type = "text"):
   lines = file.readlines()
   return list(map(lambda line: line.rstrip(), lines))
 
-def readTributes():
-  file = open("settings/tributes.txt", "r", encoding="utf-8")
+def readTributes(tributesFileName):
+  file = open(tributesFileName, "r", encoding="utf-8")
   lines = file.readlines()
 
   if (vars.gameData["options"]["districts"] > 0):
@@ -71,11 +71,11 @@ def printRankings():
   for name, tribute in list(vars.tributes.items()):
     printOutput("1. %s from district %d" % (name, tribute["district"]))
 
-vars.gameData = readFile("gameData.json", "json")
+vars.gameData = readFile("settings/gameData.json", "json")
 vars.events = getEvents()
-vars.tributes = readTributes()
+vars.tributes = readTributes("settings/tributes.txt")
 vars.totalTributes = len(vars.tributes)
-vars.sponsors = readFile("sponsors.txt")
+vars.sponsors = readFile("settings/sponsors.txt")
 vars.deaths = []
 vars.recentDeaths = []
 

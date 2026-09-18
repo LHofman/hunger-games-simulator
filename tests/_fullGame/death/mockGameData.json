@@ -1,0 +1,35 @@
+{
+  "options": {
+    "showFallenTributes": true,
+    "betrayTeammates": false,
+    "shuffleTributes": true,
+    "districts": 2,
+    "playersPerDistrict": 0,
+    "districtsAreTeammates": false,
+    "districtCanWinTogether": false,
+    "1SponsorPerTribute": true,
+    "": "Speed: 1-10, defines how often deaths occur",
+    "speed": 5,
+    "possessionsWithoutDuplicates": ["status"],
+    "autoPlay": true,
+    "collectOutputForTests": true
+  },
+  "increaseEventOdds": {
+    "possessions": {}
+  },
+  "events": {
+    "fleeBloodbath": {
+      "text": "(Player1) flees the cornocopia hastily",
+      "time": ["bloodbath"]
+    },
+    "firstEvent": {
+      "text": "(Player1) explores the arena.",
+      "maxOccurances": 1
+    },
+    "dieFromHypothermia": {
+      "text": "(Player1) dies.",
+      "deaths": ["Player1"]
+    }
+  },
+  "replaceTerms": {}
+}
