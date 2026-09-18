@@ -6,6 +6,12 @@ In this simulator the actions of the tributes have consequences for their next e
 -------------------
 * Install Python
 
+```shellsession
+python3 -m venv .venv
+source .venv/bin/activate
+pip install pytest
+```
+
 # Customize simulations
 * Replace names in tributes.txt with your own names (any amount)
 * Replace names in sponsors.txt with your own names (any amount)
@@ -15,5 +21,12 @@ In this simulator the actions of the tributes have consequences for their next e
 # Run project
 --------------
 ```shellsession
-python src/index.py
+python3 src/index.py
+```
+
+# Running the tests
+
+```shell
+source .venv/bin/activate
+pytest
 ```

@@ -94,3 +94,4 @@ def handleDeaths(event, players, exactTime):
         vars.tributes[name]["groupedWith"].remove(playerName)
 
     del vars.tributes[playerName]
+    

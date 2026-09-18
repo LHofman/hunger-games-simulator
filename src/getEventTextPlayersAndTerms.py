@@ -102,7 +102,7 @@ def setSponsorsNames(tribute, text):
   if (len(vars.sponsors) <= 0): return text.replace("(Sponsor)", "an unknown sponsor")
 
   isFixedSponsor = vars.gameData["options"]["1SponsorPerTribute"]
-  if (not isFixedSponsor or  len(vars.sponsors) != vars.totalTributes):
+  if (not isFixedSponsor or len(vars.sponsors) != vars.totalTributes):
     return text.replace("(Sponsor)", random.choice(vars.sponsors))
 
   if (text.find("(Sponsor::opposing)") == -1): return text.replace("(Sponsor)", vars.sponsors[tribute["index"] - 1])

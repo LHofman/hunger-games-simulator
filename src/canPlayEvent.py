@@ -11,7 +11,7 @@ def canPlayEvent(tribute, playersRemaining, time, playStandardEvents):
 
     if (not checkHasRequiredPossessions(tribute, event)): return False
     if (not checkCanPlayTimedEvents(time, event, playStandardEvents)): return False
-    if (not checkcompliesWithRequiredGroupSize(tribute, event, playersRemaining)): return False
+    if (not checkCompliesWithRequiredGroupSize(tribute, event, playersRemaining)): return False
     if (not checkCanBetrayTeammates(tribute, event)): return False
 
     return True
@@ -30,7 +30,7 @@ def checkHasRequiredPossessions(tribute, event):
 
   return True
 
-def checkcompliesWithRequiredGroupSize(tribute, event, playersRemaining):
+def checkCompliesWithRequiredGroupSize(tribute, event, playersRemaining):
   if ("requireGroupSize" not in event): return True
 
   sizeType = event["requireGroupSize"]["type"]
