@@ -15,10 +15,26 @@ def test_handleSplitGroup():
             'splitGroup': ['Player1', 'Player2']
         },
         'playersAlive': {
-            'Tribute1': { **defaultTribute, 'name': 'Tribute1', 'groupedWith': ['Tribute2'] },
-            'Tribute2': { **defaultTribute, 'name': 'Tribute2', 'groupedWith': ['Tribute1'] },
-            'Tribute3': { **defaultTribute, 'name': 'Tribute3', 'groupedWith': ['Tribute4'] },
-            'Tribute4': { **defaultTribute, 'name': 'Tribute4', 'groupedWith': ['Tribute3'] },
+            'Tribute1': {
+                **defaultTribute,
+                'name': 'Tribute1',
+                'groupedWith': ['Tribute2']
+            },
+            'Tribute2': {
+                **defaultTribute,
+                'name': 'Tribute2',
+                'groupedWith': ['Tribute1']
+            },
+            'Tribute3': {
+                **defaultTribute,
+                'name': 'Tribute3',
+                'groupedWith': ['Tribute4']
+            },
+            'Tribute4': {
+                **defaultTribute,
+                'name': 'Tribute4',
+                'groupedWith': ['Tribute3']
+            },
         }
     }
 

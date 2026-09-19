@@ -8,7 +8,10 @@ class EventPicker:
 
         #(In/De)crease event odds
         increaseOddsEvents = self.__getIncreasedOddsEvents(gameState)
-        eventOptions = self.__updateEventsOptionsBasedOnOdds(gameState, increaseOddsEvents)
+        eventOptions = self.__updateEventsOptionsBasedOnOdds(
+            gameState,
+            increaseOddsEvents
+        )
 
         #Remove events unable to occur at this moment
         eventOptions = list(filter(canPlayEvent(gameState), eventOptions))
@@ -22,22 +25,30 @@ class EventPicker:
         event = random.choice(eventOptions)
 
         if event['name'] in gameState['eventsOccured']:
-            gameState['eventsOccured'][event['name']] = gameState['eventsOccured'][event['name']] + 1
+            gameState['eventsOccured'][event['name']] += 1
         else:
             gameState['eventsOccured'][event['name']] = 1
 
         return event
 
-    def __getIncreasedOddsEvents(self, gameState: GameRoundStateWithoutEvent) -> list[IncreaseEventOdds]:
+    def __getIncreasedOddsEvents(
+        self,
+        gameState: GameRoundStateWithoutEvent
+    ) -> list[IncreaseEventOdds]:
         return (
             self.__getIncreasedOddsEventsFromPossessions(gameState)
             + self.__getIncreasedOddsEventsFromGameSpeed(gameState)
             + self.__getDefaultIncreasedOddsEvents(gameState)
         )
 
-    def __getIncreasedOddsEventsFromPossessions(self, gameState: GameRoundStateWithoutEvent) -> list[IncreaseEventOdds]:
+    def __getIncreasedOddsEventsFromPossessions(
+        self,
+        gameState: GameRoundStateWithoutEvent
+    ) -> list[IncreaseEventOdds]:
         tribute = gameState['currentTribute']
-        increasedOddsEventsOptions = gameState['increaseEventOdds']['possessions']
+        increasedOddsEventsOptions = (
+            gameState['increaseEventOdds']['possessions']
+        )
 
         increasedOddsEvents: list[IncreaseEventOdds] = []
         for (type, values) in tribute['possessions'].items():
@@ -45,11 +56,16 @@ class EventPicker:
 
             for value in values:
                 if value in increasedOddsEventsOptions[type]:
-                    increasedOddsEvents.extend(increasedOddsEventsOptions[type][value])
+                    increasedOddsEvents.extend(
+                        increasedOddsEventsOptions[type][value]
+                    )
 
         return increasedOddsEvents
 
-    def __getIncreasedOddsEventsFromGameSpeed(self, gameState: GameRoundStateWithoutEvent) -> list[IncreaseEventOdds]:
+    def __getIncreasedOddsEventsFromGameSpeed(
+        self,
+        gameState: GameRoundStateWithoutEvent
+    ) -> list[IncreaseEventOdds]:
         gameSpeed = gameState['options']['speed']
         events = gameState['events']
 
@@ -63,11 +79,16 @@ class EventPicker:
         percentage = (1 if gameSpeed > 5 else -1) * 100 * multiplier
         for (name, event) in list(events.items()):
             if 'deaths' in event:
-                increasedOddsEvents.append({'event': name, 'percentage': percentage})
-        
+                increasedOddsEvents.append(
+                    {'event': name, 'percentage': percentage}
+                )
+
         return increasedOddsEvents
 
-    def __getDefaultIncreasedOddsEvents(self, gameState: GameRoundStateWithoutEvent) -> list[IncreaseEventOdds]:
+    def __getDefaultIncreasedOddsEvents(
+        self,
+        gameState: GameRoundStateWithoutEvent
+    ) -> list[IncreaseEventOdds]:
         events = gameState['events']
         eventsOccured = gameState['eventsOccured']
 
@@ -78,9 +99,13 @@ class EventPicker:
                 'maxOccurances' in event and
                 name in eventsOccured and
                 event['maxOccurances'] == eventsOccured[name]
-            ): increasedOddsEvents.append({ 'event': name, 'percentage': -100 })
+            ): increasedOddsEvents.append(
+                { 'event': name, 'percentage': -100 }
+            )
             elif 'percentage' in event:
-                increasedOddsEvents.append({ 'event': name, 'percentage': event['percentage'] })
+                increasedOddsEvents.append(
+                    { 'event': name, 'percentage': event['percentage'] }
+                )
 
         return increasedOddsEvents
 
@@ -103,7 +128,9 @@ class EventPicker:
                     eventOptions.append(events[increaseEvent['event']])
             else:
                 rnd = random.random() * 100
-                if rnd < abs(percentage) and events[increaseEvent['event']] in eventOptions:
-                    eventOptions.remove(events[increaseEvent['event']])
+                if (
+                    rnd < abs(percentage) and
+                    events[increaseEvent['event']] in eventOptions
+                ): eventOptions.remove(events[increaseEvent['event']])
         
         return eventOptions

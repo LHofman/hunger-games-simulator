@@ -1,4 +1,10 @@
-from Domain.types import Event, GameOptions, GameRoundState, GameRoundStateWithoutEvent, Tribute
+from Domain.types import (
+    Event,
+    GameOptions,
+    GameRoundState,
+    GameRoundStateWithoutEvent,
+    Tribute
+)
 
 defaultEvent: Event = {
     'name': 'Event Name',

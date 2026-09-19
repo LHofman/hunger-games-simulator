@@ -35,9 +35,13 @@ providers: list[ProviderType] = [
             'text': 'This is a test text with (Player1) and (Player2)',
         },
         'tribute': { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
-        'playersRemaining': { 'Player3': { **defaultTribute, 'name': 'Player3' } },
+        'playersRemaining': {
+            'Player3': { **defaultTribute, 'name': 'Player3' }
+        },
         'expectedText': 'This is a test text with Player1 and (Player2)',
-        'expectedPlayers': [{ **defaultTribute, 'groupedWith': ['Player2', 'Player3'] }]
+        'expectedPlayers': [
+            { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] }
+        ]
     }),
     ({
         'id': 'it should only return the players in the tribute\'s group that are still remaining',
@@ -47,9 +51,14 @@ providers: list[ProviderType] = [
             'text': 'This is a test text with (Player1) and (Player2)',
         },
         'tribute': { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
-        'playersRemaining': { 'Player3': { **defaultTribute, 'name': 'Player3' } },
+        'playersRemaining': {
+            'Player3': { **defaultTribute, 'name': 'Player3' }
+        },
         'expectedText': 'This is a test text with Player1 and Player3',
-        'expectedPlayers': [{ **defaultTribute, 'groupedWith': ['Player2', 'Player3'] }, { **defaultTribute, 'name': 'Player3' }]
+        'expectedPlayers': [
+            { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
+            { **defaultTribute, 'name': 'Player3' }
+        ]
     }),
     ({
         'id': 'it should return the correct group size and players when there are multiple players remaining',
@@ -59,9 +68,15 @@ providers: list[ProviderType] = [
             'text': 'This is a test text with (Player1) and (Player2)',
         },
         'tribute': { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
-        'playersRemaining': { 'Player2': { **defaultTribute, 'name': 'Player2' }, 'Player3': { **defaultTribute, 'name': 'Player3' } },
+        'playersRemaining': {
+            'Player2': { **defaultTribute, 'name': 'Player2' },
+            'Player3': { **defaultTribute, 'name': 'Player3' }
+        },
         'expectedText': 'This is a test text with Player1 and Player2',
-        'expectedPlayers': [{ **defaultTribute, 'groupedWith': ['Player2', 'Player3'] }, { **defaultTribute, 'name': 'Player2' }],
+        'expectedPlayers': [
+            { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
+            { **defaultTribute, 'name': 'Player2' }
+        ],
     }),
 ]
 

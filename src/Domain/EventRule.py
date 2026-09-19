@@ -1,5 +1,10 @@
 from abc import ABC
-from Domain.types import Event, GameRoundState, GameRoundStateWithoutEvent, Tribute
+from Domain.types import (
+    Event,
+    GameRoundState,
+    GameRoundStateWithoutEvent,
+    Tribute
+)
 from typing import TypedDict
 from typing_extensions import NotRequired, Required
 
@@ -9,11 +14,23 @@ class TextAndTerms(TypedDict):
     terms: NotRequired[dict[str, str]]
 
 class EventRule(ABC):
-    def canPlayEvent(self, event: Event, gameState: GameRoundStateWithoutEvent) -> bool:
+    def canPlayEvent(
+        self,
+        event: Event,
+        gameState: GameRoundStateWithoutEvent
+    ) -> bool:
         return True
 
-    def replaceTextTerms(self, gameState: GameRoundState, textAndTerms: TextAndTerms) -> TextAndTerms:
+    def replaceTextTerms(
+        self,
+        gameState: GameRoundState,
+        textAndTerms: TextAndTerms
+    ) -> TextAndTerms:
         return textAndTerms
 
-    def handleEventEffects(self, gameState: GameRoundState, textAndTerms: TextAndTerms) -> None:
+    def handleEventEffects(
+        self,
+        gameState: GameRoundState,
+        textAndTerms: TextAndTerms
+    ) -> None:
         return

@@ -5,7 +5,13 @@ from Application.handleEventEffects import handleEventEffects
 from Application.Printer import Printer
 from Application.replaceTextTerms import replaceTextTerms
 from Domain.EventRules.Possessions import Possessions
-from Domain.types import GameConfig, GameRoundState, GameRoundStateWithoutEvent, GameState, Tribute
+from Domain.types import (
+    GameConfig,
+    GameRoundState,
+    GameRoundStateWithoutEvent,
+    GameState,
+    Tribute,
+)
 
 class GameExecutor:
     gameState: GameState
@@ -33,7 +39,12 @@ class GameExecutor:
 
         return self.gameState
 
-    def __playRound(self, text: str, time: str, playStandardEvents: bool) -> None:
+    def __playRound(
+        self,
+        text: str,
+        time: str,
+        playStandardEvents: bool
+    ) -> None:
         if self.__isGameOver(): return
 
         self.__shuffleTributes()
@@ -42,7 +53,12 @@ class GameExecutor:
         self.__playList(time, text, playStandardEvents)
         self.printer.print('\n---')
 
-    def __playList(self, time: str, text: str, playStandardEvents: bool) -> None:
+    def __playList(
+        self,
+        time: str,
+        text: str,
+        playStandardEvents: bool
+    ) -> None:
         tributesLeft = self.gameState['playersAlive'].copy()
         played = 0
         total = amountLeft = len(tributesLeft)
@@ -101,9 +117,15 @@ class GameExecutor:
         self.printer.print(textAndTerms['text'])
 
     def __showFallenTributes(self) -> None:
-        if len(self.gameState['recentDeaths']) > 0 and self.gameState['options']['showFallenTributes']:
+        if (
+            len(self.gameState['recentDeaths']) > 0 and
+            self.gameState['options']['showFallenTributes']
+        ):
             if not self.__isGameOver(): self.__readInput()
-            self.printer.print(f'{len(self.gameState["recentDeaths"])} cannon shots can be heard in the distance.')
+            self.printer.print(
+                f'{len(self.gameState["recentDeaths"])} cannon shots '
+                'can be heard in the distance.'
+            )
             for playerName, district in self.gameState['recentDeaths']:
                 self.printer.print(f'{playerName} from district {district}')
             self.printer.print('---')
@@ -118,7 +140,10 @@ class GameExecutor:
             isEveryoneInSameDistrict = True
             for name, tribute in self.gameState['playersAlive'].items():
                 for name2, tribute2 in self.gameState['playersAlive'].items():
-                    if name2 != name and tribute2['district'] != tribute['district']:
+                    if (
+                        name2 != name and
+                        tribute2['district'] != tribute['district']
+                    ):
                         isEveryoneInSameDistrict = False
                         break
                 if not isEveryoneInSameDistrict: break
@@ -138,7 +163,10 @@ class GameExecutor:
             self.__printStatus()
             return
 
-        userInput = input('Press Enter to continue, or type status to see the current status of all tributes: ')
+        userInput = input(
+            'Press Enter to continue, '
+            'or type status to see the current status of all tributes: '
+        )
         self.printer.print('')
 
         if userInput == 'stop': sys.exit()
@@ -157,19 +185,26 @@ class GameExecutor:
             if possessions:
                 possessions = f', has {possessions[0: -2]}'
 
-            self.printer.print(f'{name} from district {tribute["district"]} is still alive{possessions}')
+            self.printer.print(
+                f'{name} from district {tribute["district"]} '
+                f'is still alive{possessions}'
+            )
 
         self.printer.print('\n---')
 
     def __checkEveryoneInTheSameGroup(self) -> None:
         for name, tribute in self.gameState['playersAlive'].items():
             for name2 in self.gameState['playersAlive'].keys():
-                if name2 != name and name2 not in tribute['groupedWith']: return
+                if name2 != name and name2 not in tribute['groupedWith']:
+                    return
 
         for name, _ in self.gameState['playersAlive'].items():
             self.gameState['playersAlive'][name]['groupedWith'].clear()
 
-        self.printer.print('The remaining tributes realize they are the only ones left and split up')
+        self.printer.print(
+            'The remaining tributes realize they '
+            'are the only ones left and split up'
+        )
 
     def __percentageOfPlaying(self, total: int, time: str) -> float:
         if time in ['bloodbath', 'feast']: return 1

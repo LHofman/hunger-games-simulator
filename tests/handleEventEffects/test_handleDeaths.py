@@ -15,9 +15,24 @@ def test_handleDeaths():
             'deaths': ['Player2', 'Player3']
         },
         'playersAlive': {
-            'Tribute1': { **defaultTribute, 'name': 'Tribute1', 'district': 1, 'groupedWith': ['Tribute2', 'Tribute3'] },
-            'Tribute2': { **defaultTribute, 'name': 'Tribute2', 'district': 2, 'groupedWith': ['Tribute1'] },
-            'Tribute3': { **defaultTribute, 'name': 'Tribute3', 'district': 3, 'groupedWith': ['Tribute1'] },
+            'Tribute1': {
+                **defaultTribute,
+                'name': 'Tribute1',
+                'district': 1,
+                'groupedWith': ['Tribute2', 'Tribute3']
+            },
+            'Tribute2': {
+                **defaultTribute,
+                'name': 'Tribute2',
+                'district': 2,
+                'groupedWith': ['Tribute1']
+            },
+            'Tribute3': {
+                **defaultTribute,
+                'name': 'Tribute3',
+                'district': 3,
+                'groupedWith': ['Tribute1']
+            },
         },
         'exactTime': 'day',
     }
@@ -25,9 +40,24 @@ def test_handleDeaths():
     textAndTerms: TextAndTerms = {
         'text': '',
         'players': [
-            { **defaultTribute, 'name': 'Tribute1', 'district': 1, 'groupedWith': ['Tribute2', 'Tribute3'] },
-            { **defaultTribute, 'name': 'Tribute2', 'district': 2, 'groupedWith': ['Tribute1'] },
-            { **defaultTribute, 'name': 'Tribute3', 'district': 3, 'groupedWith': ['Tribute1'] },
+            {
+                **defaultTribute,
+                'name': 'Tribute1',
+                'district': 1,
+                'groupedWith': ['Tribute2', 'Tribute3']
+            },
+            {
+                **defaultTribute,
+                'name': 'Tribute2',
+                'district': 2,
+                'groupedWith': ['Tribute1']
+            },
+            {
+                **defaultTribute,
+                'name': 'Tribute3',
+                'district': 3,
+                'groupedWith': ['Tribute1']
+            },
         ]
     }
 

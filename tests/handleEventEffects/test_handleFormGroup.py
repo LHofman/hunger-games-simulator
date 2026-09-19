@@ -15,9 +15,21 @@ def test_handleFormGroup():
             'formGroup': ['Player1', 'Player2']
         },
         'playersAlive': {
-            'Tribute1': { **defaultTribute, 'name': 'Tribute1', 'groupedWith': [] },
-            'Tribute2': { **defaultTribute, 'name': 'Tribute2', 'groupedWith': [] },
-            'Tribute3': { **defaultTribute, 'name': 'Tribute3', 'groupedWith': [] },
+            'Tribute1': {
+                **defaultTribute,
+                'name': 'Tribute1',
+                'groupedWith': []
+            },
+            'Tribute2': {
+                **defaultTribute,
+                'name': 'Tribute2',
+                'groupedWith': []
+            },
+            'Tribute3': {
+                **defaultTribute,
+                'name': 'Tribute3',
+                'groupedWith': []
+            },
         }
     }
 

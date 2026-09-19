@@ -18,18 +18,42 @@ def test_handleRemovePossessions():
             ]
         },
         'playersAlive': {
-            'Tribute1': { **defaultTribute, 'name': 'Tribute1', 'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat'] } },
-            'Tribute2': { **defaultTribute, 'name': 'Tribute2', 'possessions': { 'pet': ['cat', 'dog'] } },
-            'Tribute3': { **defaultTribute, 'name': 'Tribute3', 'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat', 'dog'] } },
+            'Tribute1': {
+                **defaultTribute,
+                'name': 'Tribute1',
+                'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat'] }
+            },
+            'Tribute2': {
+                **defaultTribute,
+                'name': 'Tribute2',
+                'possessions': { 'pet': ['cat', 'dog'] }
+            },
+            'Tribute3': {
+                **defaultTribute,
+                'name': 'Tribute3',
+                'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat', 'dog'] }
+            },
         }
     }
 
     textAndTerms: TextAndTerms = {
         'text': '',
         'players': [
-            { **defaultTribute, 'name': 'Tribute1', 'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat'] } },
-            { **defaultTribute, 'name': 'Tribute2', 'possessions': { 'pet': ['cat', 'dog'] } },
-            { **defaultTribute, 'name': 'Tribute3', 'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat', 'dog'] } },
+            {
+                **defaultTribute,
+                'name': 'Tribute1',
+                'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat'] }
+            },
+            {
+                **defaultTribute,
+                'name': 'Tribute2',
+                'possessions': { 'pet': ['cat', 'dog'] }
+            },
+            {
+                **defaultTribute,
+                'name': 'Tribute3',
+                'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat', 'dog'] }
+            },
         ],
         'terms': {
             '(Animal1)': 'cat'

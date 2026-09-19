@@ -3,15 +3,22 @@ from Domain.EventRule import EventRule, TextAndTerms
 from Domain.types import GameRoundState, Tribute
 
 class TributesData(EventRule):
-    def handleEventEffects(self, gameState: GameRoundState, textAndTerms: TextAndTerms) -> None:
+    def handleEventEffects(
+        self,
+        gameState: GameRoundState,
+        textAndTerms: TextAndTerms
+    ) -> None:
         event = gameState['event']
 
         if 'updateTributesData' not in event: return
 
+        players = textAndTerms.get('players', [])
+
         for dataToAdd in event['updateTributesData']:
+            playerName = players[dataToAdd['player'] - 1]['name']
             self.updateTributesData(
                 gameState,
-                gameState['playersAlive'][textAndTerms.get('players', [])[dataToAdd['player'] - 1]['name']],
+                gameState['playersAlive'][playerName],
                 dataToAdd['type'],
                 dataToAdd['operation'] if 'operation' in dataToAdd else '',
                 dataToAdd['value']

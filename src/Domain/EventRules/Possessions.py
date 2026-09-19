@@ -1,7 +1,12 @@
 import random
 import re
 from Domain.EventRule import EventRule, TextAndTerms
-from Domain.types import Event, GameRoundState, GameRoundStateWithoutEvent, Tribute
+from Domain.types import (
+    Event,
+    GameRoundState,
+    GameRoundStateWithoutEvent,
+    Tribute
+)
 
 class Possessions(EventRule):
     def canPlayEvent(
@@ -25,20 +30,30 @@ class Possessions(EventRule):
 
         return True
 
-    def replaceTextTerms(self, gameState: GameRoundState, textAndTerms: TextAndTerms) -> TextAndTerms:
+    def replaceTextTerms(
+        self,
+        gameState: GameRoundState,
+        textAndTerms: TextAndTerms
+    ) -> TextAndTerms:
         text = textAndTerms['text']
         terms = textAndTerms.get('terms', {})
 
         index = text.find('(Possession:')
         while (index > -1):
             match = re.search(r'\d', text[index:])
-            if not match: raise ValueError(f'No number found in possession term: {text[index:]}')
+            if not match: raise ValueError(
+                f'No number found in possession term: {text[index:]}'
+            )
 
             number = int(match.group())
             numberIndex = match.start()
 
-            possessionType = text[(index + len('(Possession:')) : (index + numberIndex)]
-            possession = random.choice(gameState.get('currentTribute')['possessions'][possessionType])
+            possessionType = text[
+                (index + len('(Possession:')) : (index + numberIndex)
+            ]
+            possession = random.choice(
+                gameState.get('currentTribute')['possessions'][possessionType]
+            )
             term = f'(Possession:{possessionType}{number})'
             terms[term] = possession
 
@@ -48,48 +63,78 @@ class Possessions(EventRule):
 
         return { **textAndTerms, 'text': text, 'terms': terms }
     
-    def handleEventEffects(self, gameState: GameRoundState, textAndTerms: TextAndTerms) -> None:
+    def handleEventEffects(
+        self,
+        gameState: GameRoundState,
+        textAndTerms: TextAndTerms
+    ) -> None:
         self.__handleAddPossessions(gameState, textAndTerms)
         self.__handleRemovePossessions(gameState, textAndTerms)
 
-    def __handleAddPossessions(self, gameState: GameRoundState, textAndTerms: TextAndTerms):
+    def __handleAddPossessions(
+        self,
+        gameState: GameRoundState,
+        textAndTerms: TextAndTerms
+    ):
         event = gameState['event']
 
         if 'addPossessions' not in event: return
+
+        players = textAndTerms.get('players', [])
 
         for possession in event['addPossessions']:
             value = possession['value']
             if value in textAndTerms.get('terms', {}):
                 value = textAndTerms.get('terms', {})[value]
 
-            tribute = gameState['playersAlive'][textAndTerms.get('players', [])[possession['player'] - 1]['name']]
+            playerName = players[possession['player'] - 1]['name']
+            tribute = gameState['playersAlive'][playerName]
             possessionType = possession['type']
 
             if possessionType in tribute['possessions']:
-                if possessionType not in gameState['options']['possessionsWithoutDuplicates']:
+                if possessionType not in (
+                    gameState['options']['possessionsWithoutDuplicates']
+                ):
                     tribute['possessions'][possessionType].append(value)
             else:
                 tribute['possessions'][possessionType] = [value]
 
-    def __handleRemovePossessions(self, gameState: GameRoundState, textAndTerms: TextAndTerms):
+    def __handleRemovePossessions(
+        self,
+        gameState: GameRoundState,
+        textAndTerms: TextAndTerms
+    ):
         event = gameState['event']
 
         if 'removePossessions' not in event: return
+
+        players = textAndTerms.get('players', [])
 
         for possession in event['removePossessions']:
             value = possession['value']
             if value in textAndTerms.get('terms', {}):
                 value = textAndTerms.get('terms', {})[value]
 
-            tribute = gameState['playersAlive'][textAndTerms.get('players', [])[possession['player'] - 1]['name']]
+            playerName = players[possession['player'] - 1]['name']
+            tribute = gameState['playersAlive'][playerName]
             possessionType = possession['type']
 
             if self.doesTributeHavePossession(tribute, possessionType, value):
                 tribute['possessions'][possessionType].remove(value)
 
     @staticmethod
-    def doesTributeHavePossession(tribute: Tribute, type: str, value: str) -> bool:
+    def doesTributeHavePossession(
+        tribute: Tribute,
+        type: str,
+        value: str
+    ) -> bool:
         if value == 'any':
-            return type in tribute['possessions'] and len(tribute['possessions'][type]) > 0
+            return (
+                type in tribute['possessions'] and
+                len(tribute['possessions'][type]) > 0
+            )
         else:
-            return type in tribute['possessions'] and value in tribute['possessions'][type]
+            return (
+                type in tribute['possessions'] and
+                value in tribute['possessions'][type]
+            )

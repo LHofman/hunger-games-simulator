@@ -4,7 +4,11 @@ from Domain.EventRule import EventRule, TextAndTerms
 from Domain.types import GameRoundState
 
 class OtherTerms(EventRule):
-    def replaceTextTerms(self, gameState: GameRoundState, textAndTerms: TextAndTerms) -> TextAndTerms:
+    def replaceTextTerms(
+        self,
+        gameState: GameRoundState,
+        textAndTerms: TextAndTerms
+    ) -> TextAndTerms:
         text = textAndTerms['text']
         terms = textAndTerms.get('terms', {})
 
@@ -12,7 +16,9 @@ class OtherTerms(EventRule):
             index = text.find(f'({key}')
             while (index > -1):
                 match = re.search(r'\d', text[index:])
-                if not match: raise ValueError(f'No number found in other term: {text[index:]}')
+                if not match: raise ValueError(
+                    f'No number found in other term: {text[index:]}'
+                )
 
                 number = int(match.group())
                 term = f'({key}{number})'

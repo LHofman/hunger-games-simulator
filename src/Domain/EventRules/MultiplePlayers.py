@@ -10,14 +10,23 @@ class MultiplePlayers(EventRule):
     ) -> bool:
         if 'players' not in event: return True
 
-        return len(gameState['playersRemainingThisRound']) + 1 >= event['players']
+        return (
+            len(gameState['playersRemainingThisRound']) + 1 >=
+            event['players']
+        )
 
-    def replaceTextTerms(self, gameState: GameRoundState, textAndTerms: TextAndTerms) -> TextAndTerms:
+    def replaceTextTerms(
+        self,
+        gameState: GameRoundState,
+        textAndTerms: TextAndTerms
+    ) -> TextAndTerms:
         text = textAndTerms['text']
         players = textAndTerms.get('players', [])
 
         while (text.find('(Player') > -1):
-            player = random.choice(list(gameState['playersRemainingThisRound'].values()))
+            player = random.choice(
+                list(gameState['playersRemainingThisRound'].values())
+            )
             del gameState['playersRemainingThisRound'][player['name']]
 
             players.append(player)

@@ -58,7 +58,10 @@ providers: list[ProviderType] = [
 def test_checkCanBetrayTeammates(provider: ProviderType):
     result = Groups().canPlayEvent(
         provider['event'],
-        { **defaultGameRoundStateWithoutEvent,'currentTribute': provider['tribute'] }
+        {
+            **defaultGameRoundStateWithoutEvent,
+            'currentTribute': provider['tribute']
+        }
     )
 
     assert result == provider['expectedCanBetrayTeammates']
@@ -70,8 +73,15 @@ def test_canBetrayTeammatesIfOverriddenByOption():
             **defaultGameOptions,
             'betrayTeammates': True
         },
-        'currentTribute': { **defaultTribute, 'groupedWith': ['Player1', 'Player2'] }
+        'currentTribute': {
+            **defaultTribute,
+            'groupedWith': ['Player1', 'Player2']
+        }
     }
-    event: Event = { **defaultEvent, 'deaths': ['Player1'], 'killTeammates': True }
+    event: Event = {
+        **defaultEvent,
+        'deaths': ['Player1'],
+        'killTeammates': True
+    }
     result = Groups().canPlayEvent(event, gameRoundState)
     assert result == True

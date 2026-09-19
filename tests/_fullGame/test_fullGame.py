@@ -4,7 +4,14 @@ from Application.GameExecutor import GameExecutor
 from Application.Printers.TestPrinter import TestPrinter
 from Domain.types import GameConfig
 
-from index import readFile, addNameToEvents, readTributes, printWinner, printRankings, GameDataFile # type: ignore
+from index import (
+    readFile, # type: ignore
+    addNameToEvents,
+    readTributes,
+    printWinner,
+    printRankings,
+    GameDataFile
+)
 
 @pytest.fixture(autouse=True)
 def test_mock(mocker: MockerFixture):
@@ -62,9 +69,16 @@ def test_gameWithKill():
     )
 
 def setUpFullGame(testFolder: str) -> GameConfig:
-    gameDataFile: GameDataFile = readFile(f'tests/_fullGame/{testFolder}/mockGameData.json', 'json') # type: ignore
-    tributes = readTributes(gameDataFile['options'], f'tests/_fullGame/{testFolder}/mockTributes.txt')
-    sponsors: list[str] = readFile(f'tests/_fullGame/{testFolder}/mockSponsors.txt') # type: ignore
+    gameDataFile: GameDataFile = readFile( # type: ignore
+        f'tests/_fullGame/{testFolder}/mockGameData.json', 'json'
+    )
+    tributes = readTributes(
+        gameDataFile['options'],
+        f'tests/_fullGame/{testFolder}/mockTributes.txt'
+    )
+    sponsors: list[str] = readFile( # type: ignore
+        f'tests/_fullGame/{testFolder}/mockSponsors.txt'
+    )
 
     return {
         'options': gameDataFile['options'],
