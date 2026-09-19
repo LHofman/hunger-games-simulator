@@ -9,6 +9,7 @@ from Domain.types import (
     Tribute
 )
 
+
 class Groups(EventRule):
     def canPlayEvent(
         self,

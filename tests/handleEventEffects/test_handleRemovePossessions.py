@@ -7,6 +7,7 @@ from tests.defaults import (
     defaultTribute,
 )
 
+
 def test_handleRemovePossessions():
     gameState: GameRoundState = {
         **defaultGameRoundState,

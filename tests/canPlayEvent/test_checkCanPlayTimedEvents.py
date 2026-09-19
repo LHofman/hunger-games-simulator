@@ -8,12 +8,14 @@ from tests.defaults import (
     defaultGameRoundStateWithoutEvent,
 )
 
+
 class ProviderType(TypedDict):
     id: str
     event: Event
     time: str
     playStandardEvents: bool
     expectedCanPlayTimedEvents: bool
+
 
 providers: list[ProviderType] = [
     ({
@@ -59,6 +61,7 @@ providers: list[ProviderType] = [
         'expectedCanPlayTimedEvents': False,
     }),
 ]
+
 
 @pytest.mark.parametrize('provider', providers, ids=lambda p: f'{p["id"]}')
 def test_checkCanPlayTimedEvents(provider: ProviderType):

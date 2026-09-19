@@ -7,6 +7,7 @@ from tests.defaults import (
     defaultTribute,
 )
 
+
 def test_handleFormGroup():
     gameState: GameRoundState = {
         **defaultGameRoundState,

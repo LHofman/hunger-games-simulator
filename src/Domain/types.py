@@ -2,29 +2,35 @@ from enum import Enum
 from typing import TypedDict, Union
 from typing_extensions import NotRequired, Required
 
+
 class Possession(TypedDict):
     player: Required[int]
     type: Required[str]
     value: Required[str]
 
+
 class RequiredPossession(Possession):
     inverse: NotRequired[bool]
+
 
 class GroupSizeType(str, Enum):
     EXACT = 'exact'
     MIN = 'min'
     MAX = 'max'
-    
+
+
 class GroupSize(TypedDict):
     type: Required[GroupSizeType]
     amount: Required[int]
     groupedWith: NotRequired[list[str]]
+
 
 class UpdateTributeData(TypedDict):
     player: Required[int]
     type: Required[str]
     operation: NotRequired[str]
     value: Required[Union[int, str]]
+
 
 class Event(TypedDict):
     name: Required[str]
@@ -45,12 +51,14 @@ class Event(TypedDict):
     addPossessions: NotRequired[list[Possession]]
     removePossessions: NotRequired[list[Possession]]
 
+
 class Tribute(TypedDict):
     index: int
     name: str
     district: int
     groupedWith: Required[list[str]]
     possessions: Required[dict[str, list[str]]]
+
 
 class GameOptions(TypedDict):
     betrayTeammates: bool
@@ -64,12 +72,15 @@ class GameOptions(TypedDict):
     districtsAreTeammates: bool
     oneSponsorPerTribute: bool
 
+
 class IncreaseEventOdds(TypedDict):
     event: str
     percentage: float
 
+
 class IncreaseEventOddsMap(TypedDict):
     possessions: dict[str, dict[str, list[IncreaseEventOdds]]]
+
 
 class GameConfig(TypedDict):
     options: Required[GameOptions]
@@ -80,6 +91,7 @@ class GameConfig(TypedDict):
     events: Required[dict[str, Event]]
     increaseEventOdds: Required[IncreaseEventOddsMap]
 
+
 class GameState(GameConfig):
     eventsOccured: Required[dict[str, int]]
     playersAlive: Required[dict[str, Tribute]]
@@ -87,12 +99,14 @@ class GameState(GameConfig):
     recentDeaths: Required[list[tuple[str, int]]]
     tributesData: Required[dict[str, dict[str, Union[int, str]]]]
 
+
 class GameRoundStateWithoutEvent(GameState):
     time: Required[str]
     exactTime: Required[str]
     currentTribute: Required[Tribute]
     playersRemainingThisRound: Required[dict[str, Tribute]]
     playStandardEvents: Required[bool]
+
 
 class GameRoundState(GameRoundStateWithoutEvent):
     event: Required[Event]

@@ -2,6 +2,7 @@ import random
 from Domain.EventRule import EventRule, TextAndTerms
 from Domain.types import GameRoundState
 
+
 class Sponsors(EventRule):
     def replaceTextTerms(
         self,

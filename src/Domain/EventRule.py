@@ -8,10 +8,12 @@ from Domain.types import (
 from typing import TypedDict
 from typing_extensions import NotRequired, Required
 
+
 class TextAndTerms(TypedDict):
     text: Required[str]
     players: NotRequired[list[Tribute]]
     terms: NotRequired[dict[str, str]]
+
 
 class EventRule(ABC):
     def canPlayEvent(

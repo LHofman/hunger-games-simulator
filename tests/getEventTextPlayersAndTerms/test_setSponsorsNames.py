@@ -10,6 +10,7 @@ from tests.defaults import (
     defaultTribute,
 )
 
+
 class ProviderType(TypedDict):
     id: str
     text: str
@@ -18,6 +19,7 @@ class ProviderType(TypedDict):
     sponsors: list[str]
     expectedText: str
 
+
 @pytest.fixture(autouse=True)
 def test_mock(mocker: MockerFixture):
     mocker.patch( 'random.random', return_value=0.5 )
@@ -25,6 +27,7 @@ def test_mock(mocker: MockerFixture):
         'random.choice',
         side_effect=lambda list: list[0] # type: ignore
     )
+
 
 providers: list[ProviderType] = [
     ({
@@ -76,6 +79,7 @@ providers: list[ProviderType] = [
         'expectedText': 'Tribute receives a bow, some arrows, and a quiver from Sponsor1.',
     }),
 ]
+
 
 @pytest.mark.parametrize('provider', providers, ids=lambda p: f'{p["id"]}')
 def test_setSponsorsNames(provider: ProviderType):

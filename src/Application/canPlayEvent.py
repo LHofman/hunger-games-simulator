@@ -1,6 +1,7 @@
 from Domain.eventRulesList import eventRulesList
 from Domain.types import Event, GameRoundStateWithoutEvent
 
+
 def canPlayEvent(gameState: GameRoundStateWithoutEvent):
     def canPlayEventInner(event: Event) -> bool:
         for eventRule in eventRulesList:

@@ -3,6 +3,7 @@ import re
 from Domain.EventRule import EventRule, TextAndTerms
 from Domain.types import GameRoundState
 
+
 class OtherTerms(EventRule):
     def replaceTextTerms(
         self,

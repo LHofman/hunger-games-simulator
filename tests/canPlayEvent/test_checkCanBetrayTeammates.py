@@ -9,11 +9,13 @@ from tests.defaults import (
     defaultTribute
 )
 
+
 class ProviderType(TypedDict):
     id: str
     event: Event
     tribute: Tribute
     expectedCanBetrayTeammates: bool
+
 
 providers: list[ProviderType] = [
     ({
@@ -54,6 +56,7 @@ providers: list[ProviderType] = [
     }),
 ]
 
+
 @pytest.mark.parametrize('provider', providers, ids=lambda p: f'{p["id"]}')
 def test_checkCanBetrayTeammates(provider: ProviderType):
     result = Groups().canPlayEvent(
@@ -65,6 +68,7 @@ def test_checkCanBetrayTeammates(provider: ProviderType):
     )
 
     assert result == provider['expectedCanBetrayTeammates']
+
 
 def test_canBetrayTeammatesIfOverriddenByOption():
     gameRoundState: GameRoundStateWithoutEvent = {

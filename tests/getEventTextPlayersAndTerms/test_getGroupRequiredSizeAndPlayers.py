@@ -10,6 +10,7 @@ from tests.defaults import (
     defaultTribute,
 )
 
+
 class ProviderType(TypedDict):
     id: str
     event: Event
@@ -18,6 +19,7 @@ class ProviderType(TypedDict):
     expectedText: str
     expectedPlayers: list[Tribute]
 
+
 @pytest.fixture(autouse=True)
 def test_mock(mocker: MockerFixture):
     mocker.patch( 'random.random', return_value=0.5 )
@@ -25,6 +27,7 @@ def test_mock(mocker: MockerFixture):
         'random.choice',
         side_effect=lambda list: list[0] # type: ignore
     )
+
 
 providers: list[ProviderType] = [
     ({
@@ -79,6 +82,7 @@ providers: list[ProviderType] = [
         ],
     }),
 ]
+
 
 @pytest.mark.parametrize('provider', providers, ids=lambda p: f'{p["id"]}')
 def test_getGroupRequiredSizeAndPlayers(provider: ProviderType):

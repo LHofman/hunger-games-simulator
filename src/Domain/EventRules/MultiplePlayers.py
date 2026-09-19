@@ -2,6 +2,7 @@ import random
 from Domain.EventRule import EventRule, TextAndTerms
 from Domain.types import Event, GameRoundState, GameRoundStateWithoutEvent
 
+
 class MultiplePlayers(EventRule):
     def canPlayEvent(
         self,

@@ -9,12 +9,14 @@ from tests.defaults import (
     defaultTribute,
 )
 
+
 class ProviderType(TypedDict):
     id: str
     event: Event
     tribute: Tribute
     playersRemaining: dict[str, Tribute]
     expectedCompliesWithRequiredGroupSize: bool
+
 
 providers: list[ProviderType] = [
     ({
@@ -116,6 +118,7 @@ providers: list[ProviderType] = [
         'expectedCompliesWithRequiredGroupSize': False,
     }),
 ]
+
 
 @pytest.mark.parametrize('provider', providers, ids=lambda p: f'{p["id"]}')
 def test_checkCompliesWithRequiredGroupSize(provider: ProviderType):

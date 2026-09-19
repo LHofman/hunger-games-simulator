@@ -3,6 +3,7 @@ from Domain.EventRule import EventRule, TextAndTerms
 from Domain.EventRules.TributesData import TributesData
 from Domain.types import GameRoundState
 
+
 class Deaths(EventRule):
     def handleEventEffects(
         self,

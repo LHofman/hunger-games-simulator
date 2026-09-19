@@ -2,6 +2,7 @@ import random
 from Application.canPlayEvent import canPlayEvent
 from Domain.types import GameRoundStateWithoutEvent, Event, IncreaseEventOdds
 
+
 class EventPicker:
     def getEvent(self, gameState: GameRoundStateWithoutEvent) -> Event:
         eventOptions = list(gameState['events'].values())

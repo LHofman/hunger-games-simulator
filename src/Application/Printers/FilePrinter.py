@@ -1,5 +1,6 @@
 from Application.Printer import Printer
 
+
 class FilePrinter(Printer):
     def __init__(self, filePath: str):
         self.filePath = filePath

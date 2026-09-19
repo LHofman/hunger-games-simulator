@@ -8,10 +8,12 @@ from tests.defaults import (
     defaultTribute
 )
 
+
 class ProviderType(TypedDict):
     id: str
     event: Event
     expectedHasRequiredPossessions: bool
+
 
 providers: list[ProviderType] = [
     ({
@@ -65,6 +67,7 @@ providers: list[ProviderType] = [
         'expectedHasRequiredPossessions': False,
     })
 ]
+
 
 @pytest.mark.parametrize('provider', providers, ids=lambda p: f'{p["id"]}')
 def test_checkHasRequiredPossessions(provider: ProviderType):

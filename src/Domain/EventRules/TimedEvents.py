@@ -1,6 +1,7 @@
 from Domain.EventRule import EventRule
 from Domain.types import Event, GameRoundStateWithoutEvent
 
+
 class TimedEvents(EventRule):
     def canPlayEvent(
         self,

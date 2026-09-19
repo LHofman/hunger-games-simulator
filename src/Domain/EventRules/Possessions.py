@@ -8,6 +8,7 @@ from Domain.types import (
     Tribute
 )
 
+
 class Possessions(EventRule):
     def canPlayEvent(
         self,

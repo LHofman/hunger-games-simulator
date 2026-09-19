@@ -2,6 +2,7 @@ from Domain.types import GameRoundState
 from Domain.EventRule import TextAndTerms
 from Domain.eventRulesList import eventRulesList
 
+
 def handleEventEffects(
     gameState: GameRoundState,
     textAndTerms: TextAndTerms

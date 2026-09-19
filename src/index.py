@@ -14,6 +14,7 @@ from Domain.types import (
 
 printer: Printer = Printer()
 
+
 def readFile(fileName: str, type: str = 'text') -> Union[dict, list, None]: # type: ignore
     file = open(fileName, 'r', encoding='utf-8')
 
@@ -22,6 +23,7 @@ def readFile(fileName: str, type: str = 'text') -> Union[dict, list, None]: # ty
 
     lines = file.readlines()
     return list(map(lambda line: line.rstrip(), lines))
+
 
 def readTributes(
     gameOptions: GameOptions,
@@ -62,12 +64,14 @@ def readTributes(
 
     return tributes
 
+
 def addNameToEvents(events: dict[str, Event]) -> dict[str, Event]:
     for (name, event) in events.items():
         event['name'] = name
         events[name] = event
                 
     return events
+
 
 def printWinner(gameState: GameState, printer: Printer):
     winners = list(gameState['playersAlive'].keys())
@@ -77,6 +81,7 @@ def printWinner(gameState: GameState, printer: Printer):
         printer.print(f'The winners are {", ".join(winners)}')
     else:
         printer.print('There are no winners today')
+
 
 def printRankings(gameState: GameState, printer: Printer):
     printer.print('\n\n\n---\nFinal Rankings')
@@ -96,11 +101,13 @@ def printRankings(gameState: GameState, printer: Printer):
     for name, tribute in list(gameState['playersAlive'].items()):
         printer.print(f'1. {name} from district {tribute["district"]}')
 
+
 class GameDataFile(TypedDict):
     options: GameOptions
     increaseEventOdds: IncreaseEventOddsMap
     events: dict[str, Event]
     replaceTerms: dict[str, list[str]]
+
 
 if __name__ == '__main__':
     gameDataFile: GameDataFile = readFile('settings/gameData.json', 'json') # type: ignore

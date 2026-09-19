@@ -7,12 +7,14 @@ from tests.defaults import (
     defaultGameRoundState,
 )
 
+
 @pytest.fixture(autouse=True)
 def test_mock(mocker: MockerFixture):
     mocker.patch(
         'random.choice',
         side_effect=lambda list: list[0] # type: ignore
     )
+
 
 def test_setOtherTerms():
     gameState: GameRoundState = {

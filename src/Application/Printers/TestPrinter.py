@@ -1,5 +1,6 @@
 from Application.Printer import Printer
 
+
 class TestPrinter(Printer):
     __test__ = False
     

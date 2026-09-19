@@ -13,6 +13,7 @@ from Domain.types import (
     Tribute,
 )
 
+
 class GameExecutor:
     gameState: GameState
 

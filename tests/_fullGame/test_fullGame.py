@@ -13,11 +13,13 @@ from index import (
     GameDataFile
 )
 
+
 @pytest.fixture(autouse=True)
 def test_mock(mocker: MockerFixture):
     mocker.patch( 'random.random', return_value=0 )
     mocker.patch( 'random.choice', side_effect=lambda list: list[0] ) # type: ignore
     mocker.patch( 'random.shuffle' )
+
 
 startOfGameText = [
     'Tribute 1 from district 1 is still alive',
@@ -29,6 +31,7 @@ startOfGameText = [
     'Tribute 2 from district 2 is still alive',
     'Day 1',
 ]
+
 
 def test_gameWithDeath():
     gameConfig: GameConfig = setUpFullGame('death')
@@ -50,6 +53,7 @@ def test_gameWithDeath():
         ]
     )
 
+
 def test_gameWithKill():
     gameConfig: GameConfig = setUpFullGame('kill')
     outputArray: list[str] = []
@@ -67,6 +71,7 @@ def test_gameWithKill():
             '1. Tribute 2 from district 2',
         ]
     )
+
 
 def setUpFullGame(testFolder: str) -> GameConfig:
     gameDataFile: GameDataFile = readFile( # type: ignore
@@ -90,16 +95,19 @@ def setUpFullGame(testFolder: str) -> GameConfig:
         'increaseEventOdds': gameDataFile['increaseEventOdds'],
     }
 
+
 def runGame(gameConfig: GameConfig, outputArray: list[str]):
     printer = TestPrinter(outputArray)
     gameExecutor = GameExecutor(gameConfig, printer)
     finalGameState = gameExecutor.playGame()
     printWinner(finalGameState, printer)
     printRankings(finalGameState, printer)
-    
+
+
 def assertOutput(outputArray: list[str], expectedLines: list[str]):
     for expectedLine in expectedLines:
         assertNextLine(outputArray, expectedLine)
+
 
 def assertNextLine(outputArray: list[str], expectedLine: str):
     actualLine = outputArray.pop(0)
