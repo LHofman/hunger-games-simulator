@@ -85,34 +85,35 @@ class GameDataFile(TypedDict):
   events: dict[str, Event]
   replaceTerms: dict[str, list[str]]
 
-gameDataFile: GameDataFile = readFile('settings/gameData.json', 'json') # type: ignore
+if __name__ == '__main__':
+  gameDataFile: GameDataFile = readFile('settings/gameData.json', 'json') # type: ignore
 
-if gameDataFile['options']['autoPlay']:
-  from Application.Printers.FilePrinter import FilePrinter
-  printer = FilePrinter('resources/output.txt')
+  if gameDataFile['options']['autoPlay']:
+    from Application.Printers.FilePrinter import FilePrinter
+    printer = FilePrinter('resources/output.txt')
 
-tributes = readTributes(gameDataFile['options'], 'settings/tributes.txt')
-sponsors: list[str] = readFile('settings/sponsors.txt') # type: ignore
+  tributes = readTributes(gameDataFile['options'], 'settings/tributes.txt')
+  sponsors: list[str] = readFile('settings/sponsors.txt') # type: ignore
 
-if gameDataFile['options']['autoPlay']:
-  outputFile = open('resources/output.txt', 'w')
-  outputFile.write('')
-  outputFile.close()
+  if gameDataFile['options']['autoPlay']:
+    outputFile = open('resources/output.txt', 'w')
+    outputFile.write('')
+    outputFile.close()
 
-printer.print('----------------------------------------------------------------------------------------------------------------')
+  printer.print('----------------------------------------------------------------------------------------------------------------')
 
-gameState: GameConfig = {
-  'options': gameDataFile['options'],
-  'otherTerms': gameDataFile['replaceTerms'],
-  'sponsors': sponsors,
-  'totalTributes': len(tributes),
-  'allTributes': tributes,
-  'events': addNameToEvents(gameDataFile['events']),
-  'increaseEventOdds': gameDataFile['increaseEventOdds'],
-}
+  gameState: GameConfig = {
+    'options': gameDataFile['options'],
+    'otherTerms': gameDataFile['replaceTerms'],
+    'sponsors': sponsors,
+    'totalTributes': len(tributes),
+    'allTributes': tributes,
+    'events': addNameToEvents(gameDataFile['events']),
+    'increaseEventOdds': gameDataFile['increaseEventOdds'],
+  }
 
-gameExecutor = GameExecutor(gameState, printer)
-finalGameState = gameExecutor.playGame()
+  gameExecutor = GameExecutor(gameState, printer)
+  finalGameState = gameExecutor.playGame()
 
-printWinner(finalGameState, printer)
-printRankings(finalGameState, printer)
+  printWinner(finalGameState, printer)
+  printRankings(finalGameState, printer)
