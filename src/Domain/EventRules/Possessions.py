@@ -32,7 +32,7 @@ class Possessions(EventRule):
     index = text.find('(Possession:')
     while (index > -1):
       match = re.search(r'\d', text[index:])
-      if not match: raise Exception(f'No number found in possession term: {text[index:]}')
+      if not match: raise ValueError(f'No number found in possession term: {text[index:]}')
 
       number = int(match.group())
       numberIndex = match.start()

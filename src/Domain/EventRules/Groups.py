@@ -94,7 +94,7 @@ class Groups(EventRule):
     playersToSplit: list[str] = []
     for playerToSplit in event['splitGroup']:
       match = re.search(r'\d+', playerToSplit)
-      if not match: raise Exception(f'No number found in split group term: {playerToSplit}')
+      if not match: raise ValueError(f'No number found in split group term: {playerToSplit}')
 
       index = int(match.group()) - 1
       playersToSplit.append(players[index]['name'])
