@@ -16,11 +16,11 @@ from index import (
 )
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse = True)
 def test_mock(mocker: MockerFixture):
-    mocker.patch( 'random.random', return_value=0 )
-    mocker.patch( 'random.choice', side_effect=lambda list: list[0] ) # type: ignore
-    mocker.patch( 'random.shuffle' )
+    mocker.patch('random.random', return_value=0)
+    mocker.patch('random.choice', side_effect=lambda list: list[0]) # type: ignore
+    mocker.patch('random.shuffle')
 
 
 startOfGameText = [

@@ -24,7 +24,7 @@ class ProviderType(TypedDict):
 
 @pytest.fixture(autouse=True)
 def test_mock(mocker: MockerFixture):
-    mocker.patch( 'random.random', return_value=0.5 )
+    mocker.patch('random.random', return_value=0.5)
     mocker.patch(
         'random.choice',
         side_effect=lambda list: list[0] # type: ignore
