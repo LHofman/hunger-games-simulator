@@ -148,7 +148,7 @@ class GameExecutor:
       self.__readInput()
 
   def __printStatus(self) -> None:
-    for (name, tribute) in sorted(list(self.gameState['playersAlive'].items())):
+    for (name, tribute) in sorted(self.gameState['playersAlive'].items()):
       possessions = ''
       for (type, values) in tribute['possessions'].items():
         if Possessions.doesTributeHavePossession(tribute, type, 'any'):
