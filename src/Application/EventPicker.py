@@ -8,14 +8,14 @@ class EventPicker:
     def getEvent(self, gameState: GameRoundStateWithoutEvent) -> Event:
         eventOptions = list(gameState['events'].values())
 
-        #(In/De)crease event odds
+        # (In/De)crease event odds.
         increaseOddsEvents = self.__getIncreasedOddsEvents(gameState)
         eventOptions = self.__updateEventsOptionsBasedOnOdds(
             gameState,
             increaseOddsEvents,
         )
 
-        #Remove events unable to occur at this moment
+        # Remove events unable to occur at this moment.
         eventOptions = list(filter(canPlayEvent(gameState), eventOptions))
 
         if len(eventOptions) == 0:
@@ -23,7 +23,7 @@ class EventPicker:
             print(increaseOddsEvents)
             print(gameState)
 
-        #Get random event
+        # Get random event.
         event = random.choice(eventOptions)
 
         if event['name'] in gameState['eventsOccured']:

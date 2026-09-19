@@ -10,16 +10,16 @@ from Domain.EventRules.Sponsors import Sponsors
 from Domain.EventRules.TimedEvents import TimedEvents
 from Domain.EventRules.TributesData import TributesData
 
-# The order is important
+# The order is important.
 eventRulesList: list[EventRule] = [
     IgnoreComments(),
     TimedEvents(),
 
-    # Needs to be before Groups and MultiplePlayers
+    # Needs to be before Groups and MultiplePlayers.
     CurrentTribute(),
-    # Needs to be after CurrentTribute and before MultiplePlayers
+    # Needs to be after CurrentTribute and before MultiplePlayers.
     Groups(),
-    # Needs to be after CurrentTribute and Groups
+    # Needs to be after CurrentTribute and Groups.
     MultiplePlayers(),
 
     Possessions(),

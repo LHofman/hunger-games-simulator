@@ -34,7 +34,7 @@ class Groups(EventRule):
         sizeType = event['requireGroupSize']['type']
         size = event['requireGroupSize']['amount']
 
-        availableGroupTributes = 1 # tribute themself
+        availableGroupTributes = 1  # Tribute themself.
         for (name) in gameState['playersRemainingThisRound'].keys():
             if name in gameState['currentTribute']['groupedWith']:
                 availableGroupTributes += 1
