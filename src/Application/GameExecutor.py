@@ -1,4 +1,5 @@
 import random
+import sys
 from Application.EventPicker import EventPicker
 from Application.handleEventEffects import handleEventEffects
 from Application.Printer import Printer
@@ -140,7 +141,7 @@ class GameExecutor:
     userInput = input('Press Enter to continue, or type status to see the current status of all tributes: ')
     self.printer.print('')
 
-    if userInput == 'stop': exit()
+    if userInput == 'stop': sys.exit()
 
     if userInput == 'status':
       self.__printStatus()
