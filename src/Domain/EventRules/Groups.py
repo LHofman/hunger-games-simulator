@@ -67,7 +67,7 @@ class Groups(EventRule):
       del gameState['playersRemainingThisRound'][player['name']]
 
       players.append(player)
-      text = text.replace('(Player%d)' % len(players), player['name'])
+      text = text.replace(f'(Player{len(players)})', player['name'])
 
     return { **textAndTerms, 'text': text, 'players': players }
 
@@ -94,7 +94,7 @@ class Groups(EventRule):
     playersToSplit: list[str] = []
     for playerToSplit in event['splitGroup']:
       match = re.search(r'\d+', playerToSplit)
-      if not match: raise Exception('No number found in split group term: %s' % playerToSplit)
+      if not match: raise Exception(f'No number found in split group term: {playerToSplit}')
 
       index = int(match.group()) - 1
       playersToSplit.append(players[index]['name'])

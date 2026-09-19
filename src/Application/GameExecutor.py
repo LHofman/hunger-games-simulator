@@ -26,9 +26,9 @@ class GameExecutor:
     day = 0
     while (not self.__isGameOver()):
       day += 1
-      self.__playRound('Day %d' % day, 'day', True)
+      self.__playRound(f'Day {day}', 'day', True)
       self.__showFallenTributes()
-      self.__playRound('Night %d' % day, 'night', True)
+      self.__playRound(f'Night {day}', 'night', True)
       if day == 5: self.__playRound('The Feast', 'feast', False)
 
     return self.gameState
@@ -103,9 +103,9 @@ class GameExecutor:
   def __showFallenTributes(self) -> None:
     if len(self.gameState['recentDeaths']) > 0 and self.gameState['options']['showFallenTributes']:
       if not self.__isGameOver(): self.__readInput()
-      self.printer.print('%d cannon shots can be heard in the distance.' % len(self.gameState['recentDeaths']))
+      self.printer.print(f'{len(self.gameState["recentDeaths"])} cannon shots can be heard in the distance.')
       for playerName, district in self.gameState['recentDeaths']:
-        self.printer.print('%s from district %d' % (playerName, district))
+        self.printer.print(f'{playerName} from district {district}')
       self.printer.print('---')
 
     self.gameState['deaths'].append(self.gameState['recentDeaths'].copy())
@@ -152,12 +152,12 @@ class GameExecutor:
       possessions = ''
       for (type, values) in tribute['possessions'].items():
         if Possessions.doesTributeHavePossession(tribute, type, 'any'):
-          possessions = '%s%s: %s, ' % (possessions, type, ', '.join(values))
+          possessions = f'{possessions}{type}: {", ".join(values)}, '
 
       if possessions:
-        possessions = ', has %s' % possessions[0: -2]
+        possessions = f', has {possessions[0: -2]}'
 
-      self.printer.print('%s from district %d is still alive%s' % (name, tribute['district'], possessions))
+      self.printer.print(f'{name} from district {tribute["district"]} is still alive{possessions}')
 
     self.printer.print('\n---')
 

@@ -13,7 +13,7 @@ class Deaths(EventRule):
 
     for death in event['deaths']:
       match = re.search(r'\d+', death)
-      if not match: raise Exception('No number found in death term: %s' % death)
+      if not match: raise Exception(f'No number found in death term: {death}')
 
       index = int(match.group()) - 1
       playerName = players[index]['name']

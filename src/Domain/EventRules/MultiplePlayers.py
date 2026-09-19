@@ -21,6 +21,6 @@ class MultiplePlayers(EventRule):
       del gameState['playersRemainingThisRound'][player['name']]
 
       players.append(player)
-      text = text.replace('(Player%d)' % len(players), player['name'])
+      text = text.replace(f'(Player{len(players)})', player['name'])
 
     return { **textAndTerms, 'text': text, 'players': players }

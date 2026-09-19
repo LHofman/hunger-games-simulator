@@ -32,14 +32,14 @@ class Possessions(EventRule):
     index = text.find('(Possession:')
     while (index > -1):
       match = re.search(r'\d', text[index:])
-      if not match: raise Exception('No number found in possession term: %s' % text[index:])
+      if not match: raise Exception(f'No number found in possession term: {text[index:]}')
 
       number = int(match.group())
       numberIndex = match.start()
 
       type = text[(index + len('(Possession:')) : (index + numberIndex)]
       possession = random.choice(gameState.get('currentTribute')['possessions'][type])
-      term = '(Possession:%s%d)' % (type, number)
+      term = f'(Possession:{type}{number})'
       terms[term] = possession
 
       text = text.replace(term, possession)

@@ -56,9 +56,9 @@ def addNameToEvents(events: dict[str, Event]) -> dict[str, Event]:
 
 def printWinner(gameState: GameState, printer: Printer):
   if len(gameState['playersAlive']) == 1:
-    printer.print('The winner is %s' % list(gameState['playersAlive'].keys())[0])
+    printer.print(f'The winner is {list(gameState["playersAlive"].keys())[0]}')
   elif len(gameState['playersAlive']) > 1:
-    printer.print('The winners are %s' % ', '.join(list(gameState['playersAlive'].keys())))
+    printer.print(f'The winners are {", ".join(list(gameState["playersAlive"].keys()))}')
   else:
     printer.print('There are no winners today')
 
@@ -68,17 +68,16 @@ def printRankings(gameState: GameState, printer: Printer):
   for playerDeaths in gameState['deaths']:
     for (player, district) in playerDeaths:
       tributeData = gameState['tributesData'][player]
-      printer.print('%d. %s from district %d, died during %s, has %d kills' % (
-        gameState['totalTributes'],
-        player,
-        district,
-        tributeData['time of death'],
-        tributeData['kills'] if 'kills' in tributeData else 0
-      ))
+      printer.print(
+        f'{gameState["totalTributes"]}. '
+        f'{player} from district {district}, '
+        f'died during {tributeData["time of death"]}, '
+        f'has {tributeData["kills"] if "kills" in tributeData else 0} kills'
+      )
       gameState['totalTributes'] -= 1
 
   for name, tribute in list(gameState['playersAlive'].items()):
-    printer.print('1. %s from district %d' % (name, tribute['district']))
+    printer.print(f'1. {name} from district {tribute["district"]}')
 
 class GameDataFile(TypedDict):
   options: GameOptions
