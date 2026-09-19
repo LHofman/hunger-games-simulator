@@ -4,32 +4,32 @@ from Domain.EventRules.OtherTerms import OtherTerms
 from Domain.EventRule import TextAndTerms
 from Domain.types import GameRoundState
 from tests.defaults import (
-  defaultGameRoundState,
+    defaultGameRoundState,
 )
 
 @pytest.fixture(autouse=True)
 def test_mock(mocker: MockerFixture):
-  mocker.patch(
-    'random.choice',
-    side_effect=lambda list: list[0] # type: ignore
-  )
+    mocker.patch(
+        'random.choice',
+        side_effect=lambda list: list[0] # type: ignore
+    )
 
 def test_setOtherTerms():
-  gameState: GameRoundState = {
-    **defaultGameRoundState,
-    'otherTerms': { 'Animal': ['cat', 'dog'] }
-  }
+    gameState: GameRoundState = {
+        **defaultGameRoundState,
+        'otherTerms': { 'Animal': ['cat', 'dog'] }
+    }
 
-  textAndTerms: TextAndTerms = {
-    'text': 'Tribute finds a (Animal1), They pet it and the (Animal1) follows them around',
-  }
+    textAndTerms: TextAndTerms = {
+        'text': 'Tribute finds a (Animal1), They pet it and the (Animal1) follows them around',
+    }
 
-  result = OtherTerms().replaceTextTerms(
-    gameState,
-    textAndTerms,
-  )
+    result = OtherTerms().replaceTextTerms(
+        gameState,
+        textAndTerms,
+    )
 
-  assert result == {
-    'text': 'Tribute finds a cat, They pet it and the cat follows them around',
-    'terms': { '(Animal1)': 'cat' }
-  }
+    assert result == {
+        'text': 'Tribute finds a cat, They pet it and the cat follows them around',
+        'terms': { '(Animal1)': 'cat' }
+    }

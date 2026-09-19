@@ -12,19 +12,19 @@ from Domain.EventRules.TributesData import TributesData
 
 # The order is important
 eventRulesList: list[EventRule] = [
-  IgnoreComments(),
-  TimedEvents(),
+    IgnoreComments(),
+    TimedEvents(),
 
-  # Needs to be before Groups and MultiplePlayers
-  CurrentTribute(),
-  # Needs to be after CurrentTribute and before MultiplePlayers
-  Groups(),
-  # Needs to be after CurrentTribute and Groups
-  MultiplePlayers(),
+    # Needs to be before Groups and MultiplePlayers
+    CurrentTribute(),
+    # Needs to be after CurrentTribute and before MultiplePlayers
+    Groups(),
+    # Needs to be after CurrentTribute and Groups
+    MultiplePlayers(),
 
-  Possessions(),
-  OtherTerms(),
-  Sponsors(),
-  TributesData(),
-  Deaths(),
+    Possessions(),
+    OtherTerms(),
+    Sponsors(),
+    TributesData(),
+    Deaths(),
 ]
