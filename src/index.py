@@ -1,12 +1,14 @@
 import json
+from typing import TypedDict, Union
 
-import vars
+from Application.GameExecutor import GameExecutor
+from Application.Printer import Printer
+from Domain.types import Event, GameConfig, GameOptions, GameState, IncreaseEventOddsMap, Tribute
 
-from playGame import *
-from utils.generalUtils import *
+printer: Printer = Printer()
 
-def readFile(fileName, type = "text"):
-  file = open(fileName, "r", encoding="utf-8")
+def readFile(fileName: str, type: str = 'text') -> Union[dict, list, None]: # type: ignore
+  file = open(fileName, 'r', encoding='utf-8')
   
   if (type == 'json'):
     return json.load(file)
@@ -14,77 +16,104 @@ def readFile(fileName, type = "text"):
   lines = file.readlines()
   return list(map(lambda line: line.rstrip(), lines))
 
-def readTributes(tributesFileName):
-  file = open(tributesFileName, "r", encoding="utf-8")
+def readTributes(gameOptions: GameOptions, tributesFileName: str) -> dict[str, Tribute]:
+  file = open(tributesFileName, 'r', encoding='utf-8')
   lines = file.readlines()
 
-  if (vars.gameData["options"]["districts"] > 0):
-    playersPerDistrict = len(lines) / vars.gameData["options"]["districts"]
-  elif (vars.gameData["options"]["playersPerDistrict"] > 0):
-    playersPerDistrict = vars.gameData["options"]["playersPerDistrict"]
+  if (gameOptions['districts'] > 0):
+    playersPerDistrict = len(lines) / gameOptions['districts']
+  elif (gameOptions['playersPerDistrict'] > 0):
+    playersPerDistrict = gameOptions['playersPerDistrict']
   else: playersPerDistrict = 0
   
-  tributes = {}
+  tributes: dict[str, Tribute] = {}
   players = 0
   for line in lines:
     players += 1
     name = line.rstrip()
     tributes[name] = {
-      "index": players,
-      "name": name, 
-      "district": int(((players-1)/playersPerDistrict)+1) if (playersPerDistrict > 0) else 0,
-      "groupedWith": [],
-      "possessions": {}
+      'index': players,
+      'name': name, 
+      'district': int(((players-1)/playersPerDistrict)+1) if (playersPerDistrict > 0) else 0,
+      'groupedWith': [],
+      'possessions': {}
     }
 
-  if (vars.gameData["options"]["districtsAreTeammates"]):
+  if (gameOptions['districtsAreTeammates']):
     for name, tribute in list(tributes.items()):
       for name2, tribute2 in list(tributes.items()):
-        if (name2 != name and tribute2["district"] == tribute["district"]):
-          tribute["groupedWith"].append(name2)
+        if (name2 != name and tribute2['district'] == tribute['district']):
+          tribute['groupedWith'].append(name2)
 
   return tributes
 
-def getEvents():
-  events = {}
-
-  for (name, event) in vars.gameData["events"].items():
-    events[name] = { "name": name } | event
-
+def addNameToEvents(events: dict[str, Event]) -> dict[str, Event]:
+  for (name, event) in events.items():
+    event['name'] = name
+    events[name] = event
+    
   return events
 
+def printWinner(gameState: GameState, printer: Printer):
+  if (len(gameState['playersAlive']) == 1):
+    printer.print('The winner is %s' % list(gameState['playersAlive'].keys())[0])
+  elif (len(gameState['playersAlive']) > 1):
+    printer.print('The winners are %s' % ', '.join(list(gameState['playersAlive'].keys())))
+  else:
+    printer.print('There are no winners today')
 
-def printWinner():
-  if (len(vars.tributes) == 1): printOutput("The winner is %s" % list(vars.tributes.keys())[0])
-  elif (len(vars.tributes) > 1): printOutput("The winners are %s" % ", ".join(list(vars.tributes.keys())))
-  else: printOutput("There are no winners today")
+def printRankings(gameState: GameState, printer: Printer):
+  printer.print('\n\n\n---\nFinal Rankings')
 
-def printRankings():
-  printOutput("\n\n\n---\nFinal Rankings")
-
-  for playerDeaths in vars.deaths:
+  for playerDeaths in gameState['deaths']:
     for (player, district) in playerDeaths:
-      tributeData = vars.tributesData[player]
-      printOutput("%d. %s from district %d, died during %s, has %d kills" % (vars.totalTributes, player, district, tributeData["time of death"], tributeData["kills"] if "kills" in tributeData else 0))
-      vars.totalTributes -= 1
-  
-  for name, tribute in list(vars.tributes.items()):
-    printOutput("1. %s from district %d" % (name, tribute["district"]))
+      tributeData = gameState['tributesData'][player]
+      printer.print('%d. %s from district %d, died during %s, has %d kills' % (
+        gameState['totalTributes'],
+        player,
+        district,
+        tributeData['time of death'],
+        tributeData['kills'] if 'kills' in tributeData else 0
+      ))
+      gameState['totalTributes'] -= 1
 
-vars.gameData = readFile("settings/gameData.json", "json")
-vars.events = getEvents()
-vars.tributes = readTributes("settings/tributes.txt")
-vars.totalTributes = len(vars.tributes)
-vars.sponsors = readFile("settings/sponsors.txt")
-vars.deaths = []
-vars.recentDeaths = []
+  for name, tribute in list(gameState['playersAlive'].items()):
+    printer.print('1. %s from district %d' % (name, tribute['district']))
 
-if (vars.gameData["options"]["autoPlay"]):
-  outputFile = open("resources/output.txt", "w")
-  outputFile.write("")
+class GameDataFile(TypedDict):
+  options: GameOptions
+  increaseEventOdds: IncreaseEventOddsMap
+  events: dict[str, Event]
+  replaceTerms: dict[str, list[str]]
+
+gameDataFile: GameDataFile = readFile('settings/gameData.json', 'json') # type: ignore
+
+if (gameDataFile['options']['autoPlay']):
+  from Application.Printers.FilePrinter import FilePrinter
+  printer = FilePrinter('resources/output.txt')
+
+tributes = readTributes(gameDataFile['options'], 'settings/tributes.txt')
+sponsors: list[str] = readFile('settings/sponsors.txt') # type: ignore
+
+if (gameDataFile['options']['autoPlay']):
+  outputFile = open('resources/output.txt', 'w')
+  outputFile.write('')
   outputFile.close()
 
-printOutput('----------------------------------------------------------------------------------------------------------------')
-playGame()
-printWinner()
-printRankings()
+printer.print('----------------------------------------------------------------------------------------------------------------')
+
+gameState: GameConfig = {
+  'options': gameDataFile['options'],
+  'otherTerms': gameDataFile['replaceTerms'],
+  'sponsors': sponsors,
+  'totalTributes': len(tributes),
+  'allTributes': tributes,
+  'events': addNameToEvents(gameDataFile['events']),
+  'increaseEventOdds': gameDataFile['increaseEventOdds'],
+}
+
+gameExecutor = GameExecutor(gameState, printer)
+finalGameState = gameExecutor.playGame()
+
+printWinner(finalGameState, printer)
+printRankings(finalGameState, printer)

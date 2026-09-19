@@ -1,35 +1,45 @@
-import pytest
-import vars
-from unittest.mock import call
-from handleEventEffects import handleAddPossessions
+from Domain.EventRules.Possessions import Possessions
+from Domain.EventRule import TextAndTerms
+from Domain.types import GameRoundState
+from tests.defaults import (
+  defaultEvent,
+  defaultGameRoundState,
+  defaultTribute,
+)
 
-@pytest.fixture(autouse=True)
-def test_mock(mocker):
-  mocker.patch.object( vars, "tributes", {
-    "Tribute1": { "name": "Tribute1" },
-    "Tribute2": { "name": "Tribute2" },
-    "Tribute3": { "name": "Tribute3" },
-  } )
-
-def test_handleAddPossessions(mocker):
-  event = { "addPossessions": [
-    { "player": 1, "type": "item", "value": "bow" },
-    { "player": 3, "type": "pet", "value": "(Animal1)" },
-  ] }
-  players = [
-    { "name": "Tribute1" },
-    { "name": "Tribute2" },
-    { "name": "Tribute3" },
-  ]
-  terms = {
-    "(Animal1)": "cat"
+def test_handleAddPossessions():
+  gameState: GameRoundState = {
+    **defaultGameRoundState,
+    'event': {
+      **defaultEvent,
+      'addPossessions': [
+        { 'player': 1, 'type': 'item', 'value': 'bow' },
+        { 'player': 3, 'type': 'pet', 'value': '(Animal1)' },
+      ]
+    },
+    'playersAlive': {
+      'Tribute1': { **defaultTribute, 'name': 'Tribute1' },
+      'Tribute2': { **defaultTribute, 'name': 'Tribute2' },
+      'Tribute3': { **defaultTribute, 'name': 'Tribute3' },
+    }
   }
 
-  addPossessionMock = mocker.patch("handleEventEffects.addPossession")
-  
-  result = handleAddPossessions( event, players, terms )
+  textAndTerms: TextAndTerms = {
+    'text': '',
+    'players': [
+      { **defaultTribute, 'name': 'Tribute1' },
+      { **defaultTribute, 'name': 'Tribute2' },
+      { **defaultTribute, 'name': 'Tribute3' },
+    ],
+    'terms': {
+      '(Animal1)': 'cat'
+    }
+  }
 
-  addPossessionMock.assert_has_calls([
-    call({ "name": "Tribute1" }, "item", "bow"),
-    call({ "name": "Tribute3" }, "pet", "cat")
-  ])
+  Possessions().handleEventEffects(
+    gameState,
+    textAndTerms
+  )
+
+  assert gameState['playersAlive']['Tribute1']['possessions']['item'] == ['bow']
+  assert gameState['playersAlive']['Tribute3']['possessions']['pet'] == ['cat']

@@ -1,23 +1,39 @@
-import pytest
-import vars
-from handleEventEffects import handleFormGroup
-
-@pytest.fixture(autouse=True)
-def test_mock(mocker):
-  mocker.patch.object( vars, "tributes", {
-    "Tribute1": { "name": "Tribute1", "groupedWith": [] },
-    "Tribute2": { "name": "Tribute2", "groupedWith": [] },
-    "Tribute3": { "name": "Tribute3", "groupedWith": [] },
-  } )
+from Domain.EventRules.Groups import Groups
+from Domain.EventRule import TextAndTerms
+from Domain.types import GameRoundState
+from tests.defaults import (
+  defaultEvent,
+  defaultGameRoundState,
+  defaultTribute,
+)
 
 def test_handleFormGroup():
-  event = { "formGroup": ["Player1", "Player2"] }
-  players = [
-    { "name": "Tribute1" },
-    { "name": "Tribute2" },
-  ]
+  gameState: GameRoundState = {
+    **defaultGameRoundState,
+    'event': {
+      **defaultEvent,
+      'formGroup': ['Player1', 'Player2']
+    },
+    'playersAlive': {
+      'Tribute1': { **defaultTribute, 'name': 'Tribute1', 'groupedWith': [] },
+      'Tribute2': { **defaultTribute, 'name': 'Tribute2', 'groupedWith': [] },
+      'Tribute3': { **defaultTribute, 'name': 'Tribute3', 'groupedWith': [] },
+    }
+  }
 
-  result = handleFormGroup(event, players)
+  textAndTerms: TextAndTerms = {
+    'text': '',
+    'players': [
+      { **defaultTribute, 'name': 'Tribute1' },
+      { **defaultTribute, 'name': 'Tribute2' },
+    ]
+  }
 
-  assert vars.tributes["Tribute1"]["groupedWith"] == ["Tribute2"]
-  assert vars.tributes["Tribute2"]["groupedWith"] == ["Tribute1"]
+  Groups().handleEventEffects(
+    gameState,
+    textAndTerms
+  )
+
+  assert gameState['playersAlive']['Tribute1']['groupedWith'] == ['Tribute2']
+  assert gameState['playersAlive']['Tribute2']['groupedWith'] == ['Tribute1']
+  assert gameState['playersAlive']['Tribute3']['groupedWith'] == []

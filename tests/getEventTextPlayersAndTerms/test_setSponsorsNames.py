@@ -1,76 +1,104 @@
+from typing import TypedDict
 import pytest
-import random
-import vars
-from getEventTextPlayersAndTerms import setSponsorsNames
+from pytest_mock import MockerFixture
+from Domain.EventRules.Sponsors import Sponsors
+from Domain.EventRule import TextAndTerms
+from Domain.types import GameRoundState, Tribute
+from tests.defaults import (
+  defaultGameOptions,
+  defaultGameRoundState,
+  defaultTribute,
+)
+
+class ProviderType(TypedDict):
+  id: str
+  text: str
+  oneSponsorPerTribute: bool
+  tribute: Tribute
+  sponsors: list[str]
+  expectedText: str
 
 @pytest.fixture(autouse=True)
-def test_mock(mocker):
-  mocker.patch.object( vars, "totalTributes", 2 )
-
+def test_mock(mocker: MockerFixture):
+  mocker.patch( 'random.random', return_value=0.5 )
   mocker.patch(
-    "random.choice",
-    side_effect=lambda list: list[0]
+    'random.choice',
+    side_effect=lambda list: list[0] # type: ignore
   )
 
-providers = [
+providers: list[ProviderType] = [
   ({
-    "id": "Text without (Sponsor) placeholder doesn't change.",
-    "text": "Tribute explores the arena.",
-    "1SponsorPerTribute": True,
-    "tribute": {"index": 2},
-    "sponsors": ["Sponsor1", "Sponsor2"],
-    "expectedText": "Tribute explores the arena.",
+    'id': 'Text without (Sponsor) placeholder doesn\'t change.',
+    'text': 'Tribute explores the arena.',
+    'oneSponsorPerTribute': True,
+    'tribute': { **defaultTribute, 'index': 2 },
+    'sponsors': ['Sponsor1', 'Sponsor2'],
+    'expectedText': 'Tribute explores the arena.',
   }),
   ({
-    "id": "If the option 1SponsorPerTribute is disabled, a random sponsor is chosen",
-    "text": "Tribute receives a bow, some arrows, and a quiver from (Sponsor).",
-    "1SponsorPerTribute": False,
-    "tribute": {"index": 2},
-    "sponsors": ["Sponsor1", "Sponsor2"],
-    "expectedText": "Tribute receives a bow, some arrows, and a quiver from Sponsor1.",
+    'id': 'If the option oneSponsorPerTribute is disabled, a random sponsor is chosen',
+    'text': 'Tribute receives a bow, some arrows, and a quiver from (Sponsor).',
+    'oneSponsorPerTribute': False,
+    'tribute': { **defaultTribute, 'index': 2 },
+    'sponsors': ['Sponsor1', 'Sponsor2'],
+    'expectedText': 'Tribute receives a bow, some arrows, and a quiver from Sponsor1.',
   }),
   ({
-    "id": "If there are more sponsors than tributes, a random sponsor is chosen",
-    "text": "Tribute receives a bow, some arrows, and a quiver from (Sponsor).",
-    "1SponsorPerTribute": True,
-    "tribute": {"index": 2},
-    "sponsors": ["Sponsor1", "Sponsor2", "Sponsor3"],
-    "expectedText": "Tribute receives a bow, some arrows, and a quiver from Sponsor1.",
+    'id': 'If there are more sponsors than tributes, a random sponsor is chosen',
+    'text': 'Tribute receives a bow, some arrows, and a quiver from (Sponsor).',
+    'oneSponsorPerTribute': True,
+    'tribute': { **defaultTribute, 'index': 2 },
+    'sponsors': ['Sponsor1', 'Sponsor2', 'Sponsor3'],
+    'expectedText': 'Tribute receives a bow, some arrows, and a quiver from Sponsor1.',
   }),
   ({
-    "id": "If there are less sponsors than tributes, a random sponsor is chosen",
-    "text": "Tribute receives a bow, some arrows, and a quiver from (Sponsor).",
-    "1SponsorPerTribute": True,
-    "tribute": {"index": 2},
-    "sponsors": ["Sponsor3"],
-    "expectedText": "Tribute receives a bow, some arrows, and a quiver from Sponsor3.",
+    'id': 'If there are less sponsors than tributes, a random sponsor is chosen',
+    'text': 'Tribute receives a bow, some arrows, and a quiver from (Sponsor).',
+    'oneSponsorPerTribute': True,
+    'tribute': { **defaultTribute, 'index': 2 },
+    'sponsors': ['Sponsor3'],
+    'expectedText': 'Tribute receives a bow, some arrows, and a quiver from Sponsor3.',
   }),
   ({
-    "id": "A tribute receives an item from their respective sponsor",
-    "text": "Tribute receives a bow, some arrows, and a quiver from (Sponsor).",
-    "1SponsorPerTribute": True,
-    "tribute": {"index": 2},
-    "sponsors": ["Sponsor1", "Sponsor2"],
-    "expectedText": "Tribute receives a bow, some arrows, and a quiver from Sponsor2.",
+    'id': 'A tribute receives an item from their respective sponsor',
+    'text': 'Tribute receives a bow, some arrows, and a quiver from (Sponsor).',
+    'oneSponsorPerTribute': True,
+    'tribute': { **defaultTribute, 'index': 2 },
+    'sponsors': ['Sponsor1', 'Sponsor2'],
+    'expectedText': 'Tribute receives a bow, some arrows, and a quiver from Sponsor2.',
   }),
   ({
-    "id": "A tribute receives an item from an opposing sponsor",
-    "text": "Tribute receives a bow, some arrows, and a quiver from (Sponsor::opposing).",
-    "1SponsorPerTribute": True,
-    "tribute": {"index": 2},
-    "sponsors": ["Sponsor1", "Sponsor2"],
-    "expectedText": "Tribute receives a bow, some arrows, and a quiver from Sponsor1.",
+    'id': 'A tribute receives an item from an opposing sponsor',
+    'text': 'Tribute receives a bow, some arrows, and a quiver from (Sponsor::opposing).',
+    'oneSponsorPerTribute': True,
+    'tribute': { **defaultTribute, 'index': 2 },
+    'sponsors': ['Sponsor1', 'Sponsor2'],
+    'expectedText': 'Tribute receives a bow, some arrows, and a quiver from Sponsor1.',
   }),
 ]
 
-@pytest.mark.parametrize("provider", providers, ids=lambda p: f"{p['id']}")
-def test_setSponsorsNames(provider, mocker):
-  vars.gameData["options"] = { "1SponsorPerTribute": provider["1SponsorPerTribute"] }
-  vars.sponsors = provider["sponsors"]
+@pytest.mark.parametrize('provider', providers, ids=lambda p: f'{p["id"]}')
+def test_setSponsorsNames(provider: ProviderType):
+  gameState: GameRoundState = {
+    **defaultGameRoundState,
+    'totalTributes': 2,
+    'options': {
+      **defaultGameOptions,
+      'oneSponsorPerTribute': provider['oneSponsorPerTribute']
+    },
+    'currentTribute': provider['tribute'],
+    'sponsors': provider['sponsors'],
+  }
 
-  result = setSponsorsNames(
-    provider["tribute"],
-    provider["text"],
+  textAndTerms: TextAndTerms = {
+    'text': provider['text'],
+  }
+
+  result = Sponsors().replaceTextTerms(
+    gameState,
+    textAndTerms
   )
 
-  assert result == provider["expectedText"]
+  assert result == {
+    'text': provider['expectedText'],
+  }

@@ -1,21 +1,39 @@
 import pytest
-import random
-from getEventTextPlayersAndTerms import setPossessionsTerms
+from pytest_mock import MockerFixture
+from Domain.EventRules.Possessions import Possessions
+from Domain.EventRule import TextAndTerms
+from Domain.types import GameRoundState
+from tests.defaults import (
+  defaultGameRoundState,
+  defaultTribute,
+)
 
 @pytest.fixture(autouse=True)
-def test_mock(mocker):
+def test_mock(mocker: MockerFixture):
   mocker.patch(
-    "random.choice",
-    side_effect=lambda list: list[0]
+    'random.choice',
+    side_effect=lambda list: list[0] # type: ignore
   )
 
 def test_setPossessionsTerms():
-  tribute = { "possessions": { "pet": ["cat", "dog"] } }
-  text = "Tribute's pet (Possession:pet1) attacks and kills Enemy."
+  gameState: GameRoundState = {
+    **defaultGameRoundState,
+    'currentTribute': {
+      **defaultTribute,
+      'possessions': { 'pet': ['cat', 'dog'] }
+    }
+  }
 
-  result = setPossessionsTerms( None, tribute, text, )
+  textAndTerms: TextAndTerms = {
+    'text': 'Tribute\'s pet (Possession:pet1) attacks and kills Enemy.',
+  }
 
-  assert result == (
-    "Tribute's pet cat attacks and kills Enemy.",
-    { "(Possession:pet1)": "cat" }
+  result = Possessions().replaceTextTerms(
+    gameState,
+    textAndTerms,
   )
+
+  assert result == {
+    'text': 'Tribute\'s pet cat attacks and kills Enemy.',
+    'terms': { '(Possession:pet1)': 'cat' }
+  }

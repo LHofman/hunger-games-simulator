@@ -7,12 +7,11 @@
     "playersPerDistrict": 0,
     "districtsAreTeammates": false,
     "districtCanWinTogether": false,
-    "1SponsorPerTribute": true,
+    "oneSponsorPerTribute": true,
     "": "Speed: 1-10, defines how often deaths occur",
     "speed": 5,
     "possessionsWithoutDuplicates": ["status"],
-    "autoPlay": true,
-    "collectOutputForTests": true
+    "autoPlay": true
   },
   "increaseEventOdds": {
     "possessions": {}

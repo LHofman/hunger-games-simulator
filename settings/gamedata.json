@@ -7,7 +7,7 @@
     "playersPerDistrict": 0,
     "districtsAreTeammates": false,
     "districtCanWinTogether": false,
-    "1SponsorPerTribute": true,
+    "oneSponsorPerTribute": true,
     "": "Speed: 1-10, defines how often deaths occur",
     "speed": 5,
     "possessionsWithoutDuplicates": ["status"],
@@ -86,47 +86,47 @@
     "grabBow": {
       "text": "(Player1) finds a bow, some arrows, and a quiver.",
       "time": ["bloodbath", "feast"],
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow", "not": true }],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow", "inverse": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "bow" }]
     },
     "receiveBow": {
       "text": "(Player1) receives a bow, some arrows, and a quiver from (Sponsor).",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow", "not": true }],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow", "inverse": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "bow" }],
       "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "grabKnives": {
       "text": "(Player1) takes a handful of throwing knives.",
       "time": ["bloodbath", "feast"],
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives", "not": true }],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives", "inverse": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "knives" }]
     },
     "findKnives": {
       "text": "(Player1) finds a handful of throwing knives.",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives", "not": true }],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives", "inverse": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "knives" }]
     },
     "retrieveTrident": {
       "text": "(Player1) retrieves a trident from inside the cornucopia.",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident", "not": true }],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident", "inverse": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "trident" }],
       "time": ["bloodbath", "feast"]
     },
     "receiveTrident": {
       "text": "(Player1) receives a trident from (Sponsor)",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident", "not": true }],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident", "inverse": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "trident" }],
       "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "grabMace": {
       "text": "(Player1) grabs a mace.",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace", "not": true }],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace", "inverse": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }],
       "time": ["bloodbath", "feast"]
     },
     "receiveMace": {
       "text": "(Player1) receives a mace from (Sponsor).",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace", "not": true }],
+      "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace", "inverse": true }],
       "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }],
       "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
     },
@@ -302,7 +302,7 @@
       "text": "(Player1) camouflages themselves with bodypaint",
       "requiresPossessions": [
         { "player": 1, "type": "item", "value": "bodypaint" },
-        { "player": 1, "type": "status", "value": "hidden", "not": true }
+        { "player": 1, "type": "status", "value": "hidden", "inverse": true }
       ],
       "percentage": 1000,
       "addPossessions": [{ "player": 1, "type": "status", "value": "hidden" }]
@@ -338,7 +338,7 @@
       "text": "(Player1) starts drawing a map",
       "requiresPossessions": [
         { "player": 1, "type": "item", "value": "writingUtensils" },
-        { "player": 1, "type": "item", "value": "map", "not": true }
+        { "player": 1, "type": "item", "value": "map", "inverse": true }
       ],
       "percentage": 400,
       "addPossessions": [{ "player": 1, "type": "item", "value": "map" }]
@@ -386,7 +386,7 @@
     },
     "begsSponsorForSupplies": {
       "text": "(Player1) begs their sponsor for supplies",
-      "requiresPossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor", "not": true }],
+      "requiresPossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor", "inverse": true }],
       "addPossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor" }]
     },
 

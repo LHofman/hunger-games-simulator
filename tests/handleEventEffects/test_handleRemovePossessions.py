@@ -1,35 +1,46 @@
-import pytest
-import vars
-from unittest.mock import call
-from handleEventEffects import handleRemovePossessions
+from Domain.EventRules.Possessions import Possessions
+from Domain.EventRule import TextAndTerms
+from Domain.types import GameRoundState
+from tests.defaults import (
+  defaultEvent,
+  defaultGameRoundState,
+  defaultTribute,
+)
 
-@pytest.fixture(autouse=True)
-def test_mock(mocker):
-  mocker.patch.object( vars, "tributes", {
-    "Tribute1": { "name": "Tribute1" },
-    "Tribute2": { "name": "Tribute2" },
-    "Tribute3": { "name": "Tribute3" },
-  } )
-
-def test_handleRemovePossessions(mocker):
-  event = { "removePossessions": [
-    { "player": 1, "type": "item", "value": "bow" },
-    { "player": 3, "type": "pet", "value": "(Animal1)" },
-  ] }
-  players = [
-    { "name": "Tribute1" },
-    { "name": "Tribute2" },
-    { "name": "Tribute3" },
-  ]
-  terms = {
-    "(Animal1)": "cat"
+def test_handleRemovePossessions():
+  gameState: GameRoundState = {
+    **defaultGameRoundState,
+    'event': {
+      **defaultEvent,
+      'removePossessions': [
+        { 'player': 1, 'type': 'item', 'value': 'bow' },
+        { 'player': 3, 'type': 'pet', 'value': '(Animal1)' },
+      ]
+    },
+    'playersAlive': {
+      'Tribute1': { **defaultTribute, 'name': 'Tribute1', 'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat'] } },
+      'Tribute2': { **defaultTribute, 'name': 'Tribute2', 'possessions': { 'pet': ['cat', 'dog'] } },
+      'Tribute3': { **defaultTribute, 'name': 'Tribute3', 'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat', 'dog'] } },
+    }
   }
 
-  removePossessionMock = mocker.patch("handleEventEffects.removePossession")
-  
-  result = handleRemovePossessions(event, players, terms)
+  textAndTerms: TextAndTerms = {
+    'text': '',
+    'players': [
+      { **defaultTribute, 'name': 'Tribute1', 'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat'] } },
+      { **defaultTribute, 'name': 'Tribute2', 'possessions': { 'pet': ['cat', 'dog'] } },
+      { **defaultTribute, 'name': 'Tribute3', 'possessions': { 'item': ['bow', 'sword'], 'pet': ['cat', 'dog'] } },
+    ],
+    'terms': {
+      '(Animal1)': 'cat'
+    }
+  }
 
-  removePossessionMock.assert_has_calls([
-    call({ "name": "Tribute1" }, "item", "bow"),
-    call({ "name": "Tribute3" }, "pet", "cat")
-  ])
+  Possessions().handleEventEffects(
+    gameState,
+    textAndTerms
+  )
+
+  assert gameState['playersAlive']['Tribute1']['possessions'] == { 'item': ['sword'], 'pet': ['cat'] }
+  assert gameState['playersAlive']['Tribute2']['possessions'] == { 'pet': ['cat', 'dog'] }
+  assert gameState['playersAlive']['Tribute3']['possessions'] == { 'item': ['bow', 'sword'], 'pet': ['dog'] }

@@ -1,34 +1,48 @@
 import pytest
-import random
-from getEventTextPlayersAndTerms import setPlayersNames
+from pytest_mock import MockerFixture
+from Domain.EventRules.MultiplePlayers import MultiplePlayers
+from Domain.EventRule import TextAndTerms
+from Domain.types import GameRoundState
+from tests.defaults import (
+  defaultGameRoundState,
+  defaultTribute,
+)
 
 @pytest.fixture(autouse=True)
-def test_mock(mocker):
+def test_mock(mocker: MockerFixture):
   mocker.patch(
-    "random.choice",
-    side_effect=lambda list: list[0]
+    'random.choice',
+    side_effect=lambda list: list[0] # type: ignore
   )
 
 def test_setPlayersNames():
-  event = { "text": "(Player1) is working with (Player2) to kill (Player3)" }
-  tribute = { "name": "Tribute", "groupedWith": ["Friend 1", "Friend 2"] }
-  playersRemaining = { "Friend 2": { "name": "Friend 2" }, "Enemy": { "name": "Enemy" } }
-  aoGroupPlayersRequired = 2
-  groupedWithPlayers = { "Friend 2": { "name": "Friend 2" } }
+  gameState: GameRoundState = {
+    **defaultGameRoundState,
+    'playersRemainingThisRound': {
+      'Enemy': { **defaultTribute, 'name': 'Enemy' },
+      'Enemy 2': { **defaultTribute, 'name': 'Enemy 2' },
+    },
+  }
 
-  result = setPlayersNames(
-    event,
-    tribute,
-    playersRemaining,
-    aoGroupPlayersRequired,
-    groupedWithPlayers
-  )
-
-  assert result == (
-    [
-      { "name": "Tribute", "groupedWith": ["Friend 1", "Friend 2"] },
-      { "name": "Friend 2" },
-      { "name": "Enemy" }
+  textAndTerms: TextAndTerms = {
+    'text': 'Player1 is working with Friend to kill (Player3) and (Player4)',
+    'players': [
+      { **defaultTribute, 'name': 'Player1' },
+      { **defaultTribute, 'name': 'Friend' },
     ],
-    "Tribute is working with Friend 2 to kill Enemy"
+  }
+
+  result = MultiplePlayers().replaceTextTerms(
+    gameState,
+    textAndTerms,
   )
+
+  assert result == {
+    'text': 'Player1 is working with Friend to kill Enemy and Enemy 2',
+    'players': [
+      { **defaultTribute, 'name': 'Player1' },
+      { **defaultTribute, 'name': 'Friend' },
+      { **defaultTribute, 'name': 'Enemy' },
+      { **defaultTribute, 'name': 'Enemy 2' },
+    ],
+  }
