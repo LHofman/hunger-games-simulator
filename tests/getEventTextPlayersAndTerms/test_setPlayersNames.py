@@ -15,7 +15,7 @@ from tests.defaults import (
 def test_mock(mocker: MockerFixture):
     mocker.patch(
         'random.choice',
-        side_effect=lambda list: list[0] # type: ignore
+        side_effect=lambda list: list[0], # type: ignore
     )
 
 

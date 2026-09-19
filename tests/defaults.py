@@ -3,7 +3,7 @@ from Domain.types import (
     GameOptions,
     GameRoundState,
     GameRoundStateWithoutEvent,
-    Tribute
+    Tribute,
 )
 
 defaultEvent: Event = {

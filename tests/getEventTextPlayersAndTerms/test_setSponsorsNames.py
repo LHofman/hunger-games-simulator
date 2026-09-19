@@ -27,7 +27,7 @@ def test_mock(mocker: MockerFixture):
     mocker.patch('random.random', return_value=0.5)
     mocker.patch(
         'random.choice',
-        side_effect=lambda list: list[0] # type: ignore
+        side_effect=lambda list: list[0], # type: ignore
     )
 
 
@@ -90,7 +90,7 @@ def test_setSponsorsNames(provider: ProviderType):
         'totalTributes': 2,
         'options': {
             **defaultGameOptions,
-            'oneSponsorPerTribute': provider['oneSponsorPerTribute']
+            'oneSponsorPerTribute': provider['oneSponsorPerTribute'],
         },
         'currentTribute': provider['tribute'],
         'sponsors': provider['sponsors'],
@@ -102,7 +102,7 @@ def test_setSponsorsNames(provider: ProviderType):
 
     result = Sponsors().replaceTextTerms(
         gameState,
-        textAndTerms
+        textAndTerms,
     )
 
     assert result == {

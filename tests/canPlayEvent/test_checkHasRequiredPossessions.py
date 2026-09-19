@@ -7,7 +7,7 @@ from Domain.types import Event, GameRoundStateWithoutEvent
 from tests.defaults import (
     defaultEvent,
     defaultGameRoundStateWithoutEvent,
-    defaultTribute
+    defaultTribute,
 )
 
 
@@ -67,7 +67,7 @@ providers: list[ProviderType] = [
         'id': 'an event with multiple required possessions that the tribute does not have and does have but is negated cannot be played',
         'event': { **defaultEvent, 'name': 'Test Event', 'requiresPossessions': [{ 'player': 1, 'type': 'item', 'value': 'Test Item 3' }, { 'player': 1, 'type': 'item', 'value': 'Test Item 4', 'inverse': True }] },
         'expectedHasRequiredPossessions': False,
-    })
+    }),
 ]
 
 
@@ -79,12 +79,12 @@ def test_checkHasRequiredPossessions(provider: ProviderType):
             **defaultTribute,
             'possessions': {
                 'item': ['Test Item 1', 'Test Item 2'],
-            }
-        }
+            },
+        },
     }
     result = Possessions().canPlayEvent(
         provider['event'],
-        gameState
+        gameState,
     )
 
     assert result == provider['expectedHasRequiredPossessions']

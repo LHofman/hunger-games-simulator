@@ -29,7 +29,7 @@ def readFile(fileName: str, type: str = 'text') -> Union[dict, list, None]: # ty
 
 def readTributes(
     gameOptions: GameOptions,
-    tributesFileName: str
+    tributesFileName: str,
 ) -> dict[str, Tribute]:
     file = open(tributesFileName, 'r', encoding='utf-8')
     lines = file.readlines()
@@ -52,7 +52,7 @@ def readTributes(
                 if playersPerDistrict > 0
                 else 0,
             'groupedWith': [],
-            'possessions': {}
+            'possessions': {},
         }
 
     if gameOptions['districtsAreTeammates']:
@@ -96,7 +96,7 @@ def printRankings(gameState: GameState, printer: Printer):
                 f'{gameState["totalTributes"]}. '
                 f'{player} from district {district}, '
                 f'died during {tributeData["time of death"]}, '
-                f'has {kills} kills'
+                f'has {kills} kills',
             )
             gameState['totalTributes'] -= 1
 

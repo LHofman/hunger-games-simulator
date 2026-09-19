@@ -8,7 +8,7 @@ from tests.defaults import (
     defaultEvent,
     defaultGameOptions,
     defaultGameRoundStateWithoutEvent,
-    defaultTribute
+    defaultTribute,
 )
 
 
@@ -65,8 +65,8 @@ def test_checkCanBetrayTeammates(provider: ProviderType):
         provider['event'],
         {
             **defaultGameRoundStateWithoutEvent,
-            'currentTribute': provider['tribute']
-        }
+            'currentTribute': provider['tribute'],
+        },
     )
 
     assert result == provider['expectedCanBetrayTeammates']
@@ -77,17 +77,17 @@ def test_canBetrayTeammatesIfOverriddenByOption():
         **defaultGameRoundStateWithoutEvent,
         'options': {
             **defaultGameOptions,
-            'betrayTeammates': True
+            'betrayTeammates': True,
         },
         'currentTribute': {
             **defaultTribute,
-            'groupedWith': ['Player1', 'Player2']
-        }
+            'groupedWith': ['Player1', 'Player2'],
+        },
     }
     event: Event = {
         **defaultEvent,
         'deaths': ['Player1'],
-        'killTeammates': True
+        'killTeammates': True,
     }
     result = Groups().canPlayEvent(event, gameRoundState)
     assert result == True

@@ -9,7 +9,7 @@ class Deaths(EventRule):
     def handleEventEffects(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> None:
         event = gameState['event']
 
@@ -20,33 +20,33 @@ class Deaths(EventRule):
         for death in event['deaths']:
             match = re.search(r'\d+', death)
             if not match: raise ValueError(
-                f'No number found in death term: {death}'
+                f'No number found in death term: {death}',
             )
 
             index = int(match.group()) - 1
             playerName = players[index]['name']
             gameState['recentDeaths'].append(
-                (playerName, players[index]['district'])
+                (playerName, players[index]['district']),
             )
             TributesData.updateTributesData(
                 gameState,
                 players[index],
                 'time of death',
                 '',
-                gameState['exactTime']
+                gameState['exactTime'],
             )
             TributesData.updateTributesData(
                 gameState,
                 players[index],
                 'district',
                 '',
-                players[index]['district']
+                players[index]['district'],
             )
 
             for (name, _tribute) in gameState['playersAlive'].items():
                 if playerName in _tribute['groupedWith']:
                     gameState['playersAlive'][name]['groupedWith'].remove(
-                        playerName
+                        playerName,
                     )
 
             del gameState['playersAlive'][playerName]

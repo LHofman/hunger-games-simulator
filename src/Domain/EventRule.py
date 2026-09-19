@@ -4,7 +4,7 @@ from Domain.types import (
     Event,
     GameRoundState,
     GameRoundStateWithoutEvent,
-    Tribute
+    Tribute,
 )
 from typing import TypedDict
 from typing_extensions import NotRequired, Required
@@ -20,20 +20,20 @@ class EventRule(ABC):
     def canPlayEvent(
         self,
         event: Event,
-        gameState: GameRoundStateWithoutEvent
+        gameState: GameRoundStateWithoutEvent,
     ) -> bool:
         return True
 
     def replaceTextTerms(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> TextAndTerms:
         return textAndTerms
 
     def handleEventEffects(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> None:
         return

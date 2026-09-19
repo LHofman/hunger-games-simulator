@@ -8,7 +8,7 @@ class TributesData(EventRule):
     def handleEventEffects(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> None:
         event = gameState['event']
 
@@ -23,7 +23,7 @@ class TributesData(EventRule):
                 gameState['playersAlive'][playerName],
                 dataToAdd['type'],
                 dataToAdd['operation'] if 'operation' in dataToAdd else '',
-                dataToAdd['value']
+                dataToAdd['value'],
             )
 
     @staticmethod
@@ -32,7 +32,7 @@ class TributesData(EventRule):
         tribute: Tribute,
         type: str,
         operation: str,
-        value: Union[int, str]
+        value: Union[int, str],
     ):
         if tribute['name'] not in gameState['tributesData']:
             gameState['tributesData'][tribute['name']] = {}

@@ -128,8 +128,8 @@ def test_checkCompliesWithRequiredGroupSize(provider: ProviderType):
         {
             **defaultGameRoundStateWithoutEvent,
             'currentTribute': provider['tribute'],
-            'playersRemainingThisRound': provider['playersRemaining']
-        }
+            'playersRemainingThisRound': provider['playersRemaining'],
+        },
     )
 
     assert result == provider['expectedCompliesWithRequiredGroupSize']

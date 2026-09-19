@@ -13,25 +13,25 @@ def test_handleFormGroup():
         **defaultGameRoundState,
         'event': {
             **defaultEvent,
-            'formGroup': ['Player1', 'Player2']
+            'formGroup': ['Player1', 'Player2'],
         },
         'playersAlive': {
             'Tribute1': {
                 **defaultTribute,
                 'name': 'Tribute1',
-                'groupedWith': []
+                'groupedWith': [],
             },
             'Tribute2': {
                 **defaultTribute,
                 'name': 'Tribute2',
-                'groupedWith': []
+                'groupedWith': [],
             },
             'Tribute3': {
                 **defaultTribute,
                 'name': 'Tribute3',
-                'groupedWith': []
+                'groupedWith': [],
             },
-        }
+        },
     }
 
     textAndTerms: TextAndTerms = {
@@ -39,12 +39,12 @@ def test_handleFormGroup():
         'players': [
             { **defaultTribute, 'name': 'Tribute1' },
             { **defaultTribute, 'name': 'Tribute2' },
-        ]
+        ],
     }
 
     Groups().handleEventEffects(
         gameState,
-        textAndTerms
+        textAndTerms,
     )
 
     assert gameState['playersAlive']['Tribute1']['groupedWith'] == ['Tribute2']

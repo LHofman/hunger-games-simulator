@@ -12,7 +12,7 @@ from index import (
     readTributes,
     printWinner,
     printRankings,
-    GameDataFile
+    GameDataFile,
 )
 
 
@@ -52,7 +52,7 @@ def test_gameWithDeath():
             'Final Rankings',
             '2. Tribute 2 from district 2, died during Day 1, has 0 kills',
             '1. Tribute 1 from district 1',
-        ]
+        ],
     )
 
 
@@ -71,20 +71,20 @@ def test_gameWithKill():
             'Final Rankings',
             '2. Tribute 1 from district 1, died during Day 1, has 0 kills',
             '1. Tribute 2 from district 2',
-        ]
+        ],
     )
 
 
 def setUpFullGame(testFolder: str) -> GameConfig:
     gameDataFile: GameDataFile = readFile( # type: ignore
-        f'tests/_fullGame/{testFolder}/mockGameData.json', 'json'
+        f'tests/_fullGame/{testFolder}/mockGameData.json', 'json',
     )
     tributes = readTributes(
         gameDataFile['options'],
-        f'tests/_fullGame/{testFolder}/mockTributes.txt'
+        f'tests/_fullGame/{testFolder}/mockTributes.txt',
     )
     sponsors: list[str] = readFile( # type: ignore
-        f'tests/_fullGame/{testFolder}/mockSponsors.txt'
+        f'tests/_fullGame/{testFolder}/mockSponsors.txt',
     )
 
     return {

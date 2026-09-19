@@ -25,7 +25,7 @@ class GameExecutor:
             'playersAlive': gameConfig['allTributes'].copy(),
             'deaths': [],
             'recentDeaths': [],
-            'tributesData': {}
+            'tributesData': {},
         }
         self.printer = printer
 
@@ -45,7 +45,7 @@ class GameExecutor:
         self,
         text: str,
         time: str,
-        playStandardEvents: bool
+        playStandardEvents: bool,
     ) -> None:
         if self.__isGameOver(): return
 
@@ -59,7 +59,7 @@ class GameExecutor:
         self,
         time: str,
         text: str,
-        playStandardEvents: bool
+        playStandardEvents: bool,
     ) -> None:
         tributesLeft = self.gameState['playersAlive'].copy()
         played = 0
@@ -77,7 +77,7 @@ class GameExecutor:
                     text,
                     playStandardEvents,
                     tribute,
-                    tributesLeft
+                    tributesLeft,
                 )
                 played += 1
                 
@@ -92,7 +92,7 @@ class GameExecutor:
         text: str,
         playStandardEvents: bool,
         tribute: Tribute,
-        tributesLeft: dict[str, Tribute]
+        tributesLeft: dict[str, Tribute],
     ) -> None:
         gameRoundStateWithoutEvent: GameRoundStateWithoutEvent = {
             **self.gameState,
@@ -100,14 +100,14 @@ class GameExecutor:
             'exactTime': text,
             'playStandardEvents': playStandardEvents,
             'currentTribute': tribute,
-            'playersRemainingThisRound': tributesLeft
+            'playersRemainingThisRound': tributesLeft,
         }
 
         event = EventPicker().getEvent(gameRoundStateWithoutEvent)
 
         gameRoundState: GameRoundState = {
             **gameRoundStateWithoutEvent,
-            'event': event
+            'event': event,
         }
 
         textAndTerms = replaceTextTerms(gameRoundState)
@@ -126,7 +126,7 @@ class GameExecutor:
             if not self.__isGameOver(): self.__readInput()
             self.printer.print(
                 f'{len(self.gameState["recentDeaths"])} cannon shots '
-                'can be heard in the distance.'
+                'can be heard in the distance.',
             )
             for playerName, district in self.gameState['recentDeaths']:
                 self.printer.print(f'{playerName} from district {district}')
@@ -167,7 +167,7 @@ class GameExecutor:
 
         userInput = input(
             'Press Enter to continue, '
-            'or type status to see the current status of all tributes: '
+            'or type status to see the current status of all tributes: ',
         )
         self.printer.print('')
 
@@ -189,7 +189,7 @@ class GameExecutor:
 
             self.printer.print(
                 f'{name} from district {tribute["district"]} '
-                f'is still alive{possessions}'
+                f'is still alive{possessions}',
             )
 
         self.printer.print('\n---')
@@ -205,7 +205,7 @@ class GameExecutor:
 
         self.printer.print(
             'The remaining tributes realize they '
-            'are the only ones left and split up'
+            'are the only ones left and split up',
         )
 
     def __percentageOfPlaying(self, total: int, time: str) -> float:

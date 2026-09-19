@@ -16,13 +16,13 @@ def test_handleAddPossessions():
             'addPossessions': [
                 { 'player': 1, 'type': 'item', 'value': 'bow' },
                 { 'player': 3, 'type': 'pet', 'value': '(Animal1)' },
-            ]
+            ],
         },
         'playersAlive': {
             'Tribute1': { **defaultTribute, 'name': 'Tribute1' },
             'Tribute2': { **defaultTribute, 'name': 'Tribute2' },
             'Tribute3': { **defaultTribute, 'name': 'Tribute3' },
-        }
+        },
     }
 
     textAndTerms: TextAndTerms = {
@@ -33,13 +33,13 @@ def test_handleAddPossessions():
             { **defaultTribute, 'name': 'Tribute3' },
         ],
         'terms': {
-            '(Animal1)': 'cat'
-        }
+            '(Animal1)': 'cat',
+        },
     }
 
     Possessions().handleEventEffects(
         gameState,
-        textAndTerms
+        textAndTerms,
     )
 
     assert gameState['playersAlive']['Tribute1']['possessions']['item'] == ['bow']

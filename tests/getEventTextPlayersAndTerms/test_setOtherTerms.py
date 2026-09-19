@@ -14,14 +14,14 @@ from tests.defaults import (
 def test_mock(mocker: MockerFixture):
     mocker.patch(
         'random.choice',
-        side_effect=lambda list: list[0] # type: ignore
+        side_effect=lambda list: list[0], # type: ignore
     )
 
 
 def test_setOtherTerms():
     gameState: GameRoundState = {
         **defaultGameRoundState,
-        'otherTerms': { 'Animal': ['cat', 'dog'] }
+        'otherTerms': { 'Animal': ['cat', 'dog'] },
     }
 
     textAndTerms: TextAndTerms = {
@@ -35,5 +35,5 @@ def test_setOtherTerms():
 
     assert result == {
         'text': 'Tribute finds a cat, They pet it and the cat follows them around',
-        'terms': { '(Animal1)': 'cat' }
+        'terms': { '(Animal1)': 'cat' },
     }

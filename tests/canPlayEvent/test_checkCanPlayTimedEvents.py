@@ -72,7 +72,7 @@ def test_checkCanPlayTimedEvents(provider: ProviderType):
             **defaultGameRoundStateWithoutEvent,
             'time': provider['time'],
             'playStandardEvents': provider['playStandardEvents'],
-        }
+        },
     )
     
     assert result == provider['expectedCanPlayTimedEvents']

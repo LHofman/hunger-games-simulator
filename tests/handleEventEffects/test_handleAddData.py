@@ -16,13 +16,13 @@ def test_handleAddData():
             'updateTributesData': [
                 { 'player': 1, 'type': 'kills', 'operation': 'add', 'value': 1 },
                 { 'player': 3, 'type': 'other', 'value': 2 },
-            ]
+            ],
         },
         'playersAlive': {
             'Tribute1': { **defaultTribute, 'name': 'Tribute1' },
             'Tribute2': { **defaultTribute, 'name': 'Tribute2' },
             'Tribute3': { **defaultTribute, 'name': 'Tribute3' },
-        }
+        },
     }
 
     textAndTerms: TextAndTerms = {
@@ -31,12 +31,12 @@ def test_handleAddData():
             { **defaultTribute, 'name': 'Tribute1' },
             { **defaultTribute, 'name': 'Tribute2' },
             { **defaultTribute, 'name': 'Tribute3' },
-        ]
+        ],
     }
 
     TributesData().handleEventEffects(
         gameState,
-        textAndTerms
+        textAndTerms,
     )
 
     assert gameState['tributesData']['Tribute1']['kills'] == 1

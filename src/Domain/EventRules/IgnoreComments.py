@@ -6,6 +6,6 @@ class IgnoreComments(EventRule):
     def canPlayEvent(
         self,
         event: Event,
-        gameState: GameRoundStateWithoutEvent
+        gameState: GameRoundStateWithoutEvent,
     ) -> bool:
         return 'ignore' not in event

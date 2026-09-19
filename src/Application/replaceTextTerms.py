@@ -7,7 +7,7 @@ def replaceTextTerms(gameState: GameRoundState) -> TextAndTerms:
     textAndTerms: TextAndTerms = {
         'text': gameState['event']['text'],
         'players': [],
-        'terms': {}
+        'terms': {},
     }
 
     for eventRule in eventRulesList:

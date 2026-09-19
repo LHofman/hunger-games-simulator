@@ -6,7 +6,7 @@ class TimedEvents(EventRule):
     def canPlayEvent(
         self,
         event: Event,
-        gameState: GameRoundStateWithoutEvent
+        gameState: GameRoundStateWithoutEvent,
     ) -> bool:
         if 'time' not in event:
             return gameState['playStandardEvents']

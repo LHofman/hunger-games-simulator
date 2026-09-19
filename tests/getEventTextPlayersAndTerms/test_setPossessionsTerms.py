@@ -15,7 +15,7 @@ from tests.defaults import (
 def test_mock(mocker: MockerFixture):
     mocker.patch(
         'random.choice',
-        side_effect=lambda list: list[0] # type: ignore
+        side_effect=lambda list: list[0], # type: ignore
     )
 
 
@@ -24,8 +24,8 @@ def test_setPossessionsTerms():
         **defaultGameRoundState,
         'currentTribute': {
             **defaultTribute,
-            'possessions': { 'pet': ['cat', 'dog'] }
-        }
+            'possessions': { 'pet': ['cat', 'dog'] },
+        },
     }
 
     textAndTerms: TextAndTerms = {
@@ -39,5 +39,5 @@ def test_setPossessionsTerms():
 
     assert result == {
         'text': 'Tribute\'s pet cat attacks and kills Enemy.',
-        'terms': { '(Possession:pet1)': 'cat' }
+        'terms': { '(Possession:pet1)': 'cat' },
     }

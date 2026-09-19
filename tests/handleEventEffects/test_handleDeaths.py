@@ -13,26 +13,26 @@ def test_handleDeaths():
         **defaultGameRoundState,
         'event': {
             **defaultEvent,
-            'deaths': ['Player2', 'Player3']
+            'deaths': ['Player2', 'Player3'],
         },
         'playersAlive': {
             'Tribute1': {
                 **defaultTribute,
                 'name': 'Tribute1',
                 'district': 1,
-                'groupedWith': ['Tribute2', 'Tribute3']
+                'groupedWith': ['Tribute2', 'Tribute3'],
             },
             'Tribute2': {
                 **defaultTribute,
                 'name': 'Tribute2',
                 'district': 2,
-                'groupedWith': ['Tribute1']
+                'groupedWith': ['Tribute1'],
             },
             'Tribute3': {
                 **defaultTribute,
                 'name': 'Tribute3',
                 'district': 3,
-                'groupedWith': ['Tribute1']
+                'groupedWith': ['Tribute1'],
             },
         },
         'exactTime': 'day',
@@ -45,26 +45,26 @@ def test_handleDeaths():
                 **defaultTribute,
                 'name': 'Tribute1',
                 'district': 1,
-                'groupedWith': ['Tribute2', 'Tribute3']
+                'groupedWith': ['Tribute2', 'Tribute3'],
             },
             {
                 **defaultTribute,
                 'name': 'Tribute2',
                 'district': 2,
-                'groupedWith': ['Tribute1']
+                'groupedWith': ['Tribute1'],
             },
             {
                 **defaultTribute,
                 'name': 'Tribute3',
                 'district': 3,
-                'groupedWith': ['Tribute1']
+                'groupedWith': ['Tribute1'],
             },
-        ]
+        ],
     }
 
     Deaths().handleEventEffects(
         gameState,
-        textAndTerms
+        textAndTerms,
     )
 
     assert gameState['recentDeaths'] == [('Tribute2', 2), ('Tribute3', 3)]

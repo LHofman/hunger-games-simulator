@@ -5,7 +5,7 @@ from Domain.types import GameRoundState
 
 def handleEventEffects(
     gameState: GameRoundState,
-    textAndTerms: TextAndTerms
+    textAndTerms: TextAndTerms,
 ) -> None:
     for eventRule in eventRulesList:
         eventRule.handleEventEffects(gameState, textAndTerms)

@@ -27,7 +27,7 @@ def test_mock(mocker: MockerFixture):
     mocker.patch('random.random', return_value=0.5)
     mocker.patch(
         'random.choice',
-        side_effect=lambda list: list[0] # type: ignore
+        side_effect=lambda list: list[0], # type: ignore
     )
 
 
@@ -41,12 +41,12 @@ providers: list[ProviderType] = [
         },
         'tribute': { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
         'playersRemaining': {
-            'Player3': { **defaultTribute, 'name': 'Player3' }
+            'Player3': { **defaultTribute, 'name': 'Player3' },
         },
         'expectedText': 'This is a test text with Player1 and (Player2)',
         'expectedPlayers': [
-            { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] }
-        ]
+            { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
+        ],
     }),
     ({
         'id': 'it should only return the players in the tribute\'s group that are still remaining',
@@ -57,13 +57,13 @@ providers: list[ProviderType] = [
         },
         'tribute': { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
         'playersRemaining': {
-            'Player3': { **defaultTribute, 'name': 'Player3' }
+            'Player3': { **defaultTribute, 'name': 'Player3' },
         },
         'expectedText': 'This is a test text with Player1 and Player3',
         'expectedPlayers': [
             { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
-            { **defaultTribute, 'name': 'Player3' }
-        ]
+            { **defaultTribute, 'name': 'Player3' },
+        ],
     }),
     ({
         'id': 'it should return the correct group size and players when there are multiple players remaining',
@@ -75,12 +75,12 @@ providers: list[ProviderType] = [
         'tribute': { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
         'playersRemaining': {
             'Player2': { **defaultTribute, 'name': 'Player2' },
-            'Player3': { **defaultTribute, 'name': 'Player3' }
+            'Player3': { **defaultTribute, 'name': 'Player3' },
         },
         'expectedText': 'This is a test text with Player1 and Player2',
         'expectedPlayers': [
             { **defaultTribute, 'groupedWith': ['Player2', 'Player3'] },
-            { **defaultTribute, 'name': 'Player2' }
+            { **defaultTribute, 'name': 'Player2' },
         ],
     }),
 ]
@@ -92,12 +92,12 @@ def test_getGroupRequiredSizeAndPlayers(provider: ProviderType):
         **defaultGameRoundStateWithoutEvent,
         'event': provider['event'],
         'currentTribute': provider['tribute'],
-        'playersRemainingThisRound': provider['playersRemaining']  
+        'playersRemainingThisRound': provider['playersRemaining']  ,
     }
 
     textAndTerms: TextAndTerms = {
         'text': provider['event']['text'].replace('(Player1)', 'Player1'),
-        'players': [provider['tribute']]
+        'players': [provider['tribute']],
     }
 
     result = Groups().replaceTextTerms(
@@ -107,5 +107,5 @@ def test_getGroupRequiredSizeAndPlayers(provider: ProviderType):
 
     assert result == {
         'text': provider['expectedText'],
-        'players': provider['expectedPlayers']
+        'players': provider['expectedPlayers'],
     }

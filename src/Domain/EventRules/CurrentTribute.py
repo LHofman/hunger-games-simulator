@@ -6,15 +6,15 @@ class CurrentTribute(EventRule):
     def replaceTextTerms(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> TextAndTerms:
         text = textAndTerms['text'].replace(
             '(Player1)',
-            gameState['currentTribute']['name']
+            gameState['currentTribute']['name'],
         )
 
         return {
             **textAndTerms,
             'text': text,
-            'players': [gameState['currentTribute']]
+            'players': [gameState['currentTribute']],
         }

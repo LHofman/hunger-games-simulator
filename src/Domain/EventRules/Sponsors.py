@@ -8,7 +8,7 @@ class Sponsors(EventRule):
     def replaceTextTerms(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> TextAndTerms:
         text = textAndTerms['text']
         
@@ -17,7 +17,7 @@ class Sponsors(EventRule):
         if len(gameState['sponsors']) <= 0:
             return {
                 **textAndTerms,
-                'text': text.replace('(Sponsor)', 'an unknown sponsor')
+                'text': text.replace('(Sponsor)', 'an unknown sponsor'),
             }
 
         isFixedSponsor = (
@@ -31,8 +31,8 @@ class Sponsors(EventRule):
                 **textAndTerms,
                 'text': text.replace(
                     '(Sponsor)',
-                    random.choice(gameState['sponsors'])
-                )
+                    random.choice(gameState['sponsors']),
+                ),
             }
 
         if text.find('(Sponsor::opposing)') == -1:
@@ -41,7 +41,7 @@ class Sponsors(EventRule):
             )
             return {
                 **textAndTerms,
-                'text': text.replace('(Sponsor)', currentTributeSponsor)
+                'text': text.replace('(Sponsor)', currentTributeSponsor),
             }
 
         sponsorIndex = gameState['currentTribute']['index'] - 1
@@ -53,6 +53,6 @@ class Sponsors(EventRule):
             **textAndTerms,
             'text': text.replace(
                 '(Sponsor::opposing)',
-                random.choice(otherSponsors)
-            )
+                random.choice(otherSponsors),
+            ),
         }

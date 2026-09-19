@@ -13,30 +13,30 @@ def test_handleSplitGroup():
         **defaultGameRoundState,
         'event': {
             **defaultEvent,
-            'splitGroup': ['Player1', 'Player2']
+            'splitGroup': ['Player1', 'Player2'],
         },
         'playersAlive': {
             'Tribute1': {
                 **defaultTribute,
                 'name': 'Tribute1',
-                'groupedWith': ['Tribute2']
+                'groupedWith': ['Tribute2'],
             },
             'Tribute2': {
                 **defaultTribute,
                 'name': 'Tribute2',
-                'groupedWith': ['Tribute1']
+                'groupedWith': ['Tribute1'],
             },
             'Tribute3': {
                 **defaultTribute,
                 'name': 'Tribute3',
-                'groupedWith': ['Tribute4']
+                'groupedWith': ['Tribute4'],
             },
             'Tribute4': {
                 **defaultTribute,
                 'name': 'Tribute4',
-                'groupedWith': ['Tribute3']
+                'groupedWith': ['Tribute3'],
             },
-        }
+        },
     }
 
     textAndTerms: TextAndTerms = {
@@ -44,12 +44,12 @@ def test_handleSplitGroup():
         'players': [
             { **defaultTribute, 'name': 'Tribute1' },
             { **defaultTribute, 'name': 'Tribute2' },
-        ]
+        ],
     }
 
     Groups().handleEventEffects(
         gameState,
-        textAndTerms
+        textAndTerms,
     )
 
     assert gameState['playersAlive']['Tribute1']['groupedWith'] == []

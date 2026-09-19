@@ -9,7 +9,7 @@ class OtherTerms(EventRule):
     def replaceTextTerms(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> TextAndTerms:
         text = textAndTerms['text']
         terms = textAndTerms.get('terms', {})
@@ -19,7 +19,7 @@ class OtherTerms(EventRule):
             while (index > -1):
                 match = re.search(r'\d', text[index:])
                 if not match: raise ValueError(
-                    f'No number found in other term: {text[index:]}'
+                    f'No number found in other term: {text[index:]}',
                 )
 
                 number = int(match.group())

@@ -7,7 +7,7 @@ from Domain.types import (
     GameRoundState,
     GameRoundStateWithoutEvent,
     GroupSizeType,
-    Tribute
+    Tribute,
 )
 
 
@@ -15,7 +15,7 @@ class Groups(EventRule):
     def canPlayEvent(
         self,
         event: Event,
-        gameState: GameRoundStateWithoutEvent
+        gameState: GameRoundStateWithoutEvent,
     ) -> bool:
         if not self.__satisfiesGroupSize(event, gameState): return False
         if not self.__satisfiesCanFormGroup(event, gameState): return False
@@ -27,7 +27,7 @@ class Groups(EventRule):
     def __satisfiesGroupSize(
         self,
         event: Event,
-        gameState: GameRoundStateWithoutEvent
+        gameState: GameRoundStateWithoutEvent,
     ) -> bool:
         if 'requireGroupSize' not in event: return True
 
@@ -59,7 +59,7 @@ class Groups(EventRule):
     def __satisfiesCanFormGroup(
         self,
         event: Event,
-        gameState: GameRoundStateWithoutEvent
+        gameState: GameRoundStateWithoutEvent,
     ) -> bool:
         if 'formGroup' not in event: return True
 
@@ -68,7 +68,7 @@ class Groups(EventRule):
     def __satisfiesCanBetrayTeammates(
         self,
         event: Event,
-        gameState: GameRoundStateWithoutEvent
+        gameState: GameRoundStateWithoutEvent,
     ) -> bool:
         if gameState['options']['betrayTeammates']: return True
         if 'deaths' not in event: return True
@@ -84,7 +84,7 @@ class Groups(EventRule):
     def replaceTextTerms(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> TextAndTerms:
         event = gameState['event']
 
@@ -116,7 +116,7 @@ class Groups(EventRule):
     def handleEventEffects(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> None:
         self.__handleFormGroup(gameState, textAndTerms.get('players', []))
         self.__handleSplitGroup(gameState, textAndTerms.get('players', []))
@@ -124,7 +124,7 @@ class Groups(EventRule):
     def __handleFormGroup(
         self,
         gameState: GameRoundState,
-        players: list[Tribute]
+        players: list[Tribute],
     ) -> None:
         event = gameState['event']
 
@@ -143,7 +143,7 @@ class Groups(EventRule):
     def __handleSplitGroup(
         self,
         gameState: GameRoundState,
-        players: list[Tribute]
+        players: list[Tribute],
     ) -> None:
         event = gameState['event']
 
@@ -153,7 +153,7 @@ class Groups(EventRule):
         for playerToSplit in event['splitGroup']:
             match = re.search(r'\d+', playerToSplit)
             if not match: raise ValueError(
-                f'No number found in split group term: {playerToSplit}'
+                f'No number found in split group term: {playerToSplit}',
             )
 
             index = int(match.group()) - 1

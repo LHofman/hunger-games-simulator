@@ -6,7 +6,7 @@ from Domain.types import (
     Event,
     GameRoundState,
     GameRoundStateWithoutEvent,
-    Tribute
+    Tribute,
 )
 
 
@@ -14,7 +14,7 @@ class Possessions(EventRule):
     def canPlayEvent(
         self,
         event: Event,
-        gameState: GameRoundStateWithoutEvent
+        gameState: GameRoundStateWithoutEvent,
     ) -> bool:
         if 'requiresPossessions' not in event: return True
 
@@ -22,7 +22,7 @@ class Possessions(EventRule):
             playerHasPossession = self.doesTributeHavePossession(
                 gameState['currentTribute'],
                 possession['type'],
-                possession['value']
+                possession['value'],
             )
 
             if 'inverse' in possession and possession['inverse']:
@@ -35,7 +35,7 @@ class Possessions(EventRule):
     def replaceTextTerms(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> TextAndTerms:
         text = textAndTerms['text']
         terms = textAndTerms.get('terms', {})
@@ -44,7 +44,7 @@ class Possessions(EventRule):
         while (index > -1):
             match = re.search(r'\d', text[index:])
             if not match: raise ValueError(
-                f'No number found in possession term: {text[index:]}'
+                f'No number found in possession term: {text[index:]}',
             )
 
             number = int(match.group())
@@ -54,7 +54,7 @@ class Possessions(EventRule):
                 (index + len('(Possession:')) : (index + numberIndex)
             ]
             possession = random.choice(
-                gameState.get('currentTribute')['possessions'][possessionType]
+                gameState.get('currentTribute')['possessions'][possessionType],
             )
             term = f'(Possession:{possessionType}{number})'
             terms[term] = possession
@@ -68,7 +68,7 @@ class Possessions(EventRule):
     def handleEventEffects(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ) -> None:
         self.__handleAddPossessions(gameState, textAndTerms)
         self.__handleRemovePossessions(gameState, textAndTerms)
@@ -76,7 +76,7 @@ class Possessions(EventRule):
     def __handleAddPossessions(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ):
         event = gameState['event']
 
@@ -104,7 +104,7 @@ class Possessions(EventRule):
     def __handleRemovePossessions(
         self,
         gameState: GameRoundState,
-        textAndTerms: TextAndTerms
+        textAndTerms: TextAndTerms,
     ):
         event = gameState['event']
 
@@ -128,7 +128,7 @@ class Possessions(EventRule):
     def doesTributeHavePossession(
         tribute: Tribute,
         type: str,
-        value: str
+        value: str,
     ) -> bool:
         if value == 'any':
             return (
