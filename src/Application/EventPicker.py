@@ -1,4 +1,5 @@
 import random
+
 from Application.canPlayEvent import canPlayEvent
 from Domain.types import GameRoundStateWithoutEvent, Event, IncreaseEventOdds
 

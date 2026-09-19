@@ -1,5 +1,7 @@
 import pytest
+
 from pytest_mock import MockerFixture
+
 from Application.GameExecutor import GameExecutor
 from Application.Printers.TestPrinter import TestPrinter
 from Domain.types import GameConfig

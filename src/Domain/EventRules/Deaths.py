@@ -1,4 +1,5 @@
 import re
+
 from Domain.EventRule import EventRule, TextAndTerms
 from Domain.EventRules.TributesData import TributesData
 from Domain.types import GameRoundState

@@ -1,5 +1,6 @@
-from typing import TypedDict
 import pytest
+
+from typing import TypedDict
 
 from Domain.EventRules.TimedEvents import TimedEvents
 from Domain.types import Event

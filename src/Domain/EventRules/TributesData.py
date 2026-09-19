@@ -1,4 +1,5 @@
 from typing import Union
+
 from Domain.EventRule import EventRule, TextAndTerms
 from Domain.types import GameRoundState, Tribute
 

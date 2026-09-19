@@ -1,4 +1,5 @@
 from abc import ABC
+
 from Domain.types import (
     Event,
     GameRoundState,

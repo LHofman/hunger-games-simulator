@@ -1,8 +1,10 @@
 import json
+
 from typing import TypedDict, Union
 
 from Application.GameExecutor import GameExecutor
 from Application.Printer import Printer
+from Application.Printers.FilePrinter import FilePrinter
 from Domain.types import (
     Event,
     GameConfig,
@@ -113,7 +115,6 @@ if __name__ == '__main__':
     gameDataFile: GameDataFile = readFile('settings/gameData.json', 'json') # type: ignore
 
     if gameDataFile['options']['autoPlay']:
-        from Application.Printers.FilePrinter import FilePrinter
         printer = FilePrinter('resources/output.txt')
 
     tributes = readTributes(gameDataFile['options'], 'settings/tributes.txt')

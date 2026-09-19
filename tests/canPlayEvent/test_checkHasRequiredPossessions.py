@@ -1,5 +1,7 @@
-from typing import TypedDict
 import pytest
+
+from typing import TypedDict
+
 from Domain.EventRules.Possessions import Possessions
 from Domain.types import Event, GameRoundStateWithoutEvent
 from tests.defaults import (

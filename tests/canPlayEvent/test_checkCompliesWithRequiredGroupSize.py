@@ -1,5 +1,6 @@
-from typing import TypedDict
 import pytest
+
+from typing import TypedDict
 
 from Domain.EventRules.Groups import Groups
 from Domain.types import Event, GroupSizeType, Tribute

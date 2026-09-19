@@ -1,5 +1,6 @@
 import random
 import sys
+
 from Application.EventPicker import EventPicker
 from Application.handleEventEffects import handleEventEffects
 from Application.Printer import Printer

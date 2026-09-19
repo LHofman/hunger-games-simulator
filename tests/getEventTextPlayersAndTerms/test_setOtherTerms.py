@@ -1,5 +1,7 @@
 import pytest
+
 from pytest_mock import MockerFixture
+
 from Domain.EventRules.OtherTerms import OtherTerms
 from Domain.EventRule import TextAndTerms
 from Domain.types import GameRoundState

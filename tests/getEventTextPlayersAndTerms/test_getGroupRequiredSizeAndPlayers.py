@@ -1,6 +1,8 @@
-from typing import TypedDict
 import pytest
+
 from pytest_mock import MockerFixture
+from typing import TypedDict
+
 from Domain.EventRules.Groups import Groups
 from Domain.EventRule import TextAndTerms
 from Domain.types import Event, GameRoundState, GroupSizeType, Tribute

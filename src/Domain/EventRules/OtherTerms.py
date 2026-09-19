@@ -1,5 +1,6 @@
 import random
 import re
+
 from Domain.EventRule import EventRule, TextAndTerms
 from Domain.types import GameRoundState
 

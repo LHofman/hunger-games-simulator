@@ -1,6 +1,6 @@
-from Domain.types import GameRoundState
 from Domain.EventRule import TextAndTerms
 from Domain.eventRulesList import eventRulesList
+from Domain.types import GameRoundState
 
 
 def replaceTextTerms(gameState: GameRoundState) -> TextAndTerms:
