@@ -37,9 +37,9 @@ class Possessions(EventRule):
       number = int(match.group())
       numberIndex = match.start()
 
-      type = text[(index + len('(Possession:')) : (index + numberIndex)]
-      possession = random.choice(gameState.get('currentTribute')['possessions'][type])
-      term = f'(Possession:{type}{number})'
+      possessionType = text[(index + len('(Possession:')) : (index + numberIndex)]
+      possession = random.choice(gameState.get('currentTribute')['possessions'][possessionType])
+      term = f'(Possession:{possessionType}{number})'
       terms[term] = possession
 
       text = text.replace(term, possession)
@@ -63,13 +63,13 @@ class Possessions(EventRule):
         value = textAndTerms.get('terms', {})[value]
 
       tribute = gameState['playersAlive'][textAndTerms.get('players', [])[possession['player'] - 1]['name']]
-      type = possession['type']
+      possessionType = possession['type']
 
-      if type in tribute['possessions']:
-        if type not in gameState['options']['possessionsWithoutDuplicates']:
-          tribute['possessions'][type].append(value)
+      if possessionType in tribute['possessions']:
+        if possessionType not in gameState['options']['possessionsWithoutDuplicates']:
+          tribute['possessions'][possessionType].append(value)
       else:
-        tribute['possessions'][type] = [value]
+        tribute['possessions'][possessionType] = [value]
 
   def __handleRemovePossessions(self, gameState: GameRoundState, textAndTerms: TextAndTerms):
     event = gameState['event']
@@ -82,10 +82,10 @@ class Possessions(EventRule):
         value = textAndTerms.get('terms', {})[value]
 
       tribute = gameState['playersAlive'][textAndTerms.get('players', [])[possession['player'] - 1]['name']]
-      type = possession['type']
+      possessionType = possession['type']
 
-      if self.doesTributeHavePossession(tribute, type, value):
-        tribute['possessions'][type].remove(value)
+      if self.doesTributeHavePossession(tribute, possessionType, value):
+        tribute['possessions'][possessionType].remove(value)
 
   @staticmethod
   def doesTributeHavePossession(tribute: Tribute, type: str, value: str) -> bool:
