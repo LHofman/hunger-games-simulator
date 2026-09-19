@@ -118,8 +118,8 @@ class GameExecutor:
 
     def __showFallenTributes(self) -> None:
         if (
-            len(self.gameState['recentDeaths']) > 0 and
-            self.gameState['options']['showFallenTributes']
+            len(self.gameState['recentDeaths']) > 0
+            and self.gameState['options']['showFallenTributes']
         ):
             if not self.__isGameOver(): self.__readInput()
             self.printer.print(
@@ -141,8 +141,8 @@ class GameExecutor:
             for name, tribute in self.gameState['playersAlive'].items():
                 for name2, tribute2 in self.gameState['playersAlive'].items():
                     if (
-                        name2 != name and
-                        tribute2['district'] != tribute['district']
+                        name2 != name
+                        and tribute2['district'] != tribute['district']
                     ):
                         isEveryoneInSameDistrict = False
                         break

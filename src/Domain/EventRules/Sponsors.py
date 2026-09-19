@@ -22,8 +22,8 @@ class Sponsors(EventRule):
             gameState['options'].get('oneSponsorPerTribute', False)
         )
         if (
-            not isFixedSponsor or
-            len(gameState['sponsors']) != gameState['totalTributes']
+            not isFixedSponsor
+            or len(gameState['sponsors']) != gameState['totalTributes']
         ):
             return {
                 **textAndTerms,
@@ -44,8 +44,8 @@ class Sponsors(EventRule):
 
         sponsorIndex = gameState['currentTribute']['index'] - 1
         otherSponsors = (
-            gameState['sponsors'][:sponsorIndex] +
-            gameState['sponsors'][sponsorIndex+1:]
+            gameState['sponsors'][:sponsorIndex]
+            + gameState['sponsors'][sponsorIndex+1:]
         )
         return {
             **textAndTerms,

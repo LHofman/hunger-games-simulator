@@ -55,8 +55,8 @@ def readTributes(
         for name, tribute in list(tributes.items()):
             for name2, tribute2 in list(tributes.items()):
                 if (
-                    name2 != name and
-                    tribute2['district'] == tribute['district']
+                    name2 != name
+                    and tribute2['district'] == tribute['district']
                 ):
                     tribute['groupedWith'].append(name2)
 

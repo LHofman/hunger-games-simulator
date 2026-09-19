@@ -130,11 +130,11 @@ class Possessions(EventRule):
     ) -> bool:
         if value == 'any':
             return (
-                type in tribute['possessions'] and
-                len(tribute['possessions'][type]) > 0
+                type in tribute['possessions']
+                and len(tribute['possessions'][type]) > 0
             )
         else:
             return (
-                type in tribute['possessions'] and
-                value in tribute['possessions'][type]
+                type in tribute['possessions']
+                and value in tribute['possessions'][type]
             )

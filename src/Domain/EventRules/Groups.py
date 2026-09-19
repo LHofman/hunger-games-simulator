@@ -38,18 +38,18 @@ class Groups(EventRule):
                 availableGroupTributes += 1
 
         if (
-            sizeType == GroupSizeType.EXACT and
-            size != len(gameState['currentTribute']['groupedWith']) + 1
+            sizeType == GroupSizeType.EXACT
+            and size != len(gameState['currentTribute']['groupedWith']) + 1
         ): return False
 
         if (
-            sizeType == GroupSizeType.MIN and
-            size > availableGroupTributes
+            sizeType == GroupSizeType.MIN
+            and size > availableGroupTributes
         ): return False
 
         if (
-            sizeType == GroupSizeType.MAX and
-            size < len(gameState['currentTribute']['groupedWith']) + 1
+            sizeType == GroupSizeType.MAX
+            and size < len(gameState['currentTribute']['groupedWith']) + 1
         ): return False
 
         return True
@@ -99,8 +99,8 @@ class Groups(EventRule):
         text = textAndTerms['text']
         players: list[Tribute] = textAndTerms.get('players', [])
         while (
-            text.find('(Player') > -1 and
-            len(players) < aoGroupPlayersRequired
+            text.find('(Player') > -1
+            and len(players) < aoGroupPlayersRequired
         ):
             player = random.choice(list(groupedWithPlayers.values()))
             del groupedWithPlayers[player['name']]

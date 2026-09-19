@@ -96,9 +96,9 @@ class EventPicker:
 
         for (name, event) in events.items():
             if (
-                'maxOccurances' in event and
-                name in eventsOccured and
-                event['maxOccurances'] == eventsOccured[name]
+                'maxOccurances' in event
+                 and name in eventsOccured
+                 and event['maxOccurances'] == eventsOccured[name]
             ): increasedOddsEvents.append(
                 { 'event': name, 'percentage': -100 }
             )
@@ -129,8 +129,8 @@ class EventPicker:
             else:
                 rnd = random.random() * 100
                 if (
-                    rnd < abs(percentage) and
-                    events[increaseEvent['event']] in eventOptions
+                    rnd < abs(percentage)
+                    and events[increaseEvent['event']] in eventOptions
                 ): eventOptions.remove(events[increaseEvent['event']])
         
         return eventOptions

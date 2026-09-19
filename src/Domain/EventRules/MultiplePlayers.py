@@ -11,8 +11,8 @@ class MultiplePlayers(EventRule):
         if 'players' not in event: return True
 
         return (
-            len(gameState['playersRemainingThisRound']) + 1 >=
-            event['players']
+            len(gameState['playersRemainingThisRound']) + 1
+            >= event['players']
         )
 
     def replaceTextTerms(
