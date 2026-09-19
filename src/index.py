@@ -10,7 +10,7 @@ printer: Printer = Printer()
 def readFile(fileName: str, type: str = 'text') -> Union[dict, list, None]: # type: ignore
   file = open(fileName, 'r', encoding='utf-8')
   
-  if (type == 'json'):
+  if type == 'json':
     return json.load(file)
 
   lines = file.readlines()
@@ -20,9 +20,9 @@ def readTributes(gameOptions: GameOptions, tributesFileName: str) -> dict[str, T
   file = open(tributesFileName, 'r', encoding='utf-8')
   lines = file.readlines()
 
-  if (gameOptions['districts'] > 0):
+  if gameOptions['districts'] > 0:
     playersPerDistrict = len(lines) / gameOptions['districts']
-  elif (gameOptions['playersPerDistrict'] > 0):
+  elif gameOptions['playersPerDistrict'] > 0:
     playersPerDistrict = gameOptions['playersPerDistrict']
   else: playersPerDistrict = 0
   
@@ -34,15 +34,15 @@ def readTributes(gameOptions: GameOptions, tributesFileName: str) -> dict[str, T
     tributes[name] = {
       'index': players,
       'name': name, 
-      'district': int(((players-1)/playersPerDistrict)+1) if (playersPerDistrict > 0) else 0,
+      'district': int(((players-1)/playersPerDistrict)+1) if playersPerDistrict > 0 else 0,
       'groupedWith': [],
       'possessions': {}
     }
 
-  if (gameOptions['districtsAreTeammates']):
+  if gameOptions['districtsAreTeammates']:
     for name, tribute in list(tributes.items()):
       for name2, tribute2 in list(tributes.items()):
-        if (name2 != name and tribute2['district'] == tribute['district']):
+        if name2 != name and tribute2['district'] == tribute['district']:
           tribute['groupedWith'].append(name2)
 
   return tributes
@@ -55,9 +55,9 @@ def addNameToEvents(events: dict[str, Event]) -> dict[str, Event]:
   return events
 
 def printWinner(gameState: GameState, printer: Printer):
-  if (len(gameState['playersAlive']) == 1):
+  if len(gameState['playersAlive']) == 1:
     printer.print('The winner is %s' % list(gameState['playersAlive'].keys())[0])
-  elif (len(gameState['playersAlive']) > 1):
+  elif len(gameState['playersAlive']) > 1:
     printer.print('The winners are %s' % ', '.join(list(gameState['playersAlive'].keys())))
   else:
     printer.print('There are no winners today')
@@ -88,14 +88,14 @@ class GameDataFile(TypedDict):
 
 gameDataFile: GameDataFile = readFile('settings/gameData.json', 'json') # type: ignore
 
-if (gameDataFile['options']['autoPlay']):
+if gameDataFile['options']['autoPlay']:
   from Application.Printers.FilePrinter import FilePrinter
   printer = FilePrinter('resources/output.txt')
 
 tributes = readTributes(gameDataFile['options'], 'settings/tributes.txt')
 sponsors: list[str] = readFile('settings/sponsors.txt') # type: ignore
 
-if (gameDataFile['options']['autoPlay']):
+if gameDataFile['options']['autoPlay']:
   outputFile = open('resources/output.txt', 'w')
   outputFile.write('')
   outputFile.close()

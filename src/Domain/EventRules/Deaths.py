@@ -7,7 +7,7 @@ class Deaths(EventRule):
   def handleEventEffects(self, gameState: GameRoundState, textAndTerms: TextAndTerms) -> None:
     event = gameState['event']
 
-    if ('deaths' not in event): return
+    if 'deaths' not in event: return
 
     players = textAndTerms.get('players', [])
 

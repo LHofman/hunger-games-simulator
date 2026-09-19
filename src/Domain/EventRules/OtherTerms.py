@@ -12,7 +12,7 @@ class OtherTerms(EventRule):
       index = text.find('(%s' % key)
       while (index > -1):
         match = re.search(r'\d', text[index:])
-        if (not match): raise Exception('No number found in other term: %s' % text[index:])
+        if not match: raise Exception('No number found in other term: %s' % text[index:])
 
         number = int(match.group())
         term = '(%s%d)' % (key, number)

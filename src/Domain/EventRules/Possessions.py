@@ -9,7 +9,7 @@ class Possessions(EventRule):
     event: Event,
     gameState: GameRoundStateWithoutEvent
   ) -> bool:
-    if ('requiresPossessions' not in event): return True
+    if 'requiresPossessions' not in event: return True
 
     for possession in event['requiresPossessions']:
       playerHasPossession = self.doesTributeHavePossession(
@@ -18,10 +18,10 @@ class Possessions(EventRule):
         possession['value']
       )
 
-      if ('inverse' in possession and possession['inverse']):
-        if (playerHasPossession): return False
+      if 'inverse' in possession and possession['inverse']:
+        if playerHasPossession: return False
       else:
-        if (not playerHasPossession): return False
+        if not playerHasPossession: return False
 
     return True
 
@@ -32,7 +32,7 @@ class Possessions(EventRule):
     index = text.find('(Possession:')
     while (index > -1):
       match = re.search(r'\d', text[index:])
-      if (not match): raise Exception('No number found in possession term: %s' % text[index:])
+      if not match: raise Exception('No number found in possession term: %s' % text[index:])
 
       number = int(match.group())
       numberIndex = match.start()
@@ -55,18 +55,18 @@ class Possessions(EventRule):
   def __handleAddPossessions(self, gameState: GameRoundState, textAndTerms: TextAndTerms):
     event = gameState['event']
 
-    if ('addPossessions' not in event): return
+    if 'addPossessions' not in event: return
 
     for possession in event['addPossessions']:
       value = possession['value']
-      if (value in textAndTerms.get('terms', {})):
+      if value in textAndTerms.get('terms', {}):
         value = textAndTerms.get('terms', {})[value]
 
       tribute = gameState['playersAlive'][textAndTerms.get('players', [])[possession['player'] - 1]['name']]
       type = possession['type']
 
-      if (type in tribute['possessions']):
-        if (type not in gameState['options']['possessionsWithoutDuplicates']):
+      if type in tribute['possessions']:
+        if type not in gameState['options']['possessionsWithoutDuplicates']:
           tribute['possessions'][type].append(value)
       else:
         tribute['possessions'][type] = [value]
@@ -74,22 +74,22 @@ class Possessions(EventRule):
   def __handleRemovePossessions(self, gameState: GameRoundState, textAndTerms: TextAndTerms):
     event = gameState['event']
 
-    if ('removePossessions' not in event): return
+    if 'removePossessions' not in event: return
 
     for possession in event['removePossessions']:
       value = possession['value']
-      if (value in textAndTerms.get('terms', {})):
+      if value in textAndTerms.get('terms', {}):
         value = textAndTerms.get('terms', {})[value]
 
       tribute = gameState['playersAlive'][textAndTerms.get('players', [])[possession['player'] - 1]['name']]
       type = possession['type']
 
-      if (self.doesTributeHavePossession(tribute, type, value)):
+      if self.doesTributeHavePossession(tribute, type, value):
         tribute['possessions'][type].remove(value)
 
   @staticmethod
   def doesTributeHavePossession(tribute: Tribute, type: str, value: str) -> bool:
-    if (value == 'any'):
+    if value == 'any':
       return type in tribute['possessions'] and len(tribute['possessions'][type]) > 0
     else:
       return type in tribute['possessions'] and value in tribute['possessions'][type]

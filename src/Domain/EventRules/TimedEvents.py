@@ -7,11 +7,11 @@ class TimedEvents(EventRule):
     event: Event,
     gameState: GameRoundStateWithoutEvent
   ) -> bool:
-    if ('time' not in event):
+    if 'time' not in event:
       return gameState['playStandardEvents']
     
     timesList = event['time']
-    if (not isinstance(timesList, list)):
+    if not isinstance(timesList, list):
       timesList = [timesList]
 
     return gameState['time'] in timesList

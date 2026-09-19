@@ -8,7 +8,7 @@ class MultiplePlayers(EventRule):
     event: Event,
     gameState: GameRoundStateWithoutEvent
   ) -> bool:
-    if ('players' not in event): return True
+    if 'players' not in event: return True
 
     return len(gameState['playersRemainingThisRound']) + 1 >= event['players']
 
