@@ -7,7 +7,7 @@ import re
 from typing import TypedDict
 
 from application.game_executor import GameExecutor
-from application.printer import Printer
+from domain.printer import Printer
 from application.printers.file_printer import FilePrinter
 from domain.types import (
     Event,

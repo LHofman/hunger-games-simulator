@@ -1,6 +1,6 @@
 """Print messages to an array for testing purposes."""
 
-from application.printer import Printer
+from domain.printer import Printer
 
 
 class TestPrinter(Printer):

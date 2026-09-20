@@ -1,6 +1,6 @@
 """Prints messages to a file."""
 
-from application.printer import Printer
+from domain.printer import Printer
 
 
 class FilePrinter(Printer):

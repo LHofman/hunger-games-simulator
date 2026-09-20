@@ -5,7 +5,7 @@ import sys
 
 from application.event_picker import EventPicker
 from application.handle_event_effects import handle_event_effects
-from application.printer import Printer
+from domain.printer import Printer
 from application.replace_text_terms import replace_text_terms
 from domain.event_rules.possessions import Possessions
 from domain.types import (
