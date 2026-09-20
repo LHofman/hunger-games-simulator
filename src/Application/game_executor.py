@@ -29,7 +29,6 @@ class GameExecutor:
             'tributes_alive': game_config['all_tributes'].copy(),
             'deaths': [],
             'recent_deaths': [],
-            'tributes_data': {},
         }
         self.printer = printer
 
@@ -134,12 +133,18 @@ class GameExecutor:
         ):
             if not self._is_game_over():
                 self._read_input()
+
             self.printer.print(
                 f'{len(self._game_state["recent_deaths"])} cannon shots '
                 'can be heard in the distance.',
             )
-            for tribute_name, district in self._game_state['recent_deaths']:
-                self.printer.print(f'{tribute_name} from district {district}')
+
+            for tribute_name in self._game_state['recent_deaths']:
+                tribute = self._game_state['all_tributes'][tribute_name]
+                self.printer.print(
+                    f'{tribute_name} from district {tribute.district}'
+                )
+
             self.printer.print('---')
 
         self._game_state['deaths'].append(

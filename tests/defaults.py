@@ -35,7 +35,6 @@ default_game_round_state_without_event: GameRoundStateWithoutEvent = {
     'tributes_alive': {},
     'deaths': [],
     'recent_deaths': [],
-    'tributes_data': {},
     'time': '',
     'exact_time': '',
     'current_tribute': default_tribute,

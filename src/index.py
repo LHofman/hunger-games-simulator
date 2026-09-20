@@ -132,13 +132,13 @@ def print_rankings(game_state: GameState, printer: Printer):
     printer.print('\n\n\n---\nFinal Rankings')
 
     for tribute_deaths in game_state['deaths']:
-        for tribute, district in tribute_deaths:
-            tribute_data = game_state['tributes_data'][tribute]
+        for tribute_name in tribute_deaths:
+            tribute = game_state['all_tributes'][tribute_name]
             printer.print(
                 f'{game_state["total_tributes"]}. '
-                f'{tribute} from district {district}, '
-                f'died during {tribute_data["time of death"]}, '
-                f'has {tribute_data.get("kills", 0)} kills',
+                f'{tribute.name} from district {tribute.district}, '
+                f'died during {tribute.time_of_death}, '
+                f'has {tribute.kills} kills',
             )
             game_state['total_tributes'] -= 1
 

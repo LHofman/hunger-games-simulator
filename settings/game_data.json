@@ -402,20 +402,20 @@
       "text": "(Tribute2) catches (Tribute1) off guard and kills them.",
       "tributes": 2,
       "deaths": ["Tribute1"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }]
+      "addKills": [{ "tribute": 1, "value": 1 }]
     },
     "explodeThreeTributes": {
       "text": "(Tribute1) sets an explosive off, killing (Tribute2), (Tribute3), and (Tribute4).",
       "tributes": 4,
       "deaths": ["Tribute2", "Tribute3", "Tribute4"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 3 }]
+      "addKills": [{ "tribute": 1, "value": 3 }]
     },
     "shootArrowLethal": {
       "text": "(Tribute1) shoots an arrow into (Tribute2)'s head.",
       "tributes": 2,
       "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "bow"}],
       "deaths": ["Tribute2"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "addKills": [{ "tribute": 1, "value": 1 }],
       "percentage": 200
     },
     "shootArrowKillWrongPerson": {
@@ -423,7 +423,7 @@
       "tributes": 3,
       "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "bow"}],
       "deaths": ["Tribute3"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "addKills": [{ "tribute": 1, "value": 1 }],
       "percentage": 200,
       "killTeammates": true
     },
@@ -432,7 +432,7 @@
       "tributes": 2,
       "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "knives"}],
       "deaths": ["Tribute2"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "addKills": [{ "tribute": 1, "value": 1 }],
       "percentage": 200
     },
     "killOneTributeWithTrident": {
@@ -440,7 +440,7 @@
       "tributes": 2,
       "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "trident"}],
       "deaths": ["Tribute2"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "addKills": [{ "tribute": 1, "value": 1 }],
       "percentage": 200
     },
     "killWithMace": {
@@ -448,7 +448,7 @@
       "tributes": 2,
       "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "mace"}],
       "deaths": ["Tribute2"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "addKills": [{ "tribute": 1, "value": 1 }],
       "percentage": 200
     },
     "stepOnLandmine": {
@@ -467,9 +467,9 @@
       },
       "formGroup": ["Tribute1", "Tribute2"],
       "deaths": ["Tribute3"],
-      "updateTributesData": [
-        { "tribute": 1, "type": "kills", "operation": "add", "value": 1 },
-        { "tribute": 2, "type": "kills", "operation": "add", "value": 1 }
+      "addKills": [
+        { "tribute": 1, "value": 1 },
+        { "tribute": 2, "value": 1 }
       ]
     },
     "doubleSuicide": {
@@ -495,9 +495,9 @@
       "tributes": 4,
       "formGroup": ["Tribute2", "Tribute3"],
       "deaths": ["Tribute1", "Tribute4"],
-      "updateTributesData": [
-        { "tribute": 2, "type": "kills", "operation": "add", "value": 2 },
-        { "tribute": 3, "type": "kills", "operation": "add", "value": 2 }
+      "addKills": [
+        { "tribute": 2, "value": 2 },
+        { "tribute": 3, "value": 2 }
       ]
     },
     "argumentAndKill": {
@@ -510,10 +510,10 @@
       },
       "formGroup": ["Tribute1", "Tribute3", "Tribute4"],
       "deaths": ["Tribute2"],
-      "updateTributesData": [
-        { "tribute": 1, "type": "kills", "operation": "add", "value": 1 },
-        { "tribute": 3, "type": "kills", "operation": "add", "value": 1 },
-        { "tribute": 4, "type": "kills", "operation": "add", "value": 1 }
+      "addKills": [
+        { "tribute": 1, "value": 1 },
+        { "tribute": 3, "value": 1 },
+        { "tribute": 4, "value": 1 }
       ],
       "killTeammates": true
     },
@@ -526,9 +526,9 @@
         "groupedWith": ["Tribute2"]
       },
       "deaths": ["Tribute3"],
-      "updateTributesData": [
-        { "tribute": 1, "type": "kills", "operation": "add", "value": 1 },
-        { "tribute": 2, "type": "kills", "operation": "add", "value": 1 }
+      "addKills": [
+        { "tribute": 1, "value": 1 },
+        { "tribute": 2, "value": 1 }
       ]
     },
     "fightDuringFeast1": {
@@ -536,14 +536,14 @@
       "time": "feast",
       "tributes": 3,
       "deaths": ["Tribute3"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }]
+      "addKills": [{ "tribute": 1, "value": 1 }]
     },
     "bashHeadIntoRock": {
       "text": "(Tribute1) bashes (Tribute2)'s head against a rock several times.",
       "time": ["feast", "day", "night"],
       "tributes": 2,
       "deaths": ["Tribute2"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }]
+      "addKills": [{ "tribute": 1, "value": 1 }]
     },
     "fallIntoPitAndDie": {
       "text": "(Tribute1) falls into a pit and dies.",
@@ -556,7 +556,7 @@
       "time": "night",
       "tributes": 3,
       "deaths": ["Tribute1", "Tribute2"],
-      "updateTributesData": [{ "tribute": 3, "type": "kills", "operation": "add", "value": 2 }]
+      "addKills": [{ "tribute": 3, "value": 2 }]
     },
     "fallsFromTreeAndDies": {
       "text": "(Tribute1) falls from a tree while climbing it and dies",
@@ -567,7 +567,7 @@
       "tributes": 2,
       "requiresPossessions": [{ "tribute": 1, "type": "pet", "value": "any"}],
       "deaths": ["Tribute2"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "addKills": [{ "tribute": 1, "value": 1 }],
       "percentage": 300
     },
     "injureWithBranch": {
@@ -581,7 +581,7 @@
       "tributes": 2,
       "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "branch"}],
       "deaths": ["Tribute2"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }]
+      "addKills": [{ "tribute": 1, "value": 1 }]
     },
     "fallsFromTreeKillingSelfAndTribute2": {
       "text": "(Tribute1) falls from a tree and lands on (Tribute2), killing them both.",
@@ -603,7 +603,7 @@
       "tributes": 2,
       "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "writingUtensils"}],
       "deaths": ["Tribute2"],
-      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "addKills": [{ "tribute": 1, "value": 1 }],
       "percentage": 200
     },
     "receivesPoisonFromOpposingSponsor": {
@@ -615,7 +615,7 @@
       "text": "(Tribute1) begs for (Tribute2) to kill them. They happily oblige.",
       "tributes": 2,
       "deaths": ["Tribute1"],
-      "updateTributesData": [{ "tribute": 2, "type": "kills", "operation": "add", "value": 1 }]
+      "addKills": [{ "tribute": 2, "value": 1 }]
     }
   },
   "replaceTerms": {

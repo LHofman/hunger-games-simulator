@@ -1,5 +1,7 @@
 """Represent a tribute in the Hunger Games."""
 
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 
 from domain.types import GameOptions
@@ -16,6 +18,8 @@ class Tribute:
     possessions: dict[str, list[str]] = field(
         default_factory=dict[str, list[str]]
     )
+    kills: int = 0
+    time_of_death: str | None = None
 
     def add_possession(
         self,
@@ -65,3 +69,11 @@ class Tribute:
     def ungroup_all(self):
         """Ungroup this tribute from all other tributes."""
         self.grouped_with.clear()
+
+    def mark_dead(self, time_of_death: str):
+        """Mark this tribute as dead and record the time of death."""
+        self.time_of_death = time_of_death
+
+    def add_kills(self, number_of_kills: int = 1):
+        """Add kills to this tribute's kill count."""
+        self.kills += number_of_kills

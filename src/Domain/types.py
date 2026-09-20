@@ -41,13 +41,11 @@ class GroupSize(TypedDict):
     grouped_with: NotRequired[list[str]]
 
 
-class UpdateTributeData(TypedDict):
-    """Represent an update to a tribute's data that can be applied by an event."""
+class AddKillsData(TypedDict):
+    """Represent the data for adding kills to a tribute."""
 
     tribute: Required[int]
-    type: Required[str]
-    operation: NotRequired[str]
-    value: Required[int | str]
+    value: Required[int]
 
 
 class Event(TypedDict):
@@ -66,19 +64,9 @@ class Event(TypedDict):
     kill_teammates: NotRequired[bool]
     form_group: NotRequired[list[str]]
     split_group: NotRequired[list[str]]
-    update_tributes_data: NotRequired[list[UpdateTributeData]]
+    add_kills: NotRequired[list[AddKillsData]]
     add_possessions: NotRequired[list[Possession]]
     remove_possessions: NotRequired[list[Possession]]
-
-
-# class Tribute(TypedDict):
-#     """Represent a tribute (tribute) in the game."""
-
-#     index: int
-#     name: str
-#     district: int
-#     grouped_with: Required[list[str]]
-#     possessions: Required[dict[str, list[str]]]
 
 
 class GameOptions(TypedDict):
@@ -126,9 +114,8 @@ class GameState(GameConfig):
 
     events_occured: Required[dict[str, int]]
     tributes_alive: Required[dict[str, Tribute]]
-    deaths: Required[list[list[tuple[str, int]]]]
-    recent_deaths: Required[list[tuple[str, int]]]
-    tributes_data: Required[dict[str, dict[str, int | str]]]
+    deaths: Required[list[list[str]]]
+    recent_deaths: Required[list[str]]
 
 
 class GameRoundStateWithoutEvent(GameState):

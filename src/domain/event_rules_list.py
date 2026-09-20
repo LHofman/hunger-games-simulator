@@ -10,7 +10,6 @@ from domain.event_rules.other_terms import OtherTerms
 from domain.event_rules.possessions import Possessions
 from domain.event_rules.sponsors import Sponsors
 from domain.event_rules.timed_events import TimedEvents
-from domain.event_rules.tributes_data import TributesData
 
 # The order is important.
 event_rules_list: list[EventRule] = [
@@ -25,6 +24,5 @@ event_rules_list: list[EventRule] = [
     Possessions(),
     OtherTerms(),
     Sponsors(),
-    TributesData(),
     Deaths(),
 ]
