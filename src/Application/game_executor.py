@@ -27,7 +27,7 @@ class GameExecutor:
         self._game_state = {
             **game_config,
             'events_occured': {},
-            'players_alive': game_config['all_tributes'].copy(),
+            'tributes_alive': game_config['all_tributes'].copy(),
             'deaths': [],
             'recent_deaths': [],
             'tributes_data': {},
@@ -67,10 +67,10 @@ class GameExecutor:
         text: str,
         play_standard_events: bool,
     ) -> None:
-        tributes_left = self._game_state['players_alive'].copy()
+        tributes_left = self._game_state['tributes_alive'].copy()
         played = 0
         total = amount_left = len(tributes_left)
-        while (amount_left > 0 and len(self._game_state['players_alive']) > 1):
+        while (amount_left > 0 and len(self._game_state['tributes_alive']) > 1):
             self._check_everyone_in_the_same_group()
 
             tribute = list(tributes_left.values())[0]
@@ -106,7 +106,7 @@ class GameExecutor:
             'exact_time': text,
             'play_standard_events': play_standard_events,
             'current_tribute': tribute,
-            'players_remaining_this_round': tributes_left,
+            'tributes_remaining_this_round': tributes_left,
         }
 
         event = EventPicker().get_event(game_round_state_without_event)
@@ -136,20 +136,20 @@ class GameExecutor:
                 f'{len(self._game_state["recent_deaths"])} cannon shots '
                 'can be heard in the distance.',
             )
-            for player_name, district in self._game_state['recent_deaths']:
-                self.printer.print(f'{player_name} from district {district}')
+            for tribute_name, district in self._game_state['recent_deaths']:
+                self.printer.print(f'{tribute_name} from district {district}')
             self.printer.print('---')
 
         self._game_state['deaths'].append(self._game_state['recent_deaths'].copy())
         self._game_state['recent_deaths'].clear()
 
     def _is_game_over(self) -> bool:
-        if len(self._game_state['players_alive']) <= 1: return True
+        if len(self._game_state['tributes_alive']) <= 1: return True
 
         if self._game_state['options']['district_can_win_together']:
             is_everyone_in_same_district = True
-            for name, tribute in self._game_state['players_alive'].items():
-                for name2, tribute2 in self._game_state['players_alive'].items():
+            for name, tribute in self._game_state['tributes_alive'].items():
+                for name2, tribute2 in self._game_state['tributes_alive'].items():
                     if (
                         name2 != name
                         and tribute2['district'] != tribute['district']
@@ -164,9 +164,9 @@ class GameExecutor:
         return False
 
     def _shuffle_tributes(self) -> None:
-        l = list(self._game_state['players_alive'].items())
+        l = list(self._game_state['tributes_alive'].items())
         random.shuffle(l)
-        self._game_state['players_alive'] = dict(l)
+        self._game_state['tributes_alive'] = dict(l)
 
     def _read_input(self) -> None:
         if self._game_state['options']['auto_play']:
@@ -187,7 +187,7 @@ class GameExecutor:
             self._read_input()
 
     def _print_status(self) -> None:
-        for (name, tribute) in sorted(self._game_state['players_alive'].items()):
+        for (name, tribute) in sorted(self._game_state['tributes_alive'].items()):
             possessions = ''
             for (type, values) in tribute['possessions'].items():
                 if Possessions.does_tribute_have_possession(
@@ -208,13 +208,13 @@ class GameExecutor:
         self.printer.print('\n---')
 
     def _check_everyone_in_the_same_group(self) -> None:
-        for name, tribute in self._game_state['players_alive'].items():
-            for name2 in self._game_state['players_alive'].keys():
+        for name, tribute in self._game_state['tributes_alive'].items():
+            for name2 in self._game_state['tributes_alive'].keys():
                 if name2 != name and name2 not in tribute['grouped_with']:
                     return
 
-        for name, _ in self._game_state['players_alive'].items():
-            self._game_state['players_alive'][name]['grouped_with'].clear()
+        for name, _ in self._game_state['tributes_alive'].items():
+            self._game_state['tributes_alive'][name]['grouped_with'].clear()
 
         self.printer.print(
             'The remaining tributes realize they '

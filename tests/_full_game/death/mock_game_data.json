@@ -4,7 +4,7 @@
     "betrayTeammates": false,
     "shuffleTributes": true,
     "districts": 2,
-    "playersPerDistrict": 0,
+    "tributesPerDistrict": 0,
     "districtsAreTeammates": false,
     "districtCanWinTogether": false,
     "oneSponsorPerTribute": true,
@@ -18,16 +18,16 @@
   },
   "events": {
     "fleeBloodbath": {
-      "text": "(Player1) flees the cornocopia hastily",
+      "text": "(Tribute1) flees the cornocopia hastily",
       "time": ["bloodbath"]
     },
     "firstEvent": {
-      "text": "(Player1) explores the arena.",
+      "text": "(Tribute1) explores the arena.",
       "maxOccurances": 1
     },
     "dieFromHypothermia": {
-      "text": "(Player1) dies.",
-      "deaths": ["Player1"]
+      "text": "(Tribute1) dies.",
+      "deaths": ["Tribute1"]
     }
   },
   "replaceTerms": {}

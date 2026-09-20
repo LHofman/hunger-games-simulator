@@ -13,9 +13,9 @@ def test_handle_deaths():
         **default_game_round_state,
         'event': {
             **default_event,
-            'deaths': ['Player2', 'Player3'],
+            'deaths': ['Tribute2', 'Tribute3'],
         },
-        'players_alive': {
+        'tributes_alive': {
             'Tribute1': {
                 **default_tribute,
                 'name': 'Tribute1',
@@ -40,7 +40,7 @@ def test_handle_deaths():
 
     text_and_terms: TextAndTerms = {
         'text': '',
-        'players': [
+        'tributes': [
             {
                 **default_tribute,
                 'name': 'Tribute1',
@@ -72,6 +72,6 @@ def test_handle_deaths():
     assert game_state['tributes_data']['Tribute2']['district'] == 2
     assert game_state['tributes_data']['Tribute3']['time of death'] == 'day'
     assert game_state['tributes_data']['Tribute3']['district'] == 3
-    assert game_state['players_alive'] == {
+    assert game_state['tributes_alive'] == {
         'Tribute1': { **default_tribute, 'name': 'Tribute1', 'district': 1, 'grouped_with': [] },
     }

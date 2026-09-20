@@ -4,7 +4,7 @@
     "betrayTeammates": false,
     "shuffleTributes": true,
     "districts": 12,
-    "playersPerDistrict": 0,
+    "tributesPerDistrict": 0,
     "districtsAreTeammates": false,
     "districtCanWinTogether": false,
     "oneSponsorPerTribute": true,
@@ -35,7 +35,7 @@
         "hidden": [
           { "event": "startFire", "percentage": -80 },
           { "event": "awakesCuddlingWithAnimal", "percentage": -95 },
-          { "event": "killOnePlayer1", "percentage": -70 },
+          { "event": "killOneTribute1", "percentage": -70 },
           { "event": "fightTwoVersusTwo", "percentage": -70 },
           { "event": "injureWithBranch", "percentage": -70 },
           { "event": "killWithBranch", "percentage": -70 }
@@ -45,577 +45,577 @@
   },
   "events": {
     "exploreArena": {
-      "text": "(Player1) explores the arena."
+      "text": "(Tribute1) explores the arena."
     },
     "goHunting": {
-      "text": "(Player1) goes hunting."
+      "text": "(Tribute1) goes hunting."
     },
     "thinksAboutHome": {
-      "text": "(Player1) thinks about home."
+      "text": "(Tribute1) thinks about home."
     },
     "prickWhilePickingBerries": {
-      "text": "(Player1) is pricked by thorns while picking berries."
+      "text": "(Tribute1) is pricked by thorns while picking berries."
     },
     "collectFruitFromTree": {
-      "text": "(Player1) collects fruit from a tree."
+      "text": "(Tribute1) collects fruit from a tree."
     },
     "discoverRiver": {
-      "text": "(Player1) discovers a river."
+      "text": "(Tribute1) discovers a river."
     },
     "questionSanity": {
-      "text": "(Player1) questions her sanity."
+      "text": "(Tribute1) questions her sanity."
     },
     "begToBeKilledButRefused": {
-      "text": "(Player1) begs for (Player2) to kill them. They refuse, keeping (Player1) alive.",
-      "players": 2
+      "text": "(Tribute1) begs for (Tribute2) to kill them. They refuse, keeping (Tribute1) alive.",
+      "tributes": 2
     },
     "eavesdrop1": {
-      "text": "(Player1) overhears (Player2) and (Player3) talking in the distance.",
-      "players": 3
+      "text": "(Tribute1) overhears (Tribute2) and (Tribute3) talking in the distance.",
+      "tributes": 3
     },
     "criesToSleep": {
-      "text": "(Player1) cries theirself to sleep.",
+      "text": "(Tribute1) cries theirself to sleep.",
       "time": "night",
-      "removePossessions": [{ "player": 1, "type": "status", "value": "tired" }]
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "tired" }]
     },
     "huddleForWarmth": {
-      "text": "(Player1) and (Player2) huddle for warmth.",
+      "text": "(Tribute1) and (Tribute2) huddle for warmth.",
       "time": "night",
-      "players": 2
+      "tributes": 2
     },
     "grabBow": {
-      "text": "(Player1) finds a bow, some arrows, and a quiver.",
+      "text": "(Tribute1) finds a bow, some arrows, and a quiver.",
       "time": ["bloodbath", "feast"],
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow", "inverse": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "bow" }]
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "bow", "inverse": true }],
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "bow" }]
     },
     "receiveBow": {
-      "text": "(Player1) receives a bow, some arrows, and a quiver from (Sponsor).",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow", "inverse": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "bow" }],
-      "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
+      "text": "(Tribute1) receives a bow, some arrows, and a quiver from (Sponsor).",
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "bow", "inverse": true }],
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "bow" }],
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "grabKnives": {
-      "text": "(Player1) takes a handful of throwing knives.",
+      "text": "(Tribute1) takes a handful of throwing knives.",
       "time": ["bloodbath", "feast"],
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives", "inverse": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "knives" }]
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "knives", "inverse": true }],
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "knives" }]
     },
     "findKnives": {
-      "text": "(Player1) finds a handful of throwing knives.",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives", "inverse": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "knives" }]
+      "text": "(Tribute1) finds a handful of throwing knives.",
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "knives", "inverse": true }],
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "knives" }]
     },
     "retrieveTrident": {
-      "text": "(Player1) retrieves a trident from inside the cornucopia.",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident", "inverse": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "trident" }],
+      "text": "(Tribute1) retrieves a trident from inside the cornucopia.",
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "trident", "inverse": true }],
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "trident" }],
       "time": ["bloodbath", "feast"]
     },
     "receiveTrident": {
-      "text": "(Player1) receives a trident from (Sponsor)",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident", "inverse": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "trident" }],
-      "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
+      "text": "(Tribute1) receives a trident from (Sponsor)",
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "trident", "inverse": true }],
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "trident" }],
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "grabMace": {
-      "text": "(Player1) grabs a mace.",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace", "inverse": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }],
+      "text": "(Tribute1) grabs a mace.",
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "mace", "inverse": true }],
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "mace" }],
       "time": ["bloodbath", "feast"]
     },
     "receiveMace": {
-      "text": "(Player1) receives a mace from (Sponsor).",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace", "inverse": true }],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "mace" }],
-      "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
+      "text": "(Tribute1) receives a mace from (Sponsor).",
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "mace", "inverse": true }],
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "mace" }],
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "takeItem": {
-      "text": "(Player2) rips a (Possession:item1) out of (Player1)'s hands.",
+      "text": "(Tribute2) rips a (Possession:item1) out of (Tribute1)'s hands.",
       "time": ["bloodbath", "feast"],
-      "players": 2,
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "any"}],
-      "removePossessions": [{ "player": 1, "type": "item", "value": "(Possession:item1)"}],
-      "addPossessions": [{ "player": 2, "type": "item", "value": "(Possession:item1)"}]
+      "tributes": 2,
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "any"}],
+      "removePossessions": [{ "tribute": 1, "type": "item", "value": "(Possession:item1)"}],
+      "addPossessions": [{ "tribute": 2, "type": "item", "value": "(Possession:item1)"}]
     },
     "indecisiveAtBloodbath": {
-      "text": "(Player1) is indecisive, watches the other tributes for a bit, but ultimately decides to just leave",
+      "text": "(Tribute1) is indecisive, watches the other tributes for a bit, but ultimately decides to just leave",
       "time": ["bloodbath"]
     },
     "fleeBloodbath": {
-      "text": "(Player1) flees the cornocopia hastily",
+      "text": "(Tribute1) flees the cornocopia hastily",
       "time": ["bloodbath"]
     },
     "grabCamouflageFromBloodbath": {
-      "text": "(Player1) grabs a backpack and continues running, it contained some camouflage bodypaint",
+      "text": "(Tribute1) grabs a backpack and continues running, it contained some camouflage bodypaint",
       "time": ["bloodbath"],
-      "addPossessions": [{ "player": 1, "type": "item", "value": "bodypaint" }],
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "bodypaint" }],
       "percentage": -50
     },
     "practiceArchery": {
-      "text": "(Player1) practices their archery.",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow"}]
+      "text": "(Tribute1) practices their archery.",
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "bow"}]
     },
     "fishWithTrident": {
-      "text": "(Player1) tries to spear fish with a trident.",
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident"}]
+      "text": "(Tribute1) tries to spear fish with a trident.",
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "trident"}]
     },
     "injureSelf": {
-      "text": "(Player1) injures themselves.",
-      "addPossessions": [{ "player": 1, "type": "status", "value": "injured" }]
+      "text": "(Tribute1) injures themselves.",
+      "addPossessions": [{ "tribute": 1, "type": "status", "value": "injured" }]
     },
     "triesToTendToWounds": {
-      "text": "(Player1) tries to treat their infection, but was unsuccessful.",
-      "requiresPossessions": [{ "player": 1, "type": "status", "value": "injured" }]
+      "text": "(Tribute1) tries to treat their infection, but was unsuccessful.",
+      "requiresPossessions": [{ "tribute": 1, "type": "status", "value": "injured" }]
     },
     "tendsToWounds": {
-      "text": "(Player1) tends to their wounds",
-      "requiresPossessions": [{ "player": 1, "type": "status", "value": "injured" }],
-      "removePossessions": [{ "player": 1, "type": "status", "value": "injured" }]
+      "text": "(Tribute1) tends to their wounds",
+      "requiresPossessions": [{ "tribute": 1, "type": "status", "value": "injured" }],
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "injured" }]
     },
     "fallsInLake": {
-      "text": "(Player1) is overpowered while fishing and falls in a lake",
-      "addPossessions": [{ "player": 1, "type": "status", "value": "cold" }],
-      "removePossessions": [{ "player": 1, "type": "status", "value": "hidden" }]
+      "text": "(Tribute1) is overpowered while fishing and falls in a lake",
+      "addPossessions": [{ "tribute": 1, "type": "status", "value": "cold" }],
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "hidden" }]
     },
     "startFire": {
-      "text": "(Player1) starts a fire.",
+      "text": "(Tribute1) starts a fire.",
       "time": "night",
-      "removePossessions": [{ "player": 1, "type": "status", "value": "cold" }]
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "cold" }]
     },
     "stayAwake": {
-      "text": "(Player1) stays awake all night.",
+      "text": "(Tribute1) stays awake all night.",
       "time": "night",
-      "addPossessions": [{ "player": 1, "type": "status", "value": "tired" }]
+      "addPossessions": [{ "tribute": 1, "type": "status", "value": "tired" }]
     },
     "sleep1": {
-      "text": "(Player1) goes to sleep.",
+      "text": "(Tribute1) goes to sleep.",
       "time": "night",
-      "removePossessions": [{ "player": 1, "type": "status", "value": "tired" }]
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "tired" }]
     },
     "passOutFromExhaustion": {
-      "text": "(Player1) passes out from exhaustion.",
-      "requiresPossessions": [{ "player": 1, "type": "status", "value": "tired" }]
+      "text": "(Tribute1) passes out from exhaustion.",
+      "requiresPossessions": [{ "tribute": 1, "type": "status", "value": "tired" }]
     },
-    "workWithOtherPlayer": {
-      "text": "(Player1) and (Player2) work together for the day.",
-      "players": 2,
+    "workWithOtherTribute": {
+      "text": "(Tribute1) and (Tribute2) work together for the day.",
+      "tributes": 2,
       "requireGroupSize": {
         "type": "exact",
         "amount": 1
       },
-      "formGroup": ["Player1", "Player2"]
+      "formGroup": ["Tribute1", "Tribute2"]
     },
     "snuggle": {
-      "text": "(Player1) convinces (Player2) to snuggle with them. They continue to work together the next day.",
+      "text": "(Tribute1) convinces (Tribute2) to snuggle with them. They continue to work together the next day.",
       "time": "night",
-      "players": 2,
+      "tributes": 2,
       "removePossessions": [
-        { "player": 1, "type": "status", "value": "tired" },
-        { "player": 1, "type": "status", "value": "cold" },
-        { "player": 2, "type": "status", "value": "tired" },
-        { "player": 2, "type": "status", "value": "cold" }
+        { "tribute": 1, "type": "status", "value": "tired" },
+        { "tribute": 1, "type": "status", "value": "cold" },
+        { "tribute": 2, "type": "status", "value": "tired" },
+        { "tribute": 2, "type": "status", "value": "cold" }
       ],
-      "formGroup": ["Player1", "Player2"]
+      "formGroup": ["Tribute1", "Tribute2"]
     },
     "snuggleAndCaught": {
-      "text": "(Player1) convinces (Player2) to snuggle with them. (Player3) catches them and watches them for a bit jealously. (Player1) and (Player2) continue to work together the next day.",
+      "text": "(Tribute1) convinces (Tribute2) to snuggle with them. (Tribute3) catches them and watches them for a bit jealously. (Tribute1) and (Tribute2) continue to work together the next day.",
       "time": "night",
-      "players": 3,
+      "tributes": 3,
       "removePossessions": [
-        { "player": 1, "type": "status", "value": "tired" },
-        { "player": 1, "type": "status", "value": "cold" },
-        { "player": 2, "type": "status", "value": "tired" },
-        { "player": 2, "type": "status", "value": "cold" }
+        { "tribute": 1, "type": "status", "value": "tired" },
+        { "tribute": 1, "type": "status", "value": "cold" },
+        { "tribute": 2, "type": "status", "value": "tired" },
+        { "tribute": 2, "type": "status", "value": "cold" }
       ],
-      "formGroup": ["Player1", "Player2"]
+      "formGroup": ["Tribute1", "Tribute2"]
     },
     "triesToSnuggleButFail": {
-      "text": "(Player1) is unable to convince (Player2) to snuggle with them, and is forced to sleep alone",
-      "players": 2
+      "text": "(Tribute1) is unable to convince (Tribute2) to snuggle with them, and is forced to sleep alone",
+      "tributes": 2
     },
     "splitUpAndLookForResources": {
-      "text": "(Player1) and (Player2) split up to search for resources.",
-      "players": 2,
+      "text": "(Tribute1) and (Tribute2) split up to search for resources.",
+      "tributes": 2,
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
-        "groupedWith": ["Player2"]
+        "groupedWith": ["Tribute2"]
       },
-      "splitGroup": ["Player1", "Player2"]
+      "splitGroup": ["Tribute1", "Tribute2"]
     },
     "singSongsInGroup": {
-      "text": "(Player1), (Player2), and (Player3) cheerfully sing songs together. They continue to work together the next day.",
-      "players": 3,
-      "formGroup": ["Player1", "Player2", "Player3"]
+      "text": "(Tribute1), (Tribute2), and (Tribute3) cheerfully sing songs together. They continue to work together the next day.",
+      "tributes": 3,
+      "formGroup": ["Tribute1", "Tribute2", "Tribute3"]
     },
-    "tendToPlayerTwosWounds": {
-      "text": "(Player2) tends to (Player1)'s wounds.",
-      "players": 2,
-      "requiresPossessions": [{ "player": 1, "type": "status", "value": "injured" }],
+    "tendToTributeTwosWounds": {
+      "text": "(Tribute2) tends to (Tribute1)'s wounds.",
+      "tributes": 2,
+      "requiresPossessions": [{ "tribute": 1, "type": "status", "value": "injured" }],
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
-        "groupedWith": ["Player2"]
+        "groupedWith": ["Tribute2"]
       },
-      "removePossessions": [{ "player": 1, "type": "status", "value": "injured" }]
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "injured" }]
     },
     "ignoreFeast": {
-      "text": "(Player1) decides not to go to The Feast.",
+      "text": "(Tribute1) decides not to go to The Feast.",
       "time": "feast"
     },
     "sobWithPhotoOfFriendsAndFamily": {
-      "text": "(Player1) sobs while gripping a photo of their friends and family.",
+      "text": "(Tribute1) sobs while gripping a photo of their friends and family.",
       "time": "feast"
     },
     "gatherFoodFromFeast": {
-      "text": "(Player1) gathers as much food into a bag as they can before fleeing.",
+      "text": "(Tribute1) gathers as much food into a bag as they can before fleeing.",
       "time": "feast"
     },
     "confrontationDuringFeast": {
-      "text": "(Player1), (Player2), and (Player3) confront each other, but grab what they want slowly to avoid conflict.",
-      "players": 3,
+      "text": "(Tribute1), (Tribute2), and (Tribute3) confront each other, but grab what they want slowly to avoid conflict.",
+      "tributes": 3,
       "time": "feast"
     },
     "playCheckers": {
-      "text": "(Player1) and (Player2) play Checkers with sticks and stones",
-      "players": 2,
+      "text": "(Tribute1) and (Tribute2) play Checkers with sticks and stones",
+      "tributes": 2,
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
-        "groupedWith": ["Player2"]
+        "groupedWith": ["Tribute2"]
       }
     },
     "awokenByNightmares": {
-      "text": "(Player1) is woken up by nightmares",
+      "text": "(Tribute1) is woken up by nightmares",
       "time": "night"
     },
     "kickTumbleWeed": {
-      "text": "(Player1) kicks around a tumble weed"
+      "text": "(Tribute1) kicks around a tumble weed"
     },
     "receivesBodyPaint": {
-      "text": "(Player1) receives bodypaint from (Sponsor)",
-      "addPossessions": [{ "player": 1, "type": "item", "value": "bodypaint" }],
-      "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
+      "text": "(Tribute1) receives bodypaint from (Sponsor)",
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "bodypaint" }],
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "camouflageWithBodypaint": {
-      "text": "(Player1) camouflages themselves with bodypaint",
+      "text": "(Tribute1) camouflages themselves with bodypaint",
       "requiresPossessions": [
-        { "player": 1, "type": "item", "value": "bodypaint" },
-        { "player": 1, "type": "status", "value": "hidden", "inverse": true }
+        { "tribute": 1, "type": "item", "value": "bodypaint" },
+        { "tribute": 1, "type": "status", "value": "hidden", "inverse": true }
       ],
       "percentage": 1000,
-      "addPossessions": [{ "player": 1, "type": "status", "value": "hidden" }]
+      "addPossessions": [{ "tribute": 1, "type": "status", "value": "hidden" }]
     },
     "makePlanForTomorrow": {
-      "text": "(Player1) makes a plan for the following day"
+      "text": "(Tribute1) makes a plan for the following day"
     },
     "makePlanWithTeam": {
-      "text": "(Player1) and (Player2) make plans for the following day together",
-      "players": 2,
+      "text": "(Tribute1) and (Tribute2) make plans for the following day together",
+      "tributes": 2,
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
-        "groupedWith": ["Player2"]
+        "groupedWith": ["Tribute2"]
       }
     },
     "beginsToStink": {
-      "text": "(Player1) begins to stink",
-      "addPossessions": [{ "player": 1, "type": "status", "value": "stink" }]
+      "text": "(Tribute1) begins to stink",
+      "addPossessions": [{ "tribute": 1, "type": "status", "value": "stink" }]
     },
     "buildsHammock": {
-      "text": "(Player1) builds a hammock in a tree"
+      "text": "(Tribute1) builds a hammock in a tree"
     },
     "fallsFromTreeAndGetInjured": {
-      "text": "(Player1) falls from a tree while climbing it and gets injured"
+      "text": "(Tribute1) falls from a tree while climbing it and gets injured"
     },
     "getsPencils": {
-      "text": "(Player1) receives writing utensils from (Sponsor)",
-      "addPossessions": [{ "player": 1, "type": "item", "value": "writingUtensils" }],
-      "removePossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor"}]
+      "text": "(Tribute1) receives writing utensils from (Sponsor)",
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "writingUtensils" }],
+      "removePossessions": [{ "tribute": 1, "type": "status", "value": "beggedSponsor"}]
     },
     "drawsMap": {
-      "text": "(Player1) starts drawing a map",
+      "text": "(Tribute1) starts drawing a map",
       "requiresPossessions": [
-        { "player": 1, "type": "item", "value": "writingUtensils" },
-        { "player": 1, "type": "item", "value": "map", "inverse": true }
+        { "tribute": 1, "type": "item", "value": "writingUtensils" },
+        { "tribute": 1, "type": "item", "value": "map", "inverse": true }
       ],
       "percentage": 400,
-      "addPossessions": [{ "player": 1, "type": "item", "value": "map" }]
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "map" }]
     },
     "getLost": {
-      "text": "(Player1) gets lost in the woods"
+      "text": "(Tribute1) gets lost in the woods"
     },
     "findAnimalButItRunsAway": {
-      "text": "(Player1) finds a (Animal1), it runs away scared"
+      "text": "(Tribute1) finds a (Animal1), it runs away scared"
     },
     "findAnimalAndGainsPet": {
-      "text": "(Player1) finds a (Animal1), They pet it and the (Animal1) follows them around",
-      "addPossessions": [{ "player": 1, "type": "pet", "value": "(Animal1)" }],
+      "text": "(Tribute1) finds a (Animal1), They pet it and the (Animal1) follows them around",
+      "addPossessions": [{ "tribute": 1, "type": "pet", "value": "(Animal1)" }],
       "percentage": 250
     },
     "findAnimalButRunsAway": {
-      "text": "(Player1) finds a (Animal1), they get scared and run away"
+      "text": "(Tribute1) finds a (Animal1), they get scared and run away"
     },
     "findAnimalAndGetsBitten": {
-      "text": "(Player1) finds a (Animal1), the (Animal1) bites (Player1) which injures them",
-      "addPossessions": [{ "player": 1, "type": "status", "value": "injured" }]
+      "text": "(Tribute1) finds a (Animal1), the (Animal1) bites (Tribute1) which injures them",
+      "addPossessions": [{ "tribute": 1, "type": "status", "value": "injured" }]
     },
     "findAnimalAndKillForFood": {
-      "text": "(Player1) finds a (Animal1), it lets itself getting pet by (Player1). (Player1) kills the (Animal1) for food"
+      "text": "(Tribute1) finds a (Animal1), it lets itself getting pet by (Tribute1). (Tribute1) kills the (Animal1) for food"
     },
     "findAnimalButTeammatesKillsIt": {
-      "text": "(Player1) finds a (Animal1), it lets itself getting pet by (Player1). (Player2) kills the (Animal1), because they thought it was a danger to (Player1)",
-      "players": 2,
+      "text": "(Tribute1) finds a (Animal1), it lets itself getting pet by (Tribute1). (Tribute2) kills the (Animal1), because they thought it was a danger to (Tribute1)",
+      "tributes": 2,
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
-        "groupedWith": ["Player2"]
+        "groupedWith": ["Tribute2"]
       }
     },
     "awakesCuddlingWithAnimal": {
-      "text": "(Player1) wakes up cuddling with a (Animal1)"
+      "text": "(Tribute1) wakes up cuddling with a (Animal1)"
     },
     "grabsBranchFromTree": {
-      "text": "(Player1) breaks a branch from a tree, hoping to use it as a weapon.",
-      "addPossessions": [{ "player": 1, "type": "item", "value": "branch" }]
+      "text": "(Tribute1) breaks a branch from a tree, hoping to use it as a weapon.",
+      "addPossessions": [{ "tribute": 1, "type": "item", "value": "branch" }]
     },
     "pokesWasphive": {
-      "text": "(Player1) accidentally pokes at a wasp-hive, gets attacked and runs away injured",
-      "addPossessions": [{ "player": 1, "type": "status", "value": "injured" }]
+      "text": "(Tribute1) accidentally pokes at a wasp-hive, gets attacked and runs away injured",
+      "addPossessions": [{ "tribute": 1, "type": "status", "value": "injured" }]
     },
     "begsSponsorForSupplies": {
-      "text": "(Player1) begs their sponsor for supplies",
-      "requiresPossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor", "inverse": true }],
-      "addPossessions": [{ "player": 1, "type": "status", "value": "beggedSponsor" }]
+      "text": "(Tribute1) begs their sponsor for supplies",
+      "requiresPossessions": [{ "tribute": 1, "type": "status", "value": "beggedSponsor", "inverse": true }],
+      "addPossessions": [{ "tribute": 1, "type": "status", "value": "beggedSponsor" }]
     },
 
     "": { "comment": "Events with deaths", "ignore": true },
 
     "dieFromHypothermia": {
-      "text": "(Player1) dies from hypothermia.",
-      "requiresPossessions": [{ "player": 1, "type": "status", "value": "cold" }],
+      "text": "(Tribute1) dies from hypothermia.",
+      "requiresPossessions": [{ "tribute": 1, "type": "status", "value": "cold" }],
       "percentage": 250,
-      "deaths": ["Player1"]
+      "deaths": ["Tribute1"]
     },
-    "killOnePlayer1": {
-      "text": "(Player2) catches (Player1) off guard and kills them.",
-      "players": 2,
-      "deaths": ["Player1"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }]
+    "killOneTribute1": {
+      "text": "(Tribute2) catches (Tribute1) off guard and kills them.",
+      "tributes": 2,
+      "deaths": ["Tribute1"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }]
     },
-    "explodeThreePlayers": {
-      "text": "(Player1) sets an explosive off, killing (Player2), (Player3), and (Player4).",
-      "players": 4,
-      "deaths": ["Player2", "Player3", "Player4"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 3 }]
+    "explodeThreeTributes": {
+      "text": "(Tribute1) sets an explosive off, killing (Tribute2), (Tribute3), and (Tribute4).",
+      "tributes": 4,
+      "deaths": ["Tribute2", "Tribute3", "Tribute4"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 3 }]
     },
     "shootArrowLethal": {
-      "text": "(Player1) shoots an arrow into (Player2)'s head.",
-      "players": 2,
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow"}],
-      "deaths": ["Player2"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "text": "(Tribute1) shoots an arrow into (Tribute2)'s head.",
+      "tributes": 2,
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "bow"}],
+      "deaths": ["Tribute2"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
       "percentage": 200
     },
     "shootArrowKillWrongPerson": {
-      "text": "(Player1) shoots an arrow at (Player2), but misses and kills (Player3) instead.",
-      "players": 3,
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "bow"}],
-      "deaths": ["Player3"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "text": "(Tribute1) shoots an arrow at (Tribute2), but misses and kills (Tribute3) instead.",
+      "tributes": 3,
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "bow"}],
+      "deaths": ["Tribute3"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
       "percentage": 200,
       "killTeammates": true
     },
     "throwKnifeLethal": {
-      "text": "(Player1) throws a knife into (Player2)'s head.",
-      "players": 2,
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "knives"}],
-      "deaths": ["Player2"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "text": "(Tribute1) throws a knife into (Tribute2)'s head.",
+      "tributes": 2,
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "knives"}],
+      "deaths": ["Tribute2"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
       "percentage": 200
     },
-    "killOnePlayerWithTrident": {
-      "text": "(Player1) stabs (Player2) in the back with a trident.",
-      "players": 2,
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "trident"}],
-      "deaths": ["Player2"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+    "killOneTributeWithTrident": {
+      "text": "(Tribute1) stabs (Tribute2) in the back with a trident.",
+      "tributes": 2,
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "trident"}],
+      "deaths": ["Tribute2"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
       "percentage": 200
     },
     "killWithMace": {
-      "text": "(Player1) bashes (Player2)'s head in with a mace.",
-      "players": 2,
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "mace"}],
-      "deaths": ["Player2"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "text": "(Tribute1) bashes (Tribute2)'s head in with a mace.",
+      "tributes": 2,
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "mace"}],
+      "deaths": ["Tribute2"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
       "percentage": 200
     },
     "stepOnLandmine": {
-      "text": "(Player1) accidentally steps on a landmine.",
+      "text": "(Tribute1) accidentally steps on a landmine.",
       "time": ["bloodbath", "day", "night", "feast"],
       "percentage": 3,
       "maxOccurances": 2,
-      "deaths": ["Player1"]
+      "deaths": ["Tribute1"]
     },
-    "twoPlayersDrownOnePlayer": {
-      "text": "(Player1) and (Player2) work together to drown (Player3). They continue to work together the next day.",
-      "players": 3,
+    "twoTributesDrownOneTribute": {
+      "text": "(Tribute1) and (Tribute2) work together to drown (Tribute3). They continue to work together the next day.",
+      "tributes": 3,
       "requireGroupSize": {
         "type": "exact",
         "amount": 1
       },
-      "formGroup": ["Player1", "Player2"],
-      "deaths": ["Player3"],
+      "formGroup": ["Tribute1", "Tribute2"],
+      "deaths": ["Tribute3"],
       "updateTributesData": [
-        { "player": 1, "type": "kills", "operation": "add", "value": 1 },
-        { "player": 2, "type": "kills", "operation": "add", "value": 1 }
+        { "tribute": 1, "type": "kills", "operation": "add", "value": 1 },
+        { "tribute": 2, "type": "kills", "operation": "add", "value": 1 }
       ]
     },
     "doubleSuicide": {
-      "text": "(Player1) and (Player2) threaten a double suicide. It fails and they die.",
-      "players": 2,
+      "text": "(Tribute1) and (Tribute2) threaten a double suicide. It fails and they die.",
+      "tributes": 2,
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
-        "groupedWith": ["Player2"]
+        "groupedWith": ["Tribute2"]
       },
-      "deaths": ["Player1", "Player2"],
+      "deaths": ["Tribute1", "Tribute2"],
       "percentage": 33,
       "killTeammates": true
     },
     "diesFromInjury": {
-      "text": "(Player1) bleeds out due to untreated injuries.",
-      "requiresPossessions": [{ "player": 1, "type": "status", "value": "injured" }],
-      "deaths": ["Player1"],
+      "text": "(Tribute1) bleeds out due to untreated injuries.",
+      "requiresPossessions": [{ "tribute": 1, "type": "status", "value": "injured" }],
+      "deaths": ["Tribute1"],
       "percentage": 50
     },
     "fightTwoVersusTwo": {
-      "text": "(Player2) and (Player3) fight (Player1) and (Player4). (Player2) and (Player3) survive. They continue to work together the next day.",
-      "players": 4,
-      "formGroup": ["Player2", "Player3"],
-      "deaths": ["Player1", "Player4"],
+      "text": "(Tribute2) and (Tribute3) fight (Tribute1) and (Tribute4). (Tribute2) and (Tribute3) survive. They continue to work together the next day.",
+      "tributes": 4,
+      "formGroup": ["Tribute2", "Tribute3"],
+      "deaths": ["Tribute1", "Tribute4"],
       "updateTributesData": [
-        { "player": 2, "type": "kills", "operation": "add", "value": 2 },
-        { "player": 3, "type": "kills", "operation": "add", "value": 2 }
+        { "tribute": 2, "type": "kills", "operation": "add", "value": 2 },
+        { "tribute": 3, "type": "kills", "operation": "add", "value": 2 }
       ]
     },
     "argumentAndKill": {
-      "text": "While hunting as a group, (Player1) and (Player2) have an argument. (Player3) and (Player4) side with (Player1), and work together to kill (Player2). They continue to work together the next day.",
-      "players": 4,
+      "text": "While hunting as a group, (Tribute1) and (Tribute2) have an argument. (Tribute3) and (Tribute4) side with (Tribute1), and work together to kill (Tribute2). They continue to work together the next day.",
+      "tributes": 4,
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
-        "groupedWith": ["Player2"]
+        "groupedWith": ["Tribute2"]
       },
-      "formGroup": ["Player1", "Player3", "Player4"],
-      "deaths": ["Player2"],
+      "formGroup": ["Tribute1", "Tribute3", "Tribute4"],
+      "deaths": ["Tribute2"],
       "updateTributesData": [
-        { "player": 1, "type": "kills", "operation": "add", "value": 1 },
-        { "player": 3, "type": "kills", "operation": "add", "value": 1 },
-        { "player": 4, "type": "kills", "operation": "add", "value": 1 }
+        { "tribute": 1, "type": "kills", "operation": "add", "value": 1 },
+        { "tribute": 3, "type": "kills", "operation": "add", "value": 1 },
+        { "tribute": 4, "type": "kills", "operation": "add", "value": 1 }
       ],
       "killTeammates": true
     },
-    "twoPlayerTrackDownAndKillPlayerThree": {
-      "text": "(Player1) and (Player2) track down and kill (Player3).",
-      "players": 3,
+    "twoTributeTrackDownAndKillTributeThree": {
+      "text": "(Tribute1) and (Tribute2) track down and kill (Tribute3).",
+      "tributes": 3,
       "requireGroupSize": {
         "type": "min",
         "amount": 2,
-        "groupedWith": ["Player2"]
+        "groupedWith": ["Tribute2"]
       },
-      "deaths": ["Player3"],
+      "deaths": ["Tribute3"],
       "updateTributesData": [
-        { "player": 1, "type": "kills", "operation": "add", "value": 1 },
-        { "player": 2, "type": "kills", "operation": "add", "value": 1 }
+        { "tribute": 1, "type": "kills", "operation": "add", "value": 1 },
+        { "tribute": 2, "type": "kills", "operation": "add", "value": 1 }
       ]
     },
     "fightDuringFeast1": {
-      "text": "(Player1), (Player2), and (Player3) start fighting, but (Player2) runs away as (Player1) kills (Player3).",
+      "text": "(Tribute1), (Tribute2), and (Tribute3) start fighting, but (Tribute2) runs away as (Tribute1) kills (Tribute3).",
       "time": "feast",
-      "players": 3,
-      "deaths": ["Player3"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }]
+      "tributes": 3,
+      "deaths": ["Tribute3"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }]
     },
     "bashHeadIntoRock": {
-      "text": "(Player1) bashes (Player2)'s head against a rock several times.",
+      "text": "(Tribute1) bashes (Tribute2)'s head against a rock several times.",
       "time": ["feast", "day", "night"],
-      "players": 2,
-      "deaths": ["Player2"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }]
+      "tributes": 2,
+      "deaths": ["Tribute2"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }]
     },
     "fallIntoPitAndDie": {
-      "text": "(Player1) falls into a pit and dies.",
+      "text": "(Tribute1) falls into a pit and dies.",
       "time": "feast",
-      "deaths": ["Player1"],
+      "deaths": ["Tribute1"],
       "percentage": 25
     },
     "snuggleButGetKilled": {
-      "text": "(Player1) convinces (Player2) to snuggle with them. (Player3) catches them and kills them both",
+      "text": "(Tribute1) convinces (Tribute2) to snuggle with them. (Tribute3) catches them and kills them both",
       "time": "night",
-      "players": 3,
-      "deaths": ["Player1", "Player2"],
-      "updateTributesData": [{ "player": 3, "type": "kills", "operation": "add", "value": 2 }]
+      "tributes": 3,
+      "deaths": ["Tribute1", "Tribute2"],
+      "updateTributesData": [{ "tribute": 3, "type": "kills", "operation": "add", "value": 2 }]
     },
     "fallsFromTreeAndDies": {
-      "text": "(Player1) falls from a tree while climbing it and dies",
-      "deaths": ["Player1"]
+      "text": "(Tribute1) falls from a tree while climbing it and dies",
+      "deaths": ["Tribute1"]
     },
     "killByPet": {
-      "text": "(Player1)'s pet (Possession:pet1) attacks and kills (Player2).",
-      "players": 2,
-      "requiresPossessions": [{ "player": 1, "type": "pet", "value": "any"}],
-      "deaths": ["Player2"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "text": "(Tribute1)'s pet (Possession:pet1) attacks and kills (Tribute2).",
+      "tributes": 2,
+      "requiresPossessions": [{ "tribute": 1, "type": "pet", "value": "any"}],
+      "deaths": ["Tribute2"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
       "percentage": 300
     },
     "injureWithBranch": {
-      "text": "(Player1) tries to stabs (Player2) with a tree branch, injuring them. (Player2) then runs away leaving a trail of blood behind them",
-      "players": 2,
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "branch"}],
-      "addPossessions": [{ "player": 2, "type": "status", "value": "injured" }]
+      "text": "(Tribute1) tries to stabs (Tribute2) with a tree branch, injuring them. (Tribute2) then runs away leaving a trail of blood behind them",
+      "tributes": 2,
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "branch"}],
+      "addPossessions": [{ "tribute": 2, "type": "status", "value": "injured" }]
     },
     "killWithBranch": {
-      "text": "(Player1) stabs (Player2) with a tree branch, killing them",
-      "players": 2,
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "branch"}],
-      "deaths": ["Player2"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }]
+      "text": "(Tribute1) stabs (Tribute2) with a tree branch, killing them",
+      "tributes": 2,
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "branch"}],
+      "deaths": ["Tribute2"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }]
     },
-    "fallsFromTreeKillingSelfAndPlayer2": {
-      "text": "(Player1) falls from a tree and lands on (Player2), killing them both.",
-      "players": 2,
-      "deaths": ["Player1", "Player2"]
+    "fallsFromTreeKillingSelfAndTribute2": {
+      "text": "(Tribute1) falls from a tree and lands on (Tribute2), killing them both.",
+      "tributes": 2,
+      "deaths": ["Tribute1", "Tribute2"]
     },
     "setsFireToTreeAndDies": {
-      "text": "(Player1) accidentally sets a tree on fire and burns to a crisp",
-      "deaths": ["Player1"],
+      "text": "(Tribute1) accidentally sets a tree on fire and burns to a crisp",
+      "deaths": ["Tribute1"],
       "percentage": 20
     },
     "getsStrangledByTreeVine": {
-      "text": "(Player1) gets tangled in the vines of a tree and suffocates from one around their neck.",
-      "deaths": ["Player1"],
+      "text": "(Tribute1) gets tangled in the vines of a tree and suffocates from one around their neck.",
+      "deaths": ["Tribute1"],
       "percentage": 20
     },
     "stabsPerson2WithPencil": {
-      "text": "(Player1) stabs a pencil through (Player2)s eye",
-      "players": 2,
-      "requiresPossessions": [{ "player": 1, "type": "item", "value": "writingUtensils"}],
-      "deaths": ["Player2"],
-      "updateTributesData": [{ "player": 1, "type": "kills", "operation": "add", "value": 1 }],
+      "text": "(Tribute1) stabs a pencil through (Tribute2)s eye",
+      "tributes": 2,
+      "requiresPossessions": [{ "tribute": 1, "type": "item", "value": "writingUtensils"}],
+      "deaths": ["Tribute2"],
+      "updateTributesData": [{ "tribute": 1, "type": "kills", "operation": "add", "value": 1 }],
       "percentage": 200
     },
     "receivesPoisonFromOpposingSponsor": {
-      "text": "(Player1) unknowingly receives poisoned food from (Sponsor::opposing), they eat it and die",
-      "deaths": ["Player1"],
+      "text": "(Tribute1) unknowingly receives poisoned food from (Sponsor::opposing), they eat it and die",
+      "deaths": ["Tribute1"],
       "percentage": 25
     },
     "begToBeKilledAndHappilyOblige": {
-      "text": "(Player1) begs for (Player2) to kill them. They happily oblige.",
-      "players": 2,
-      "deaths": ["Player1"],
-      "updateTributesData": [{ "player": 2, "type": "kills", "operation": "add", "value": 1 }]
+      "text": "(Tribute1) begs for (Tribute2) to kill them. They happily oblige.",
+      "tributes": 2,
+      "deaths": ["Tribute1"],
+      "updateTributesData": [{ "tribute": 2, "type": "kills", "operation": "add", "value": 1 }]
     }
   },
   "replaceTerms": {

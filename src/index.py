@@ -80,21 +80,21 @@ def read_tributes(
     lines = file.readlines()
 
     if game_options['districts'] > 0:
-        players_per_district = len(lines) / game_options['districts']
-    elif game_options['players_per_district'] > 0:
-        players_per_district = game_options['players_per_district']
-    else: players_per_district = 0
+        tributes_per_district = len(lines) / game_options['districts']
+    elif game_options['tributes_per_district'] > 0:
+        tributes_per_district = game_options['tributes_per_district']
+    else: tributes_per_district = 0
     
     tributes: dict[str, Tribute] = {}
-    players = 0
+    ao_tributes = 0
     for line in lines:
-        players += 1
+        ao_tributes += 1
         name = line.rstrip()
         tributes[name] = {
-            'index': players,
-            'name': name, 
-            'district': int(((players-1) / players_per_district) + 1)
-                if players_per_district > 0
+            'index': ao_tributes,
+            'name': name,
+            'district': int(((ao_tributes - 1) / tributes_per_district) + 1)
+                if tributes_per_district > 0
                 else 0,
             'grouped_with': [],
             'possessions': {},
@@ -123,7 +123,7 @@ def add_name_to_events(events: dict[str, Event]) -> dict[str, Event]:
 
 def print_winner(game_state: GameState, printer: Printer):
     """Print the winner(s) of the game."""
-    winners = list(game_state['players_alive'].keys())
+    winners = list(game_state['tributes_alive'].keys())
     if len(winners) == 1:
         printer.print(f'The winner is {winners[0]}')
     elif len(winners) > 1:
@@ -136,19 +136,19 @@ def print_rankings(game_state: GameState, printer: Printer):
     """Print the final rankings of the tributes."""
     printer.print('\n\n\n---\nFinal Rankings')
 
-    for player_deaths in game_state['deaths']:
-        for (player, district) in player_deaths:
-            tribute_data = game_state['tributes_data'][player]
+    for tribute_deaths in game_state['deaths']:
+        for (tribute, district) in tribute_deaths:
+            tribute_data = game_state['tributes_data'][tribute]
             kills = tribute_data['kills'] if 'kills' in tribute_data else 0
             printer.print(
                 f'{game_state["total_tributes"]}. '
-                f'{player} from district {district}, '
+                f'{tribute} from district {district}, '
                 f'died during {tribute_data["time of death"]}, '
                 f'has {kills} kills',
             )
             game_state['total_tributes'] -= 1
 
-    for name, tribute in list(game_state['players_alive'].items()):
+    for name, tribute in list(game_state['tributes_alive'].items()):
         printer.print(f'1. {name} from district {tribute["district"]}')
 
 

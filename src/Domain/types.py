@@ -8,7 +8,7 @@ from typing_extensions import NotRequired, Required
 class Possession(TypedDict):
     """Represent a possession that a tribute can have."""
 
-    player: Required[int]
+    tribute: Required[int]
     type: Required[str]
     value: Required[str]
 
@@ -38,7 +38,7 @@ class GroupSize(TypedDict):
 class UpdateTributeData(TypedDict):
     """Represent an update to a tribute's data that can be applied by an event."""
 
-    player: Required[int]
+    tribute: Required[int]
     type: Required[str]
     operation: NotRequired[str]
     value: Required[Union[int, str]]
@@ -52,7 +52,7 @@ class Event(TypedDict):
     ignore: NotRequired[bool]
     max_occurances: NotRequired[int]
     percentage: NotRequired[float]
-    players: NotRequired[int]
+    tributes: NotRequired[int]
     deaths: NotRequired[list[str]]
     requires_possessions: NotRequired[list[RequiredPossession]]
     time: NotRequired[Union[str, list[str]]]
@@ -66,7 +66,7 @@ class Event(TypedDict):
 
 
 class Tribute(TypedDict):
-    """Represent a tribute (player) in the game."""
+    """Represent a tribute (tribute) in the game."""
 
     index: int
     name: str
@@ -85,7 +85,7 @@ class GameOptions(TypedDict):
     show_fallen_tributes: bool
     possessions_without_duplicates: list[str]
     districts: int
-    players_per_district: int
+    tributes_per_district: int
     districts_are_teammates: bool
     one_sponsor_per_tribute: bool
 
@@ -119,7 +119,7 @@ class GameState(GameConfig):
     """Represent the current state of the game."""
 
     events_occured: Required[dict[str, int]]
-    players_alive: Required[dict[str, Tribute]]
+    tributes_alive: Required[dict[str, Tribute]]
     deaths: Required[list[list[tuple[str, int]]]]
     recent_deaths: Required[list[tuple[str, int]]]
     tributes_data: Required[dict[str, dict[str, Union[int, str]]]]
@@ -131,7 +131,7 @@ class GameRoundStateWithoutEvent(GameState):
     time: Required[str]
     exact_time: Required[str]
     current_tribute: Required[Tribute]
-    players_remaining_this_round: Required[dict[str, Tribute]]
+    tributes_remaining_this_round: Required[dict[str, Tribute]]
     play_standard_events: Required[bool]
 
 

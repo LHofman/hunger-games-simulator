@@ -16,7 +16,7 @@ class TextAndTerms(TypedDict):
     """Represent the text and terms associated with an event."""
 
     text: Required[str]
-    players: NotRequired[list[Tribute]]
+    tributes: NotRequired[list[Tribute]]
     terms: NotRequired[dict[str, str]]
 
 

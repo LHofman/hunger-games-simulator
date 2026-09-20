@@ -24,16 +24,16 @@ class Possessions(EventRule):
         if 'requires_possessions' not in event: return True
 
         for possession in event['requires_possessions']:
-            player_has_possession = self.does_tribute_have_possession(
+            tribute_has_possession = self.does_tribute_have_possession(
                 game_state['current_tribute'],
                 possession['type'],
                 possession['value'],
             )
 
             if 'inverse' in possession and possession['inverse']:
-                if player_has_possession: return False
+                if tribute_has_possession: return False
             else:
-                if not player_has_possession: return False
+                if not tribute_has_possession: return False
 
         return True
 
@@ -90,15 +90,15 @@ class Possessions(EventRule):
 
         if 'add_possessions' not in event: return
 
-        players = text_and_terms.get('players', [])
+        tributes = text_and_terms.get('tributes', [])
 
         for possession in event['add_possessions']:
             value = possession['value']
             if value in text_and_terms.get('terms', {}):
                 value = text_and_terms.get('terms', {})[value]
 
-            player_name = players[possession['player'] - 1]['name']
-            tribute = game_state['players_alive'][player_name]
+            tribute_name = tributes[possession['tribute'] - 1]['name']
+            tribute = game_state['tributes_alive'][tribute_name]
             possession_type = possession['type']
 
             if possession_type in tribute['possessions']:
@@ -118,15 +118,15 @@ class Possessions(EventRule):
 
         if 'remove_possessions' not in event: return
 
-        players = text_and_terms.get('players', [])
+        tributes = text_and_terms.get('tributes', [])
 
         for possession in event['remove_possessions']:
             value = possession['value']
             if value in text_and_terms.get('terms', {}):
                 value = text_and_terms.get('terms', {})[value]
 
-            player_name = players[possession['player'] - 1]['name']
-            tribute = game_state['players_alive'][player_name]
+            tribute_name = tributes[possession['tribute'] - 1]['name']
+            tribute = game_state['tributes_alive'][tribute_name]
             possession_type = possession['type']
 
             if self.does_tribute_have_possession(

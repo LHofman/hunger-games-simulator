@@ -20,7 +20,7 @@ class Deaths(EventRule):
 
         if 'deaths' not in event: return
 
-        players = text_and_terms.get('players', [])
+        tributes = text_and_terms.get('tributes', [])
 
         for death in event['deaths']:
             match = re.search(r'\d+', death)
@@ -29,29 +29,29 @@ class Deaths(EventRule):
             )
 
             index = int(match.group()) - 1
-            player_name = players[index]['name']
+            tribute_name = tributes[index]['name']
             game_state['recent_deaths'].append(
-                (player_name, players[index]['district']),
+                (tribute_name, tributes[index]['district']),
             )
             TributesData.update_tributes_data(
                 game_state,
-                players[index],
+                tributes[index],
                 'time of death',
                 '',
                 game_state['exact_time'],
             )
             TributesData.update_tributes_data(
                 game_state,
-                players[index],
+                tributes[index],
                 'district',
                 '',
-                players[index]['district'],
+                tributes[index]['district'],
             )
 
-            for (name, _tribute) in game_state['players_alive'].items():
-                if player_name in _tribute['grouped_with']:
-                    game_state['players_alive'][name]['grouped_with'].remove(
-                        player_name,
+            for (name, _tribute) in game_state['tributes_alive'].items():
+                if tribute_name in _tribute['grouped_with']:
+                    game_state['tributes_alive'][name]['grouped_with'].remove(
+                        tribute_name,
                     )
 
-            del game_state['players_alive'][player_name]
+            del game_state['tributes_alive'][tribute_name]

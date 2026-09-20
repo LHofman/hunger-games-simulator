@@ -14,11 +14,11 @@ def test_handle_add_data():
         'event': {
             **default_event,
             'update_tributes_data': [
-                { 'player': 1, 'type': 'kills', 'operation': 'add', 'value': 1 },
-                { 'player': 3, 'type': 'other', 'value': 2 },
+                { 'tribute': 1, 'type': 'kills', 'operation': 'add', 'value': 1 },
+                { 'tribute': 3, 'type': 'other', 'value': 2 },
             ],
         },
-        'players_alive': {
+        'tributes_alive': {
             'Tribute1': { **default_tribute, 'name': 'Tribute1' },
             'Tribute2': { **default_tribute, 'name': 'Tribute2' },
             'Tribute3': { **default_tribute, 'name': 'Tribute3' },
@@ -27,7 +27,7 @@ def test_handle_add_data():
 
     text_and_terms: TextAndTerms = {
         'text': '',
-        'players': [
+        'tributes': [
             { **default_tribute, 'name': 'Tribute1' },
             { **default_tribute, 'name': 'Tribute2' },
             { **default_tribute, 'name': 'Tribute3' },

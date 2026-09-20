@@ -13,9 +13,9 @@ def test_handlesplit_group():
         **default_game_round_state,
         'event': {
             **default_event,
-            'split_group': ['Player1', 'Player2'],
+            'split_group': ['Tribute1', 'Tribute2'],
         },
-        'players_alive': {
+        'tributes_alive': {
             'Tribute1': {
                 **default_tribute,
                 'name': 'Tribute1',
@@ -41,7 +41,7 @@ def test_handlesplit_group():
 
     text_and_terms: TextAndTerms = {
         'text': '',
-        'players': [
+        'tributes': [
             { **default_tribute, 'name': 'Tribute1' },
             { **default_tribute, 'name': 'Tribute2' },
         ],
@@ -52,7 +52,7 @@ def test_handlesplit_group():
         text_and_terms,
     )
 
-    assert game_state['players_alive']['Tribute1']['grouped_with'] == []
-    assert game_state['players_alive']['Tribute2']['grouped_with'] == []
-    assert game_state['players_alive']['Tribute3']['grouped_with'] == ['Tribute4']
-    assert game_state['players_alive']['Tribute4']['grouped_with'] == ['Tribute3']
+    assert game_state['tributes_alive']['Tribute1']['grouped_with'] == []
+    assert game_state['tributes_alive']['Tribute2']['grouped_with'] == []
+    assert game_state['tributes_alive']['Tribute3']['grouped_with'] == ['Tribute4']
+    assert game_state['tributes_alive']['Tribute4']['grouped_with'] == ['Tribute3']

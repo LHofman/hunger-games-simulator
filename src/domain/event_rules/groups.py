@@ -40,7 +40,7 @@ class Groups(EventRule):
         size = event['require_group_size']['amount']
 
         available_group_tributes = 1  # Tribute themself.
-        for (name) in game_state['players_remaining_this_round'].keys():
+        for (name) in game_state['tributes_remaining_this_round'].keys():
             if name in game_state['current_tribute']['grouped_with']:
                 available_group_tributes += 1
 
@@ -68,7 +68,7 @@ class Groups(EventRule):
     ) -> bool:
         if 'form_group' not in event: return True
 
-        return len(game_state['players_alive']) > 2
+        return len(game_state['tributes_alive']) > 2
     
     def _satisfies_can_betray_teammates(
         self,
@@ -96,28 +96,28 @@ class Groups(EventRule):
 
         if 'require_group_size' not in event: return text_and_terms
 
-        ao_group_players_required = event['require_group_size']['amount']
+        ao_group_tributes_required = event['require_group_size']['amount']
         
-        players_remaining = game_state.get('players_remaining_this_round').items()
-        grouped_with_players: dict[str, Tribute] = {}
-        for (name, player) in players_remaining:
+        tributes_remaining = game_state.get('tributes_remaining_this_round').items()
+        grouped_with_tributes: dict[str, Tribute] = {}
+        for (name, tribute) in tributes_remaining:
             if name in game_state.get('current_tribute')['grouped_with']:
-                grouped_with_players[name] = player
+                grouped_with_tributes[name] = tribute
 
         text = text_and_terms['text']
-        players: list[Tribute] = text_and_terms.get('players', [])
+        tributes: list[Tribute] = text_and_terms.get('tributes', [])
         while (
-            text.find('(Player') > -1
-            and len(players) < ao_group_players_required
+            text.find('(Tribute') > -1
+            and len(tributes) < ao_group_tributes_required
         ):
-            player = random.choice(list(grouped_with_players.values()))
-            del grouped_with_players[player['name']]
-            del game_state['players_remaining_this_round'][player['name']]
+            tribute = random.choice(list(grouped_with_tributes.values()))
+            del grouped_with_tributes[tribute['name']]
+            del game_state['tributes_remaining_this_round'][tribute['name']]
 
-            players.append(player)
-            text = text.replace(f'(Player{len(players)})', player['name'])
+            tributes.append(tribute)
+            text = text.replace(f'(Tribute{len(tributes)})', tribute['name'])
 
-        return { **text_and_terms, 'text': text, 'players': players }
+        return { **text_and_terms, 'text': text, 'tributes': tributes }
 
     def handle_event_effects(
         self,
@@ -125,52 +125,52 @@ class Groups(EventRule):
         text_and_terms: TextAndTerms,
     ) -> None:
         """Handle the effects of group dynamics in the event on the game state."""
-        self._handle_form_group(game_state, text_and_terms.get('players', []))
-        self._handle_split_group(game_state, text_and_terms.get('players', []))
+        self._handle_form_group(game_state, text_and_terms.get('tributes', []))
+        self._handle_split_group(game_state, text_and_terms.get('tributes', []))
 
     def _handle_form_group(
         self,
         game_state: GameRoundState,
-        players: list[Tribute],
+        tributes: list[Tribute],
     ) -> None:
         event = game_state['event']
 
         if 'form_group' not in event: return
 
-        for player in players:
-            for other_player in players:
-                if player['name'] == other_player['name']: continue
+        for tribute in tributes:
+            for other_tribute in tributes:
+                if tribute['name'] == other_tribute['name']: continue
 
                 grouped_with = (
-                    game_state['players_alive'][player['name']]['grouped_with']
+                    game_state['tributes_alive'][tribute['name']]['grouped_with']
                 )
-                if other_player['name'] in grouped_with: continue
-                grouped_with.append(other_player['name'])
+                if other_tribute['name'] in grouped_with: continue
+                grouped_with.append(other_tribute['name'])
 
     def _handle_split_group(
         self,
         game_state: GameRoundState,
-        players: list[Tribute],
+        tributes: list[Tribute],
     ) -> None:
         event = game_state['event']
 
         if 'split_group' not in event: return
 
-        players_to_split: list[str] = []
-        for player_to_split in event['split_group']:
-            match = re.search(r'\d+', player_to_split)
+        tributes_to_split: list[str] = []
+        for tribute_to_split in event['split_group']:
+            match = re.search(r'\d+', tribute_to_split)
             if not match: raise ValueError(
-                f'No number found in split group term: {player_to_split}',
+                f'No number found in split group term: {tribute_to_split}',
             )
 
             index = int(match.group()) - 1
-            players_to_split.append(players[index]['name'])
+            tributes_to_split.append(tributes[index]['name'])
             
-        for player in players:
-            if player['name'] not in players_to_split: continue
-            for player_to_split in players_to_split:
-                if player_to_split != player['name']:
+        for tribute in tributes:
+            if tribute['name'] not in tributes_to_split: continue
+            for tribute_to_split in tributes_to_split:
+                if tribute_to_split != tribute['name']:
                     grouped_tribute = (
-                        game_state['players_alive'][player['name']]
+                        game_state['tributes_alive'][tribute['name']]
                     )
-                    grouped_tribute['grouped_with'].remove(player_to_split)
+                    grouped_tribute['grouped_with'].remove(tribute_to_split)

@@ -9,7 +9,7 @@ def replace_text_terms(game_state: GameRoundState) -> TextAndTerms:
     """Replace text and terms in the event based on the current game state."""
     text_and_terms: TextAndTerms = {
         'text': game_state['event']['text'],
-        'players': [],
+        'tributes': [],
         'terms': {},
     }
 

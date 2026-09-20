@@ -19,13 +19,13 @@ class TributesData(EventRule):
 
         if 'update_tributes_data' not in event: return
 
-        players = text_and_terms.get('players', [])
+        tributes = text_and_terms.get('tributes', [])
 
         for data_to_add in event['update_tributes_data']:
-            player_name = players[data_to_add['player'] - 1]['name']
+            tribute_name = tributes[data_to_add['tribute'] - 1]['name']
             self.update_tributes_data(
                 game_state,
-                game_state['players_alive'][player_name],
+                game_state['tributes_alive'][tribute_name],
                 data_to_add['type'],
                 data_to_add['operation'] if 'operation' in data_to_add else '',
                 data_to_add['value'],

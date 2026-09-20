@@ -12,7 +12,7 @@ default_event: Event = {
 }
 default_tribute: Tribute = {
     'index': 1,
-    'name': 'Player1',
+    'name': 'Tribute1',
     'district': 1,
     'grouped_with': [],
     'possessions': {},
@@ -25,7 +25,7 @@ default_game_options: GameOptions = {
     'show_fallen_tributes': False,
     'possessions_without_duplicates': [],
     'districts': 0,
-    'players_per_district': 0,
+    'tributes_per_district': 0,
     'districts_are_teammates': False,
     'one_sponsor_per_tribute': False,
 }
@@ -38,14 +38,14 @@ default_game_round_state_without_event: GameRoundStateWithoutEvent = {
     'events': {},
     'increase_event_odds': { 'possessions': {} },
     'events_occured': {},
-    'players_alive': {},
+    'tributes_alive': {},
     'deaths': [],
     'recent_deaths': [],
     'tributes_data': {},
     'time': '',
     'exact_time': '',
     'current_tribute': default_tribute,
-    'players_remaining_this_round': {},
+    'tributes_remaining_this_round': {},
     'play_standard_events': True,
 }
 default_game_round_state: GameRoundState = {

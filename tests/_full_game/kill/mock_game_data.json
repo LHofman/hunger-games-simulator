@@ -4,7 +4,7 @@
     "betrayTeammates": false,
     "shuffleTributes": true,
     "districts": 2,
-    "playersPerDistrict": 0,
+    "tributesPerDistrict": 0,
     "districtsAreTeammates": false,
     "districtCanWinTogether": false,
     "oneSponsorPerTribute": true,
@@ -18,14 +18,14 @@
   },
   "events": {
     "fleeBloodbath": {
-      "text": "(Player1) flees the cornocopia hastily",
+      "text": "(Tribute1) flees the cornocopia hastily",
       "time": ["bloodbath"]
     },
-    "killOnePlayer1": {
-      "text": "(Player2) catches (Player1) off guard and kills them.",
-      "players": 2,
-      "deaths": ["Player1"],
-      "updateTributesData": [{ "player": 2, "type": "kills", "operation": "add", "value": 1 }]
+    "killOneTribute1": {
+      "text": "(Tribute2) catches (Tribute1) off guard and kills them.",
+      "tributes": 2,
+      "deaths": ["Tribute1"],
+      "updateTributesData": [{ "tribute": 2, "type": "kills", "operation": "add", "value": 1 }]
     }
   },
   "replaceTerms": {}

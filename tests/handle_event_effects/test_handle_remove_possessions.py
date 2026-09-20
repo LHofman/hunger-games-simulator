@@ -14,11 +14,11 @@ def test_handleremove_possessions():
         'event': {
             **default_event,
             'remove_possessions': [
-                { 'player': 1, 'type': 'item', 'value': 'bow' },
-                { 'player': 3, 'type': 'pet', 'value': '(Animal1)' },
+                { 'tribute': 1, 'type': 'item', 'value': 'bow' },
+                { 'tribute': 3, 'type': 'pet', 'value': '(Animal1)' },
             ],
         },
-        'players_alive': {
+        'tributes_alive': {
             'Tribute1': {
                 **default_tribute,
                 'name': 'Tribute1',
@@ -39,7 +39,7 @@ def test_handleremove_possessions():
 
     text_and_terms: TextAndTerms = {
         'text': '',
-        'players': [
+        'tributes': [
             {
                 **default_tribute,
                 'name': 'Tribute1',
@@ -66,6 +66,6 @@ def test_handleremove_possessions():
         text_and_terms,
     )
 
-    assert game_state['players_alive']['Tribute1']['possessions'] == { 'item': ['sword'], 'pet': ['cat'] }
-    assert game_state['players_alive']['Tribute2']['possessions'] == { 'pet': ['cat', 'dog'] }
-    assert game_state['players_alive']['Tribute3']['possessions'] == { 'item': ['bow', 'sword'], 'pet': ['dog'] }
+    assert game_state['tributes_alive']['Tribute1']['possessions'] == { 'item': ['sword'], 'pet': ['cat'] }
+    assert game_state['tributes_alive']['Tribute2']['possessions'] == { 'pet': ['cat', 'dog'] }
+    assert game_state['tributes_alive']['Tribute3']['possessions'] == { 'item': ['bow', 'sword'], 'pet': ['dog'] }
