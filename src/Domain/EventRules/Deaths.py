@@ -1,3 +1,5 @@
+"""Event rule that handles effects on the gamestate based on deaths."""
+
 import re
 
 from Domain.EventRule import EventRule, TextAndTerms
@@ -6,11 +8,14 @@ from Domain.types import GameRoundState
 
 
 class Deaths(EventRule):
+    """Event rule that handles effects on the gamestate based on deaths."""
+
     def handleEventEffects(
         self,
         gameState: GameRoundState,
         textAndTerms: TextAndTerms,
     ) -> None:
+        """Handle the effects of deaths in the event on the game state."""
         event = gameState['event']
 
         if 'deaths' not in event: return

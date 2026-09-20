@@ -1,3 +1,5 @@
+"""Event picker for the Hunger Games simulator."""
+
 import random
 
 from Application.canPlayEvent import canPlayEvent
@@ -5,7 +7,10 @@ from Domain.types import GameRoundStateWithoutEvent, Event, IncreaseEventOdds
 
 
 class EventPicker:
+    """Pick an event based on the current game state."""
+
     def getEvent(self, gameState: GameRoundStateWithoutEvent) -> Event:
+        """Return a random event based on the current game state."""
         eventOptions = list(gameState['events'].values())
 
         # (In/De)crease event odds.

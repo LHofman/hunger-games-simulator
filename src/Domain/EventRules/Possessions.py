@@ -1,3 +1,5 @@
+"""Event rule that handles effects on the gamestate based on possessions in the event."""
+
 import random
 import re
 
@@ -11,11 +13,14 @@ from Domain.types import (
 
 
 class Possessions(EventRule):
+    """Event rule that handles effects on the gamestate based on possessions in the event."""
+
     def canPlayEvent(
         self,
         event: Event,
         gameState: GameRoundStateWithoutEvent,
     ) -> bool:
+        """Check if the event can be played based on the possessions required in the event."""
         if 'requiresPossessions' not in event: return True
 
         for possession in event['requiresPossessions']:
@@ -37,6 +42,7 @@ class Possessions(EventRule):
         gameState: GameRoundState,
         textAndTerms: TextAndTerms,
     ) -> TextAndTerms:
+        """Replace text and terms in the event based on possessions in the event."""
         text = textAndTerms['text']
         terms = textAndTerms.get('terms', {})
 
@@ -70,6 +76,7 @@ class Possessions(EventRule):
         gameState: GameRoundState,
         textAndTerms: TextAndTerms,
     ) -> None:
+        """Handle the effects of possessions in the event on the game state."""
         self.__handleAddPossessions(gameState, textAndTerms)
         self.__handleRemovePossessions(gameState, textAndTerms)
 
@@ -130,6 +137,7 @@ class Possessions(EventRule):
         type: str,
         value: str,
     ) -> bool:
+        """Check if the tribute has the specified possession."""
         if value == 'any':
             return (
                 type in tribute['possessions']

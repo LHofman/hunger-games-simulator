@@ -1,3 +1,5 @@
+"""Event rules list for the hunger games simulator."""
+
 from Domain.EventRule import EventRule
 from Domain.EventRules.CurrentTribute import CurrentTribute
 from Domain.EventRules.Deaths import Deaths

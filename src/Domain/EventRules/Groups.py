@@ -1,3 +1,5 @@
+"""Event rule that handles effects on the gamestate based on group dynamics."""
+
 import random
 import re
 
@@ -12,11 +14,14 @@ from Domain.types import (
 
 
 class Groups(EventRule):
+    """Event rule that handles effects on the gamestate based on group dynamics."""
+
     def canPlayEvent(
         self,
         event: Event,
         gameState: GameRoundStateWithoutEvent,
     ) -> bool:
+        """Check if the event can be played based on group dynamics and game state."""
         if not self.__satisfiesGroupSize(event, gameState): return False
         if not self.__satisfiesCanFormGroup(event, gameState): return False
         if not self.__satisfiesCanBetrayTeammates(event, gameState):
@@ -86,6 +91,7 @@ class Groups(EventRule):
         gameState: GameRoundState,
         textAndTerms: TextAndTerms,
     ) -> TextAndTerms:
+        """Replace text and terms in the event based on group dynamics and the current game state."""
         event = gameState['event']
 
         if 'requireGroupSize' not in event: return textAndTerms
@@ -118,6 +124,7 @@ class Groups(EventRule):
         gameState: GameRoundState,
         textAndTerms: TextAndTerms,
     ) -> None:
+        """Handle the effects of group dynamics in the event on the game state."""
         self.__handleFormGroup(gameState, textAndTerms.get('players', []))
         self.__handleSplitGroup(gameState, textAndTerms.get('players', []))
 

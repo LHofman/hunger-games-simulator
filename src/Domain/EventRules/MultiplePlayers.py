@@ -1,3 +1,5 @@
+"""Event rule that handles effects on the gamestate based on multiple players involved in an event."""
+
 import random
 
 from Domain.EventRule import EventRule, TextAndTerms
@@ -5,11 +7,14 @@ from Domain.types import Event, GameRoundState, GameRoundStateWithoutEvent
 
 
 class MultiplePlayers(EventRule):
+    """Event rule that handles effects on the gamestate based on multiple players involved in an event."""
+
     def canPlayEvent(
         self,
         event: Event,
         gameState: GameRoundStateWithoutEvent,
     ) -> bool:
+        """Check if the event can be played based on the number of players involved in the event."""
         if 'players' not in event: return True
 
         return (
@@ -22,6 +27,7 @@ class MultiplePlayers(EventRule):
         gameState: GameRoundState,
         textAndTerms: TextAndTerms,
     ) -> TextAndTerms:
+        """Replace text and terms in the event based on the number of players involved in the event."""
         text = textAndTerms['text']
         players = textAndTerms.get('players', [])
 

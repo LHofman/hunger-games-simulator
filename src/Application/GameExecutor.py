@@ -1,3 +1,5 @@
+"""Game executor for the Hunger Games simulator."""
+
 import random
 import sys
 
@@ -16,9 +18,12 @@ from Domain.types import (
 
 
 class GameExecutor:
+    """Execute the game based on the given configuration and prints the results."""
+
     gameState: GameState
 
     def __init__(self, gameConfig: GameConfig, printer: Printer):
+        """Initialize the GameExecutor with the given game configuration and printer."""
         self.gameState = {
             **gameConfig,
             'eventsOccured': {},
@@ -30,6 +35,7 @@ class GameExecutor:
         self.printer = printer
 
     def playGame(self) -> GameState:
+        """Play the game until there is a winner and returns the final game state."""
         self.__playRound('The Bloodbath', 'bloodbath', False)
         day = 0
         while (not self.__isGameOver()):

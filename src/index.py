@@ -1,3 +1,5 @@
+"""Main entry point for the Hunger Games simulator."""
+
 import json
 
 from typing import TypedDict, Union
@@ -18,6 +20,7 @@ printer: Printer = Printer()
 
 
 def readFile(fileName: str, type: str = 'text') -> Union[dict, list, None]: # type: ignore
+    """Read a file and returns its contents as a dictionary (for JSON) or a list of lines (for text)."""
     file = open(fileName, 'r', encoding='utf-8')
 
     if type == 'json':
@@ -31,6 +34,7 @@ def readTributes(
     gameOptions: GameOptions,
     tributesFileName: str,
 ) -> dict[str, Tribute]:
+    """Read the tributes from a file and returns a dictionary of Tribute objects."""
     file = open(tributesFileName, 'r', encoding='utf-8')
     lines = file.readlines()
 
@@ -68,6 +72,7 @@ def readTributes(
 
 
 def addNameToEvents(events: dict[str, Event]) -> dict[str, Event]:
+    """Add the name of each event to its corresponding Event object."""
     for (name, event) in events.items():
         event['name'] = name
         events[name] = event
@@ -76,6 +81,7 @@ def addNameToEvents(events: dict[str, Event]) -> dict[str, Event]:
 
 
 def printWinner(gameState: GameState, printer: Printer):
+    """Print the winner(s) of the game."""
     winners = list(gameState['playersAlive'].keys())
     if len(winners) == 1:
         printer.print(f'The winner is {winners[0]}')
@@ -86,6 +92,7 @@ def printWinner(gameState: GameState, printer: Printer):
 
 
 def printRankings(gameState: GameState, printer: Printer):
+    """Print the final rankings of the tributes."""
     printer.print('\n\n\n---\nFinal Rankings')
 
     for playerDeaths in gameState['deaths']:
@@ -105,6 +112,8 @@ def printRankings(gameState: GameState, printer: Printer):
 
 
 class GameDataFile(TypedDict):
+    """Represent the structure of the game data file."""
+
     options: GameOptions
     increaseEventOdds: IncreaseEventOddsMap
     events: dict[str, Event]

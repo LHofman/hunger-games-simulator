@@ -1,3 +1,5 @@
+"""Event rule that handles effects on the gamestate based on other terms in the event text."""
+
 import random
 import re
 
@@ -6,11 +8,14 @@ from Domain.types import GameRoundState
 
 
 class OtherTerms(EventRule):
+    """Event rule that handles effects on the gamestate based on other terms in the event text."""
+
     def replaceTextTerms(
         self,
         gameState: GameRoundState,
         textAndTerms: TextAndTerms,
     ) -> TextAndTerms:
+        """Replace text and terms in the event based on other terms in the event text."""
         text = textAndTerms['text']
         terms = textAndTerms.get('terms', {})
 
