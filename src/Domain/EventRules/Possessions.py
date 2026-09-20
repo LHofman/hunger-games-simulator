@@ -77,10 +77,10 @@ class Possessions(EventRule):
         textAndTerms: TextAndTerms,
     ) -> None:
         """Handle the effects of possessions in the event on the game state."""
-        self.__handleAddPossessions(gameState, textAndTerms)
-        self.__handleRemovePossessions(gameState, textAndTerms)
+        self._handleAddPossessions(gameState, textAndTerms)
+        self._handleRemovePossessions(gameState, textAndTerms)
 
-    def __handleAddPossessions(
+    def _handleAddPossessions(
         self,
         gameState: GameRoundState,
         textAndTerms: TextAndTerms,
@@ -108,7 +108,7 @@ class Possessions(EventRule):
             else:
                 tribute['possessions'][possessionType] = [value]
 
-    def __handleRemovePossessions(
+    def _handleRemovePossessions(
         self,
         gameState: GameRoundState,
         textAndTerms: TextAndTerms,

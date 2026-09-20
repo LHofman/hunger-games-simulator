@@ -36,32 +36,32 @@ class GameExecutor:
 
     def playGame(self) -> GameState:
         """Play the game until there is a winner and returns the final game state."""
-        self.__playRound('The Bloodbath', 'bloodbath', False)
+        self._playRound('The Bloodbath', 'bloodbath', False)
         day = 0
-        while (not self.__isGameOver()):
+        while (not self._isGameOver()):
             day += 1
-            self.__playRound(f'Day {day}', 'day', True)
-            self.__showFallenTributes()
-            self.__playRound(f'Night {day}', 'night', True)
-            if day == 5: self.__playRound('The Feast', 'feast', False)
+            self._playRound(f'Day {day}', 'day', True)
+            self._showFallenTributes()
+            self._playRound(f'Night {day}', 'night', True)
+            if day == 5: self._playRound('The Feast', 'feast', False)
 
         return self.gameState
 
-    def __playRound(
+    def _playRound(
         self,
         text: str,
         time: str,
         playStandardEvents: bool,
     ) -> None:
-        if self.__isGameOver(): return
+        if self._isGameOver(): return
 
-        self.__shuffleTributes()
-        self.__readInput()
+        self._shuffleTributes()
+        self._readInput()
         self.printer.print(text)
-        self.__playList(time, text, playStandardEvents)
+        self._playList(time, text, playStandardEvents)
         self.printer.print('\n---')
 
-    def __playList(
+    def _playList(
         self,
         time: str,
         text: str,
@@ -71,14 +71,14 @@ class GameExecutor:
         played = 0
         total = amountLeft = len(tributesLeft)
         while (amountLeft > 0 and len(self.gameState['playersAlive']) > 1):
-            self.__checkEveryoneInTheSameGroup()
+            self._checkEveryoneInTheSameGroup()
 
             tribute = list(tributesLeft.values())[0]
             del tributesLeft[tribute['name']]
-            percentage = self.__percentageOfPlaying(total, time)
+            percentage = self._percentageOfPlaying(total, time)
             rnd = random.random()
             if rnd < percentage:
-                self.__playTribute(
+                self._playTribute(
                     time,
                     text,
                     playStandardEvents,
@@ -90,9 +90,9 @@ class GameExecutor:
             amountLeft = len(tributesLeft)
 
         if played == 0:
-            self.__playList(time, text, playStandardEvents)
+            self._playList(time, text, playStandardEvents)
 
-    def __playTribute(
+    def _playTribute(
         self,
         time: str,
         text: str,
@@ -124,12 +124,12 @@ class GameExecutor:
 
         self.printer.print(textAndTerms['text'])
 
-    def __showFallenTributes(self) -> None:
+    def _showFallenTributes(self) -> None:
         if (
             len(self.gameState['recentDeaths']) > 0
             and self.gameState['options']['showFallenTributes']
         ):
-            if not self.__isGameOver(): self.__readInput()
+            if not self._isGameOver(): self._readInput()
             self.printer.print(
                 f'{len(self.gameState["recentDeaths"])} cannon shots '
                 'can be heard in the distance.',
@@ -141,7 +141,7 @@ class GameExecutor:
         self.gameState['deaths'].append(self.gameState['recentDeaths'].copy())
         self.gameState['recentDeaths'].clear()
 
-    def __isGameOver(self) -> bool:
+    def _isGameOver(self) -> bool:
         if len(self.gameState['playersAlive']) <= 1: return True
 
         if self.gameState['options']['districtCanWinTogether']:
@@ -160,15 +160,15 @@ class GameExecutor:
 
         return False
 
-    def __shuffleTributes(self) -> None:
+    def _shuffleTributes(self) -> None:
         l = list(self.gameState['playersAlive'].items())
         random.shuffle(l)
         self.gameState['playersAlive'] = dict(l)
 
-    def __readInput(self) -> None:
+    def _readInput(self) -> None:
         if self.gameState['options']['autoPlay']:
             self.printer.print('')
-            self.__printStatus()
+            self._printStatus()
             return
 
         userInput = input(
@@ -180,10 +180,10 @@ class GameExecutor:
         if userInput == 'stop': sys.exit()
 
         if userInput == 'status':
-            self.__printStatus()
-            self.__readInput()
+            self._printStatus()
+            self._readInput()
 
-    def __printStatus(self) -> None:
+    def _printStatus(self) -> None:
         for (name, tribute) in sorted(self.gameState['playersAlive'].items()):
             possessions = ''
             for (type, values) in tribute['possessions'].items():
@@ -200,7 +200,7 @@ class GameExecutor:
 
         self.printer.print('\n---')
 
-    def __checkEveryoneInTheSameGroup(self) -> None:
+    def _checkEveryoneInTheSameGroup(self) -> None:
         for name, tribute in self.gameState['playersAlive'].items():
             for name2 in self.gameState['playersAlive'].keys():
                 if name2 != name and name2 not in tribute['groupedWith']:
@@ -214,7 +214,7 @@ class GameExecutor:
             'are the only ones left and split up',
         )
 
-    def __percentageOfPlaying(self, total: int, time: str) -> float:
+    def _percentageOfPlaying(self, total: int, time: str) -> float:
         if time in ['bloodbath', 'feast']: return 1
         
         if total > 25: return 15/total

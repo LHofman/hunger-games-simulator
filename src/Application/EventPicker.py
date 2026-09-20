@@ -14,8 +14,8 @@ class EventPicker:
         eventOptions = list(gameState['events'].values())
 
         # (In/De)crease event odds.
-        increaseOddsEvents = self.__getIncreasedOddsEvents(gameState)
-        eventOptions = self.__updateEventsOptionsBasedOnOdds(
+        increaseOddsEvents = self._getIncreasedOddsEvents(gameState)
+        eventOptions = self._updateEventsOptionsBasedOnOdds(
             gameState,
             increaseOddsEvents,
         )
@@ -38,17 +38,17 @@ class EventPicker:
 
         return event
 
-    def __getIncreasedOddsEvents(
+    def _getIncreasedOddsEvents(
         self,
         gameState: GameRoundStateWithoutEvent,
     ) -> list[IncreaseEventOdds]:
         return (
-            self.__getIncreasedOddsEventsFromPossessions(gameState)
-            + self.__getIncreasedOddsEventsFromGameSpeed(gameState)
-            + self.__getDefaultIncreasedOddsEvents(gameState)
+            self._getIncreasedOddsEventsFromPossessions(gameState)
+            + self._getIncreasedOddsEventsFromGameSpeed(gameState)
+            + self._getDefaultIncreasedOddsEvents(gameState)
         )
 
-    def __getIncreasedOddsEventsFromPossessions(
+    def _getIncreasedOddsEventsFromPossessions(
         self,
         gameState: GameRoundStateWithoutEvent,
     ) -> list[IncreaseEventOdds]:
@@ -69,7 +69,7 @@ class EventPicker:
 
         return increasedOddsEvents
 
-    def __getIncreasedOddsEventsFromGameSpeed(
+    def _getIncreasedOddsEventsFromGameSpeed(
         self,
         gameState: GameRoundStateWithoutEvent,
     ) -> list[IncreaseEventOdds]:
@@ -92,7 +92,7 @@ class EventPicker:
 
         return increasedOddsEvents
 
-    def __getDefaultIncreasedOddsEvents(
+    def _getDefaultIncreasedOddsEvents(
         self,
         gameState: GameRoundStateWithoutEvent,
     ) -> list[IncreaseEventOdds]:
@@ -116,7 +116,7 @@ class EventPicker:
 
         return increasedOddsEvents
 
-    def __updateEventsOptionsBasedOnOdds(
+    def _updateEventsOptionsBasedOnOdds(
         self,
         gameState: GameRoundStateWithoutEvent,
         increasedOddsEvents: list[IncreaseEventOdds],

@@ -22,14 +22,14 @@ class Groups(EventRule):
         gameState: GameRoundStateWithoutEvent,
     ) -> bool:
         """Check if the event can be played based on group dynamics and game state."""
-        if not self.__satisfiesGroupSize(event, gameState): return False
-        if not self.__satisfiesCanFormGroup(event, gameState): return False
-        if not self.__satisfiesCanBetrayTeammates(event, gameState):
+        if not self._satisfiesGroupSize(event, gameState): return False
+        if not self._satisfiesCanFormGroup(event, gameState): return False
+        if not self._satisfiesCanBetrayTeammates(event, gameState):
             return False
 
         return True
 
-    def __satisfiesGroupSize(
+    def _satisfiesGroupSize(
         self,
         event: Event,
         gameState: GameRoundStateWithoutEvent,
@@ -61,7 +61,7 @@ class Groups(EventRule):
 
         return True
 
-    def __satisfiesCanFormGroup(
+    def _satisfiesCanFormGroup(
         self,
         event: Event,
         gameState: GameRoundStateWithoutEvent,
@@ -70,7 +70,7 @@ class Groups(EventRule):
 
         return len(gameState['playersAlive']) > 2
     
-    def __satisfiesCanBetrayTeammates(
+    def _satisfiesCanBetrayTeammates(
         self,
         event: Event,
         gameState: GameRoundStateWithoutEvent,
@@ -125,10 +125,10 @@ class Groups(EventRule):
         textAndTerms: TextAndTerms,
     ) -> None:
         """Handle the effects of group dynamics in the event on the game state."""
-        self.__handleFormGroup(gameState, textAndTerms.get('players', []))
-        self.__handleSplitGroup(gameState, textAndTerms.get('players', []))
+        self._handleFormGroup(gameState, textAndTerms.get('players', []))
+        self._handleSplitGroup(gameState, textAndTerms.get('players', []))
 
-    def __handleFormGroup(
+    def _handleFormGroup(
         self,
         gameState: GameRoundState,
         players: list[Tribute],
@@ -147,7 +147,7 @@ class Groups(EventRule):
                 if otherPlayer['name'] in groupedWith: continue
                 groupedWith.append(otherPlayer['name'])
 
-    def __handleSplitGroup(
+    def _handleSplitGroup(
         self,
         gameState: GameRoundState,
         players: list[Tribute],
