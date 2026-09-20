@@ -53,7 +53,7 @@ class EventPicker:
         ]
 
         increased_odds_events: list[IncreaseEventOdds] = []
-        for type, values in tribute['possessions'].items():
+        for type, values in tribute.possessions.items():
             if type not in increased_odds_events_options:
                 continue
 

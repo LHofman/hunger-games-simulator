@@ -8,7 +8,6 @@ from domain.types import (
     Event,
     GameRoundState,
     GameRoundStateWithoutEvent,
-    Tribute,
 )
 
 
@@ -25,18 +24,17 @@ class Possessions(EventRule):
             return True
 
         for possession in event['requires_possessions']:
-            tribute_has_possession = self.does_tribute_have_possession(
-                game_state['current_tribute'],
+            tribute = game_state['current_tribute']
+            tribute_has_possession = tribute.has_possession(
                 possession['type'],
                 possession['value'],
             )
 
-            if possession.get('inverse'):
-                if tribute_has_possession:
-                    return False
-            else:
-                if not tribute_has_possession:
-                    return False
+            if possession.get('inverse') and tribute_has_possession:
+                return False
+
+            if not possession.get('inverse') and not tribute_has_possession:
+                return False
 
         return True
 
@@ -65,7 +63,7 @@ class Possessions(EventRule):
             ]
             current_tribute = game_state.get('current_tribute')
             possession = random.choice(
-                current_tribute['possessions'][possession_type],
+                current_tribute.possessions[possession_type],
             )
             term = f'(Possession:{possession_type}{number})'
             terms[term] = possession
@@ -102,20 +100,14 @@ class Possessions(EventRule):
             if value in text_and_terms.get('terms', {}):
                 value = text_and_terms.get('terms', {})[value]
 
-            tribute_name = tributes[possession['tribute'] - 1]['name']
+            tribute_name = tributes[possession['tribute'] - 1].name
             tribute = game_state['tributes_alive'][tribute_name]
-            possession_type = possession['type']
 
-            if possession_type in tribute['possessions']:
-                if (
-                    possession_type
-                    not in (
-                        game_state['options']['possessions_without_duplicates']
-                    )
-                ):
-                    tribute['possessions'][possession_type].append(value)
-            else:
-                tribute['possessions'][possession_type] = [value]
+            tribute.add_possession(
+                game_state['options'],
+                possession['type'],
+                value,
+            )
 
     def _handle_remove_possessions(
         self,
@@ -134,31 +126,7 @@ class Possessions(EventRule):
             if value in text_and_terms.get('terms', {}):
                 value = text_and_terms.get('terms', {})[value]
 
-            tribute_name = tributes[possession['tribute'] - 1]['name']
+            tribute_name = tributes[possession['tribute'] - 1].name
             tribute = game_state['tributes_alive'][tribute_name]
-            possession_type = possession['type']
 
-            if self.does_tribute_have_possession(
-                tribute,
-                possession_type,
-                value,
-            ):
-                tribute['possessions'][possession_type].remove(value)
-
-    @staticmethod
-    def does_tribute_have_possession(
-        tribute: Tribute,
-        type: str,
-        value: str,
-    ) -> bool:
-        """Check if the tribute has the specified possession."""
-        if value == 'any':
-            return (
-                type in tribute['possessions']
-                and len(tribute['possessions'][type]) > 0
-            )
-        else:
-            return (
-                type in tribute['possessions']
-                and value in tribute['possessions'][type]
-            )
+            tribute.remove_possession(possession['type'], value)

@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 import pytest
 from pytest_mock import MockerFixture
 
@@ -21,10 +23,10 @@ def test_mock(mocker: MockerFixture):
 def test_set_possessions_terms():
     game_state: GameRoundState = {
         **default_game_round_state,
-        'current_tribute': {
-            **default_tribute,
-            'possessions': {'pet': ['cat', 'dog']},
-        },
+        'current_tribute': replace(
+            default_tribute,
+            possessions={'pet': ['cat', 'dog']},
+        ),
     }
 
     text_and_terms: TextAndTerms = {

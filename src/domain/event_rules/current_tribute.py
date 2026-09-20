@@ -15,7 +15,7 @@ class CurrentTribute(EventRule):
         """Replace text and terms in the event based on the current tribute."""
         text = text_and_terms['text'].replace(
             '(Tribute1)',
-            game_state['current_tribute']['name'],
+            game_state['current_tribute'].name,
         )
 
         return {

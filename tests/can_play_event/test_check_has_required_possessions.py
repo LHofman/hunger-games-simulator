@@ -1,3 +1,4 @@
+from dataclasses import replace
 from typing import TypedDict
 
 import pytest
@@ -179,12 +180,12 @@ providers: list[ProviderType] = [
 def test_check_has_required_possessions(provider: ProviderType):
     game_state: GameRoundStateWithoutEvent = {
         **default_game_round_state_without_event,
-        'current_tribute': {
-            **default_tribute,
-            'possessions': {
+        'current_tribute': replace(
+            default_tribute,
+            possessions={
                 'item': ['Test Item 1', 'Test Item 2'],
             },
-        },
+        ),
     }
     result = Possessions().can_play_event(
         provider['event'],

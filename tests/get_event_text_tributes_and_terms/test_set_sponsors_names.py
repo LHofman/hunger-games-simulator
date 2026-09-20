@@ -1,3 +1,4 @@
+from dataclasses import replace
 from typing import TypedDict
 
 import pytest
@@ -5,7 +6,8 @@ from pytest_mock import MockerFixture
 
 from domain.event_rule import TextAndTerms
 from domain.event_rules.sponsors import Sponsors
-from domain.types import GameRoundState, Tribute
+from domain.tribute import Tribute
+from domain.types import GameRoundState
 from tests.defaults import (
     default_game_options,
     default_game_round_state,
@@ -37,7 +39,7 @@ providers: list[ProviderType] = [
             'id': "Text without (Sponsor) placeholder doesn't change.",
             'text': 'Tribute explores the arena.',
             'one_sponsor_per_tribute': True,
-            'tribute': {**default_tribute, 'index': 2},
+            'tribute': replace(default_tribute, index=2),
             'sponsors': ['Sponsor1', 'Sponsor2'],
             'expected_text': 'Tribute explores the arena.',
         }
@@ -47,7 +49,7 @@ providers: list[ProviderType] = [
             'id': 'If the option one_sponsor_per_tribute is disabled, a random sponsor is chosen',
             'text': 'Tribute receives a bow, some arrows, and a quiver from (Sponsor).',
             'one_sponsor_per_tribute': False,
-            'tribute': {**default_tribute, 'index': 2},
+            'tribute': replace(default_tribute, index=2),
             'sponsors': ['Sponsor1', 'Sponsor2'],
             'expected_text': 'Tribute receives a bow, some arrows, and a quiver from Sponsor1.',
         }
@@ -57,7 +59,7 @@ providers: list[ProviderType] = [
             'id': 'If there are more sponsors than tributes, a random sponsor is chosen',
             'text': 'Tribute receives a bow, some arrows, and a quiver from (Sponsor).',
             'one_sponsor_per_tribute': True,
-            'tribute': {**default_tribute, 'index': 2},
+            'tribute': replace(default_tribute, index=2),
             'sponsors': ['Sponsor1', 'Sponsor2', 'Sponsor3'],
             'expected_text': 'Tribute receives a bow, some arrows, and a quiver from Sponsor1.',
         }
@@ -67,7 +69,7 @@ providers: list[ProviderType] = [
             'id': 'If there are less sponsors than tributes, a random sponsor is chosen',
             'text': 'Tribute receives a bow, some arrows, and a quiver from (Sponsor).',
             'one_sponsor_per_tribute': True,
-            'tribute': {**default_tribute, 'index': 2},
+            'tribute': replace(default_tribute, index=2),
             'sponsors': ['Sponsor3'],
             'expected_text': 'Tribute receives a bow, some arrows, and a quiver from Sponsor3.',
         }
@@ -77,7 +79,7 @@ providers: list[ProviderType] = [
             'id': 'A tribute receives an item from their respective sponsor',
             'text': 'Tribute receives a bow, some arrows, and a quiver from (Sponsor).',
             'one_sponsor_per_tribute': True,
-            'tribute': {**default_tribute, 'index': 2},
+            'tribute': replace(default_tribute, index=2),
             'sponsors': ['Sponsor1', 'Sponsor2'],
             'expected_text': 'Tribute receives a bow, some arrows, and a quiver from Sponsor2.',
         }
@@ -87,7 +89,7 @@ providers: list[ProviderType] = [
             'id': 'A tribute receives an item from an opposing sponsor',
             'text': 'Tribute receives a bow, some arrows, and a quiver from (Sponsor::opposing).',
             'one_sponsor_per_tribute': True,
-            'tribute': {**default_tribute, 'index': 2},
+            'tribute': replace(default_tribute, index=2),
             'sponsors': ['Sponsor1', 'Sponsor2'],
             'expected_text': 'Tribute receives a bow, some arrows, and a quiver from Sponsor1.',
         }

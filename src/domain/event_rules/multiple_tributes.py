@@ -36,9 +36,9 @@ class MultipleTributes(EventRule):
             tribute = random.choice(
                 list(game_state['tributes_remaining_this_round'].values()),
             )
-            del game_state['tributes_remaining_this_round'][tribute['name']]
+            del game_state['tributes_remaining_this_round'][tribute.name]
 
             tributes.append(tribute)
-            text = text.replace(f'(Tribute{len(tributes)})', tribute['name'])
+            text = text.replace(f'(Tribute{len(tributes)})', tribute.name)
 
         return {**text_and_terms, 'text': text, 'tributes': tributes}

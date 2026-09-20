@@ -45,14 +45,14 @@ class Sponsors(EventRule):
         if text.find('(Sponsor::opposing)') == -1:
             sponsors = game_state['sponsors']
             current_tribute_sponsor = sponsors[
-                game_state['current_tribute']['index'] - 1
+                game_state['current_tribute'].index - 1
             ]
             return {
                 **text_and_terms,
                 'text': text.replace('(Sponsor)', current_tribute_sponsor),
             }
 
-        sponsor_index = game_state['current_tribute']['index'] - 1
+        sponsor_index = game_state['current_tribute'].index - 1
         other_sponsors = (
             game_state['sponsors'][:sponsor_index]
             + game_state['sponsors'][sponsor_index + 1 :]

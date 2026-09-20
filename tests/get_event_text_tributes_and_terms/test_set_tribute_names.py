@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 import pytest
 from pytest_mock import MockerFixture
 
@@ -22,16 +24,16 @@ def test_set_tributes_names():
     game_state: GameRoundState = {
         **default_game_round_state,
         'tributes_remaining_this_round': {
-            'Enemy': {**default_tribute, 'name': 'Enemy'},
-            'Enemy 2': {**default_tribute, 'name': 'Enemy 2'},
+            'Enemy': replace(default_tribute, name='Enemy'),
+            'Enemy 2': replace(default_tribute, name='Enemy 2'),
         },
     }
 
     text_and_terms: TextAndTerms = {
         'text': 'Tribute1 is working with Friend to kill (Tribute3) and (Tribute4)',
         'tributes': [
-            {**default_tribute, 'name': 'Tribute1'},
-            {**default_tribute, 'name': 'Friend'},
+            replace(default_tribute, name='Tribute1'),
+            replace(default_tribute, name='Friend'),
         ],
     }
 
@@ -43,9 +45,9 @@ def test_set_tributes_names():
     assert result == {
         'text': 'Tribute1 is working with Friend to kill Enemy and Enemy 2',
         'tributes': [
-            {**default_tribute, 'name': 'Tribute1'},
-            {**default_tribute, 'name': 'Friend'},
-            {**default_tribute, 'name': 'Enemy'},
-            {**default_tribute, 'name': 'Enemy 2'},
+            replace(default_tribute, name='Tribute1'),
+            replace(default_tribute, name='Friend'),
+            replace(default_tribute, name='Enemy'),
+            replace(default_tribute, name='Enemy 2'),
         ],
     }

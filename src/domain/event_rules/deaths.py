@@ -31,9 +31,9 @@ class Deaths(EventRule):
                 )
 
             index = int(match.group()) - 1
-            tribute_name = tributes[index]['name']
+            tribute_name = tributes[index].name
             game_state['recent_deaths'].append(
-                (tribute_name, tributes[index]['district']),
+                (tribute_name, tributes[index].district),
             )
             TributesData.update_tributes_data(
                 game_state,
@@ -47,13 +47,11 @@ class Deaths(EventRule):
                 tributes[index],
                 'district',
                 '',
-                tributes[index]['district'],
+                tributes[index].district,
             )
 
-            for name, _tribute in game_state['tributes_alive'].items():
-                if tribute_name in _tribute['grouped_with']:
-                    game_state['tributes_alive'][name]['grouped_with'].remove(
-                        tribute_name,
-                    )
+            for _tribute in game_state['tributes_alive'].values():
+                if _tribute.is_grouped_with(tribute_name):
+                    _tribute.ungroup_with(tribute_name)
 
             del game_state['tributes_alive'][tribute_name]

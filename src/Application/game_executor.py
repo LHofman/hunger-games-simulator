@@ -7,13 +7,12 @@ from application.event_picker import EventPicker
 from application.handle_event_effects import handle_event_effects
 from domain.printer import Printer
 from application.replace_text_terms import replace_text_terms
-from domain.event_rules.possessions import Possessions
+from domain.tribute import Tribute
 from domain.types import (
     GameConfig,
     GameRoundState,
     GameRoundStateWithoutEvent,
     GameState,
-    Tribute,
 )
 
 
@@ -76,7 +75,7 @@ class GameExecutor:
             self._check_everyone_in_the_same_group()
 
             tribute = next(iter(tributes_left.values()))
-            del tributes_left[tribute['name']]
+            del tributes_left[tribute.name]
             percentage = self._percentage_of_playing(total, time)
             rnd = random.random()
             if rnd < percentage:
@@ -158,10 +157,7 @@ class GameExecutor:
                 for name2, tribute2 in self._game_state[
                     'tributes_alive'
                 ].items():
-                    if (
-                        name2 != name
-                        and tribute2['district'] != tribute['district']
-                    ):
+                    if name2 != name and tribute2.district != tribute.district:
                         is_everyone_in_same_district = False
                         break
 
@@ -200,19 +196,15 @@ class GameExecutor:
     def _print_status(self) -> None:
         for name, tribute in sorted(self._game_state['tributes_alive'].items()):
             possessions = ''
-            for type, values in tribute['possessions'].items():
-                if Possessions.does_tribute_have_possession(
-                    tribute,
-                    type,
-                    'any',
-                ):
+            for type, values in tribute.possessions.items():
+                if tribute.has_possession(type, 'any'):
                     possessions = f'{possessions}{type}: {", ".join(values)}, '
 
             if possessions:
                 possessions = f', has {possessions[0:-2]}'
 
             self.printer.print(
-                f'{name} from district {tribute["district"]} '
+                f'{name} from district {tribute.district} '
                 f'is still alive{possessions}',
             )
 
@@ -221,11 +213,11 @@ class GameExecutor:
     def _check_everyone_in_the_same_group(self) -> None:
         for name, tribute in self._game_state['tributes_alive'].items():
             for name2 in self._game_state['tributes_alive']:
-                if name2 != name and name2 not in tribute['grouped_with']:
+                if name2 != name and not tribute.is_grouped_with(name2):
                     return
 
         for name in self._game_state['tributes_alive']:
-            self._game_state['tributes_alive'][name]['grouped_with'].clear()
+            self._game_state['tributes_alive'][name].ungroup_all()
 
         self.printer.print(
             'The remaining tributes realize they '

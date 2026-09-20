@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 from domain.event_rule import TextAndTerms
 from domain.event_rules.groups import Groups
 from domain.types import GameRoundState
@@ -16,29 +18,29 @@ def test_handleform_group():
             'form_group': ['Tribute1', 'Tribute2'],
         },
         'tributes_alive': {
-            'Tribute1': {
-                **default_tribute,
-                'name': 'Tribute1',
-                'grouped_with': [],
-            },
-            'Tribute2': {
-                **default_tribute,
-                'name': 'Tribute2',
-                'grouped_with': [],
-            },
-            'Tribute3': {
-                **default_tribute,
-                'name': 'Tribute3',
-                'grouped_with': [],
-            },
+            'Tribute1': replace(
+                default_tribute,
+                name='Tribute1',
+                grouped_with=[],
+            ),
+            'Tribute2': replace(
+                default_tribute,
+                name='Tribute2',
+                grouped_with=[],
+            ),
+            'Tribute3': replace(
+                default_tribute,
+                name='Tribute3',
+                grouped_with=[],
+            ),
         },
     }
 
     text_and_terms: TextAndTerms = {
         'text': '',
         'tributes': [
-            {**default_tribute, 'name': 'Tribute1'},
-            {**default_tribute, 'name': 'Tribute2'},
+            replace(default_tribute, name='Tribute1'),
+            replace(default_tribute, name='Tribute2'),
         ],
     }
 
@@ -47,10 +49,6 @@ def test_handleform_group():
         text_and_terms,
     )
 
-    assert game_state['tributes_alive']['Tribute1']['grouped_with'] == [
-        'Tribute2'
-    ]
-    assert game_state['tributes_alive']['Tribute2']['grouped_with'] == [
-        'Tribute1'
-    ]
-    assert game_state['tributes_alive']['Tribute3']['grouped_with'] == []
+    assert game_state['tributes_alive']['Tribute1'].grouped_with == ['Tribute2']
+    assert game_state['tributes_alive']['Tribute2'].grouped_with == ['Tribute1']
+    assert game_state['tributes_alive']['Tribute3'].grouped_with == []

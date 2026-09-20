@@ -5,11 +5,11 @@ from typing import TypedDict
 
 from typing_extensions import NotRequired, Required
 
+from domain.tribute import Tribute
 from domain.types import (
     Event,
     GameRoundState,
     GameRoundStateWithoutEvent,
-    Tribute,
 )
 
 

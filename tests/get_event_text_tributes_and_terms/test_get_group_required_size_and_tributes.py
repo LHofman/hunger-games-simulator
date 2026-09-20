@@ -1,3 +1,4 @@
+from dataclasses import replace
 from typing import TypedDict
 
 import pytest
@@ -5,7 +6,8 @@ from pytest_mock import MockerFixture
 
 from domain.event_rule import TextAndTerms
 from domain.event_rules.groups import Groups
-from domain.types import Event, GameRoundState, GroupSizeType, Tribute
+from domain.tribute import Tribute
+from domain.types import Event, GameRoundState, GroupSizeType
 from tests.defaults import (
     default_event,
     default_game_round_state_without_event,
@@ -40,16 +42,19 @@ providers: list[ProviderType] = [
                 'name': 'Event without require_group_size',
                 'text': 'This is a test text with (Tribute1) and (Tribute2)',
             },
-            'tribute': {
-                **default_tribute,
-                'grouped_with': ['Tribute2', 'Tribute3'],
-            },
+            'tribute': replace(
+                default_tribute,
+                grouped_with=['Tribute2', 'Tribute3'],
+            ),
             'tributes_remaining': {
-                'Tribute3': {**default_tribute, 'name': 'Tribute3'},
+                'Tribute3': replace(default_tribute, name='Tribute3'),
             },
             'expected_text': 'This is a test text with Tribute1 and (Tribute2)',
             'expected_tributes': [
-                {**default_tribute, 'grouped_with': ['Tribute2', 'Tribute3']},
+                replace(
+                    default_tribute,
+                    grouped_with=['Tribute2', 'Tribute3'],
+                ),
             ],
         }
     ),
@@ -64,17 +69,20 @@ providers: list[ProviderType] = [
                 },
                 'text': 'This is a test text with (Tribute1) and (Tribute2)',
             },
-            'tribute': {
-                **default_tribute,
-                'grouped_with': ['Tribute2', 'Tribute3'],
-            },
+            'tribute': replace(
+                default_tribute,
+                grouped_with=['Tribute2', 'Tribute3'],
+            ),
             'tributes_remaining': {
-                'Tribute3': {**default_tribute, 'name': 'Tribute3'},
+                'Tribute3': replace(default_tribute, name='Tribute3'),
             },
             'expected_text': 'This is a test text with Tribute1 and Tribute3',
             'expected_tributes': [
-                {**default_tribute, 'grouped_with': ['Tribute2', 'Tribute3']},
-                {**default_tribute, 'name': 'Tribute3'},
+                replace(
+                    default_tribute,
+                    grouped_with=['Tribute2', 'Tribute3'],
+                ),
+                replace(default_tribute, name='Tribute3'),
             ],
         }
     ),
@@ -89,18 +97,21 @@ providers: list[ProviderType] = [
                 },
                 'text': 'This is a test text with (Tribute1) and (Tribute2)',
             },
-            'tribute': {
-                **default_tribute,
-                'grouped_with': ['Tribute2', 'Tribute3'],
-            },
+            'tribute': replace(
+                default_tribute,
+                grouped_with=['Tribute2', 'Tribute3'],
+            ),
             'tributes_remaining': {
-                'Tribute2': {**default_tribute, 'name': 'Tribute2'},
-                'Tribute3': {**default_tribute, 'name': 'Tribute3'},
+                'Tribute2': replace(default_tribute, name='Tribute2'),
+                'Tribute3': replace(default_tribute, name='Tribute3'),
             },
             'expected_text': 'This is a test text with Tribute1 and Tribute2',
             'expected_tributes': [
-                {**default_tribute, 'grouped_with': ['Tribute2', 'Tribute3']},
-                {**default_tribute, 'name': 'Tribute2'},
+                replace(
+                    default_tribute,
+                    grouped_with=['Tribute2', 'Tribute3'],
+                ),
+                replace(default_tribute, name='Tribute2'),
             ],
         }
     ),

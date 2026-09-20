@@ -4,12 +4,12 @@ import random
 import re
 
 from domain.event_rule import EventRule, TextAndTerms
+from domain.tribute import Tribute
 from domain.types import (
     Event,
     GameRoundState,
     GameRoundStateWithoutEvent,
     GroupSizeType,
-    Tribute,
 )
 
 
@@ -43,12 +43,12 @@ class Groups(EventRule):
 
         available_group_tributes = 1  # Tribute themself.
         for name in game_state['tributes_remaining_this_round']:
-            if name in game_state['current_tribute']['grouped_with']:
+            if game_state['current_tribute'].is_grouped_with(name):
                 available_group_tributes += 1
 
         if (
             size_type == GroupSizeType.EXACT
-            and size != len(game_state['current_tribute']['grouped_with']) + 1
+            and size != len(game_state['current_tribute'].grouped_with) + 1
         ):
             return False
 
@@ -57,7 +57,7 @@ class Groups(EventRule):
 
         if (
             size_type == GroupSizeType.MAX
-            and size < len(game_state['current_tribute']['grouped_with']) + 1
+            and size < len(game_state['current_tribute'].grouped_with) + 1
         ):
             return False
 
@@ -86,7 +86,7 @@ class Groups(EventRule):
             return True
 
         for death in event['deaths']:
-            if death in game_state['current_tribute']['grouped_with']:
+            if game_state['current_tribute'].is_grouped_with(death):
                 return False
 
         return True
@@ -109,7 +109,7 @@ class Groups(EventRule):
         ).items()
         grouped_with_tributes: dict[str, Tribute] = {}
         for name, tribute in tributes_remaining:
-            if name in game_state.get('current_tribute')['grouped_with']:
+            if game_state.get('current_tribute').is_grouped_with(name):
                 grouped_with_tributes[name] = tribute
 
         text = text_and_terms['text']
@@ -119,11 +119,11 @@ class Groups(EventRule):
             and len(tributes) < ao_group_tributes_required
         ):
             tribute = random.choice(list(grouped_with_tributes.values()))
-            del grouped_with_tributes[tribute['name']]
-            del game_state['tributes_remaining_this_round'][tribute['name']]
+            del grouped_with_tributes[tribute.name]
+            del game_state['tributes_remaining_this_round'][tribute.name]
 
             tributes.append(tribute)
-            text = text.replace(f'(Tribute{len(tributes)})', tribute['name'])
+            text = text.replace(f'(Tribute{len(tributes)})', tribute.name)
 
         return {**text_and_terms, 'text': text, 'tributes': tributes}
 
@@ -148,15 +148,11 @@ class Groups(EventRule):
 
         for tribute in tributes:
             for other_tribute in tributes:
-                if tribute['name'] == other_tribute['name']:
+                if tribute.name == other_tribute.name:
                     continue
 
-                grouped_with = game_state['tributes_alive'][tribute['name']][
-                    'grouped_with'
-                ]
-                if other_tribute['name'] in grouped_with:
-                    continue
-                grouped_with.append(other_tribute['name'])
+                tribute = game_state['tributes_alive'][tribute.name]
+                tribute.group_with(other_tribute.name)
 
     def _handle_split_group(
         self,
@@ -177,14 +173,13 @@ class Groups(EventRule):
                 )
 
             index = int(match.group()) - 1
-            tributes_to_split.append(tributes[index]['name'])
+            tributes_to_split.append(tributes[index].name)
 
         for tribute in tributes:
-            if tribute['name'] not in tributes_to_split:
+            if tribute.name not in tributes_to_split:
                 continue
+
             for tribute_to_split in tributes_to_split:
-                if tribute_to_split != tribute['name']:
-                    grouped_tribute = game_state['tributes_alive'][
-                        tribute['name']
-                    ]
-                    grouped_tribute['grouped_with'].remove(tribute_to_split)
+                if tribute_to_split != tribute.name:
+                    grouped_tribute = game_state['tributes_alive'][tribute.name]
+                    grouped_tribute.ungroup_with(tribute_to_split)

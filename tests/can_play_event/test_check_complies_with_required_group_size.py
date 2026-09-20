@@ -1,9 +1,11 @@
+from dataclasses import replace
 from typing import TypedDict
 
 import pytest
 
 from domain.event_rules.groups import Groups
-from domain.types import Event, GroupSizeType, Tribute
+from domain.tribute import Tribute
+from domain.types import Event, GroupSizeType
 from tests.defaults import (
     default_event,
     default_game_round_state_without_event,
@@ -39,7 +41,7 @@ providers: list[ProviderType] = [
                     'amount': 1,
                 },
             },
-            'tribute': {**default_tribute, 'grouped_with': []},
+            'tribute': default_tribute,
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': True,
         }
@@ -54,7 +56,7 @@ providers: list[ProviderType] = [
                     'amount': 1,
                 },
             },
-            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tribute': replace(default_tribute, grouped_with=['Tribute 2']),
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': False,
         }
@@ -69,7 +71,7 @@ providers: list[ProviderType] = [
                     'amount': 2,
                 },
             },
-            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tribute': replace(default_tribute, grouped_with=['Tribute 2']),
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': True,
         }
@@ -81,7 +83,7 @@ providers: list[ProviderType] = [
                 **default_event,
                 'require_group_size': {'type': GroupSizeType.MIN, 'amount': 1},
             },
-            'tribute': {**default_tribute, 'grouped_with': []},
+            'tribute': default_tribute,
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': True,
         }
@@ -93,7 +95,7 @@ providers: list[ProviderType] = [
                 **default_event,
                 'require_group_size': {'type': GroupSizeType.MIN, 'amount': 2},
             },
-            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tribute': replace(default_tribute, grouped_with=['Tribute 2']),
             'tributes_remaining': {'Tribute 2': default_tribute},
             'expected_complies_with_required_group_size': True,
         }
@@ -105,7 +107,7 @@ providers: list[ProviderType] = [
                 **default_event,
                 'require_group_size': {'type': GroupSizeType.MIN, 'amount': 2},
             },
-            'tribute': {**default_tribute, 'grouped_with': []},
+            'tribute': default_tribute,
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': False,
         }
@@ -117,7 +119,7 @@ providers: list[ProviderType] = [
                 **default_event,
                 'require_group_size': {'type': GroupSizeType.MIN, 'amount': 2},
             },
-            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tribute': replace(default_tribute, grouped_with=['Tribute 2']),
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': False,
         }
@@ -129,7 +131,7 @@ providers: list[ProviderType] = [
                 **default_event,
                 'require_group_size': {'type': GroupSizeType.MIN, 'amount': 2},
             },
-            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tribute': replace(default_tribute, grouped_with=['Tribute 2']),
             'tributes_remaining': {'Tribute 3': default_tribute},
             'expected_complies_with_required_group_size': False,
         }
@@ -141,7 +143,7 @@ providers: list[ProviderType] = [
                 **default_event,
                 'require_group_size': {'type': GroupSizeType.MAX, 'amount': 1},
             },
-            'tribute': {**default_tribute, 'grouped_with': []},
+            'tribute': default_tribute,
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': True,
         }
@@ -153,7 +155,7 @@ providers: list[ProviderType] = [
                 **default_event,
                 'require_group_size': {'type': GroupSizeType.MAX, 'amount': 2},
             },
-            'tribute': {**default_tribute, 'grouped_with': []},
+            'tribute': default_tribute,
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': True,
         }
@@ -165,7 +167,7 @@ providers: list[ProviderType] = [
                 **default_event,
                 'require_group_size': {'type': GroupSizeType.MAX, 'amount': 2},
             },
-            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tribute': replace(default_tribute, grouped_with=['Tribute 2']),
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': True,
         }
@@ -177,7 +179,7 @@ providers: list[ProviderType] = [
                 **default_event,
                 'require_group_size': {'type': GroupSizeType.MAX, 'amount': 1},
             },
-            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tribute': replace(default_tribute, grouped_with=['Tribute 2']),
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': False,
         }
@@ -189,7 +191,7 @@ providers: list[ProviderType] = [
                 **default_event,
                 'require_group_size': {'type': GroupSizeType.MAX, 'amount': 1},
             },
-            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tribute': replace(default_tribute, grouped_with=['Tribute 2']),
             'tributes_remaining': {},
             'expected_complies_with_required_group_size': False,
         }

@@ -9,13 +9,13 @@ from typing import TypedDict
 from application.game_executor import GameExecutor
 from domain.printer import Printer
 from application.printers.file_printer import FilePrinter
+from domain.tribute import Tribute
 from domain.types import (
     Event,
     GameConfig,
     GameOptions,
     GameState,
     IncreaseEventOddsMap,
-    Tribute,
 )
 
 printer: Printer = Printer()
@@ -88,26 +88,21 @@ def read_tributes(
     tributes: dict[str, Tribute] = {}
     for ao_tributes, line in enumerate(lines, start=1):
         name = line.rstrip()
-        tributes[name] = {
-            'index': ao_tributes,
-            'name': name,
-            'district': (
+        tributes[name] = Tribute(
+            ao_tributes,
+            name,
+            (
                 int(((ao_tributes - 1) / tributes_per_district) + 1)
                 if tributes_per_district > 0
                 else 0
             ),
-            'grouped_with': [],
-            'possessions': {},
-        }
+        )
 
     if game_options['districts_are_teammates']:
         for name, tribute in list(tributes.items()):
             for name2, tribute2 in list(tributes.items()):
-                if (
-                    name2 != name
-                    and tribute2['district'] == tribute['district']
-                ):
-                    tribute['grouped_with'].append(name2)
+                if name2 != name and tribute2.district == tribute.district:
+                    tribute.group_with(name2)
 
     return tributes
 
@@ -148,7 +143,7 @@ def print_rankings(game_state: GameState, printer: Printer):
             game_state['total_tributes'] -= 1
 
     for name, tribute in list(game_state['tributes_alive'].items()):
-        printer.print(f'1. {name} from district {tribute["district"]}')
+        printer.print(f'1. {name} from district {tribute.district}')
 
 
 if __name__ == '__main__':

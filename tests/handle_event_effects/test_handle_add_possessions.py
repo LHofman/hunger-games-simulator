@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 from domain.event_rule import TextAndTerms
 from domain.event_rules.possessions import Possessions
 from domain.types import GameRoundState
@@ -19,18 +21,18 @@ def test_handleadd_possessions():
             ],
         },
         'tributes_alive': {
-            'Tribute1': {**default_tribute, 'name': 'Tribute1'},
-            'Tribute2': {**default_tribute, 'name': 'Tribute2'},
-            'Tribute3': {**default_tribute, 'name': 'Tribute3'},
+            'Tribute1': replace(default_tribute, name='Tribute1'),
+            'Tribute2': replace(default_tribute, name='Tribute2'),
+            'Tribute3': replace(default_tribute, name='Tribute3'),
         },
     }
 
     text_and_terms: TextAndTerms = {
         'text': '',
         'tributes': [
-            {**default_tribute, 'name': 'Tribute1'},
-            {**default_tribute, 'name': 'Tribute2'},
-            {**default_tribute, 'name': 'Tribute3'},
+            replace(default_tribute, name='Tribute1'),
+            replace(default_tribute, name='Tribute2'),
+            replace(default_tribute, name='Tribute3'),
         ],
         'terms': {
             '(Animal1)': 'cat',
@@ -42,9 +44,9 @@ def test_handleadd_possessions():
         text_and_terms,
     )
 
-    assert game_state['tributes_alive']['Tribute1']['possessions']['item'] == [
+    assert game_state['tributes_alive']['Tribute1'].possessions['item'] == [
         'bow'
     ]
-    assert game_state['tributes_alive']['Tribute3']['possessions']['pet'] == [
+    assert game_state['tributes_alive']['Tribute3'].possessions['pet'] == [
         'cat'
     ]

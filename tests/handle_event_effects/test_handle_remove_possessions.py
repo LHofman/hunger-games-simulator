@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 from domain.event_rule import TextAndTerms
 from domain.event_rules.possessions import Possessions
 from domain.types import GameRoundState
@@ -19,48 +21,48 @@ def test_handleremove_possessions():
             ],
         },
         'tributes_alive': {
-            'Tribute1': {
-                **default_tribute,
-                'name': 'Tribute1',
-                'possessions': {'item': ['bow', 'sword'], 'pet': ['cat']},
-            },
-            'Tribute2': {
-                **default_tribute,
-                'name': 'Tribute2',
-                'possessions': {'pet': ['cat', 'dog']},
-            },
-            'Tribute3': {
-                **default_tribute,
-                'name': 'Tribute3',
-                'possessions': {
+            'Tribute1': replace(
+                default_tribute,
+                name='Tribute1',
+                possessions={'item': ['bow', 'sword'], 'pet': ['cat']},
+            ),
+            'Tribute2': replace(
+                default_tribute,
+                name='Tribute2',
+                possessions={'pet': ['cat', 'dog']},
+            ),
+            'Tribute3': replace(
+                default_tribute,
+                name='Tribute3',
+                possessions={
                     'item': ['bow', 'sword'],
                     'pet': ['cat', 'dog'],
                 },
-            },
+            ),
         },
     }
 
     text_and_terms: TextAndTerms = {
         'text': '',
         'tributes': [
-            {
-                **default_tribute,
-                'name': 'Tribute1',
-                'possessions': {'item': ['bow', 'sword'], 'pet': ['cat']},
-            },
-            {
-                **default_tribute,
-                'name': 'Tribute2',
-                'possessions': {'pet': ['cat', 'dog']},
-            },
-            {
-                **default_tribute,
-                'name': 'Tribute3',
-                'possessions': {
+            replace(
+                default_tribute,
+                name='Tribute1',
+                possessions={'item': ['bow', 'sword'], 'pet': ['cat']},
+            ),
+            replace(
+                default_tribute,
+                name='Tribute2',
+                possessions={'pet': ['cat', 'dog']},
+            ),
+            replace(
+                default_tribute,
+                name='Tribute3',
+                possessions={
                     'item': ['bow', 'sword'],
                     'pet': ['cat', 'dog'],
                 },
-            },
+            ),
         ],
         'terms': {
             '(Animal1)': 'cat',
@@ -72,14 +74,14 @@ def test_handleremove_possessions():
         text_and_terms,
     )
 
-    assert game_state['tributes_alive']['Tribute1']['possessions'] == {
+    assert game_state['tributes_alive']['Tribute1'].possessions == {
         'item': ['sword'],
         'pet': ['cat'],
     }
-    assert game_state['tributes_alive']['Tribute2']['possessions'] == {
+    assert game_state['tributes_alive']['Tribute2'].possessions == {
         'pet': ['cat', 'dog']
     }
-    assert game_state['tributes_alive']['Tribute3']['possessions'] == {
+    assert game_state['tributes_alive']['Tribute3'].possessions == {
         'item': ['bow', 'sword'],
         'pet': ['dog'],
     }

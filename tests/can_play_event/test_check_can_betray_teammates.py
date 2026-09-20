@@ -1,9 +1,11 @@
+from dataclasses import replace
 from typing import TypedDict
 
 import pytest
 
 from domain.event_rules.groups import Groups
-from domain.types import Event, GameRoundStateWithoutEvent, Tribute
+from domain.tribute import Tribute
+from domain.types import Event, GameRoundStateWithoutEvent
 from tests.defaults import (
     default_event,
     default_game_options,
@@ -24,9 +26,7 @@ providers: list[ProviderType] = [
         {
             'id': 'An event without deaths can be played',
             'event': {**default_event, 'name': 'Event without deaths'},
-            'tribute': {
-                **default_tribute,
-            },
+            'tribute': default_tribute,
             'expected_can_betray_teammates': True,
         }
     ),
@@ -34,9 +34,7 @@ providers: list[ProviderType] = [
         {
             'id': 'An event with deaths but no kill_teammates can be played',
             'event': {**default_event, 'deaths': ['Tribute2']},
-            'tribute': {
-                **default_tribute,
-            },
+            'tribute': default_tribute,
             'expected_can_betray_teammates': True,
         }
     ),
@@ -48,9 +46,7 @@ providers: list[ProviderType] = [
                 'deaths': ['Tribute2'],
                 'kill_teammates': False,
             },
-            'tribute': {
-                **default_tribute,
-            },
+            'tribute': default_tribute,
             'expected_can_betray_teammates': True,
         }
     ),
@@ -62,7 +58,7 @@ providers: list[ProviderType] = [
                 'deaths': ['Tribute2'],
                 'kill_teammates': True,
             },
-            'tribute': {**default_tribute, 'grouped_with': []},
+            'tribute': default_tribute,
             'expected_can_betray_teammates': True,
         }
     ),
@@ -74,7 +70,7 @@ providers: list[ProviderType] = [
                 'deaths': ['Tribute2'],
                 'kill_teammates': True,
             },
-            'tribute': {**default_tribute, 'grouped_with': ['Tribute3']},
+            'tribute': replace(default_tribute, grouped_with=['Tribute3']),
             'expected_can_betray_teammates': True,
         }
     ),
@@ -86,7 +82,7 @@ providers: list[ProviderType] = [
                 'deaths': ['Tribute2'],
                 'kill_teammates': True,
             },
-            'tribute': {**default_tribute, 'grouped_with': ['Tribute2']},
+            'tribute': replace(default_tribute, grouped_with=['Tribute2']),
             'expected_can_betray_teammates': False,
         }
     ),
@@ -113,10 +109,10 @@ def test_can_betray_teammates_if_overridden_by_option():
             **default_game_options,
             'betray_teammates': True,
         },
-        'current_tribute': {
-            **default_tribute,
-            'grouped_with': ['Tribute1', 'Tribute2'],
-        },
+        'current_tribute': replace(
+            default_tribute,
+            grouped_with=['Tribute1', 'Tribute2'],
+        ),
     }
     event: Event = {
         **default_event,

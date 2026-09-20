@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import TypedDict
+from typing import TYPE_CHECKING, TypedDict
 
 from typing_extensions import NotRequired, Required
+
+if TYPE_CHECKING:
+    from domain.tribute import Tribute
 
 
 class Possession(TypedDict):
@@ -68,14 +71,14 @@ class Event(TypedDict):
     remove_possessions: NotRequired[list[Possession]]
 
 
-class Tribute(TypedDict):
-    """Represent a tribute (tribute) in the game."""
+# class Tribute(TypedDict):
+#     """Represent a tribute (tribute) in the game."""
 
-    index: int
-    name: str
-    district: int
-    grouped_with: Required[list[str]]
-    possessions: Required[dict[str, list[str]]]
+#     index: int
+#     name: str
+#     district: int
+#     grouped_with: Required[list[str]]
+#     possessions: Required[dict[str, list[str]]]
 
 
 class GameOptions(TypedDict):

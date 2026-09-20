@@ -1,22 +1,16 @@
+from domain.tribute import Tribute
 from domain.types import (
     Event,
     GameOptions,
     GameRoundState,
     GameRoundStateWithoutEvent,
-    Tribute,
 )
 
 default_event: Event = {
     'name': 'Event Name',
     'text': 'Event Text',
 }
-default_tribute: Tribute = {
-    'index': 1,
-    'name': 'Tribute1',
-    'district': 1,
-    'grouped_with': [],
-    'possessions': {},
-}
+default_tribute: Tribute = Tribute(1, 'Tribute1', 1)
 default_game_options: GameOptions = {
     'betray_teammates': False,
     'speed': 1,

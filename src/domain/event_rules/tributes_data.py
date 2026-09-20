@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from domain.event_rule import EventRule, TextAndTerms
-from domain.types import GameRoundState, Tribute
+from domain.tribute import Tribute
+from domain.types import GameRoundState
 
 
 class TributesData(EventRule):
@@ -23,7 +24,7 @@ class TributesData(EventRule):
         tributes = text_and_terms.get('tributes', [])
 
         for data_to_add in event['update_tributes_data']:
-            tribute_name = tributes[data_to_add['tribute'] - 1]['name']
+            tribute_name = tributes[data_to_add['tribute'] - 1].name
             self.update_tributes_data(
                 game_state,
                 game_state['tributes_alive'][tribute_name],
@@ -41,16 +42,16 @@ class TributesData(EventRule):
         value: int | str,
     ):
         """Update the tributes data in the game state based on the event effects."""
-        if tribute['name'] not in game_state['tributes_data']:
-            game_state['tributes_data'][tribute['name']] = {}
+        if tribute.name not in game_state['tributes_data']:
+            game_state['tributes_data'][tribute.name] = {}
 
-        if type not in game_state['tributes_data'][tribute['name']]:
-            game_state['tributes_data'][tribute['name']][type] = value
+        if type not in game_state['tributes_data'][tribute.name]:
+            game_state['tributes_data'][tribute.name][type] = value
             return
 
         if operation == 'add':
-            game_state['tributes_data'][tribute['name']][type] += value  # type: ignore
+            game_state['tributes_data'][tribute.name][type] += value  # type: ignore
         elif operation == 'remove':
-            game_state['tributes_data'][tribute['name']][type] -= value  # type: ignore
+            game_state['tributes_data'][tribute.name][type] -= value  # type: ignore
         else:
-            game_state['tributes_data'][tribute['name']][type] = value
+            game_state['tributes_data'][tribute.name][type] = value
