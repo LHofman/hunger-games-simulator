@@ -60,10 +60,10 @@ class GameExecutor:
         self._shuffle_tributes()
         self._read_input()
         self.printer.print(text)
-        self._playList(time, text, play_standard_events)
+        self._play_list(time, text, play_standard_events)
         self.printer.print('\n---')
 
-    def _playList(
+    def _play_list(
         self,
         time: str,
         text: str,
@@ -80,7 +80,7 @@ class GameExecutor:
             percentage = self._percentage_of_playing(total, time)
             rnd = random.random()
             if rnd < percentage:
-                self._playTribute(
+                self._play_tribute(
                     time,
                     text,
                     play_standard_events,
@@ -92,9 +92,9 @@ class GameExecutor:
             amount_left = len(tributes_left)
 
         if played == 0:
-            self._playList(time, text, play_standard_events)
+            self._play_list(time, text, play_standard_events)
 
-    def _playTribute(
+    def _play_tribute(
         self,
         time: str,
         text: str,

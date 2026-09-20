@@ -1,9 +1,7 @@
 """Abstract base class for printing messages."""
 
-from abc import ABC
 
-
-class Printer(ABC):
+class Printer():
     """Abstract base class for printing messages. Subclasses should implement the print method."""
 
     def print(self, message: str) -> None:
