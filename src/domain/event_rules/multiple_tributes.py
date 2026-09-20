@@ -15,7 +15,8 @@ class MultipleTributes(EventRule):
         game_state: GameRoundStateWithoutEvent,
     ) -> bool:
         """Check if the event can be played based on the number of tributes involved in the event."""
-        if 'tributes' not in event: return True
+        if 'tributes' not in event:
+            return True
 
         return (
             len(game_state['tributes_remaining_this_round']) + 1
@@ -31,7 +32,7 @@ class MultipleTributes(EventRule):
         text = text_and_terms['text']
         tributes = text_and_terms.get('tributes', [])
 
-        while (text.find('(Tribute') > -1):
+        while text.find('(Tribute') > -1:
             tribute = random.choice(
                 list(game_state['tributes_remaining_this_round'].values()),
             )
@@ -40,4 +41,4 @@ class MultipleTributes(EventRule):
             tributes.append(tribute)
             text = text.replace(f'(Tribute{len(tributes)})', tribute['name'])
 
-        return { **text_and_terms, 'text': text, 'tributes': tributes }
+        return {**text_and_terms, 'text': text, 'tributes': tributes}

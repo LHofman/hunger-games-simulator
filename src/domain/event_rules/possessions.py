@@ -21,7 +21,8 @@ class Possessions(EventRule):
         game_state: GameRoundStateWithoutEvent,
     ) -> bool:
         """Check if the event can be played based on the possessions required in the event."""
-        if 'requires_possessions' not in event: return True
+        if 'requires_possessions' not in event:
+            return True
 
         for possession in event['requires_possessions']:
             tribute_has_possession = self.does_tribute_have_possession(
@@ -30,10 +31,12 @@ class Possessions(EventRule):
                 possession['value'],
             )
 
-            if 'inverse' in possession and possession['inverse']:
-                if tribute_has_possession: return False
+            if possession.get('inverse'):
+                if tribute_has_possession:
+                    return False
             else:
-                if not tribute_has_possession: return False
+                if not tribute_has_possession:
+                    return False
 
         return True
 
@@ -47,11 +50,12 @@ class Possessions(EventRule):
         terms = text_and_terms.get('terms', {})
 
         index = text.find('(Possession:')
-        while (index > -1):
+        while index > -1:
             match = re.search(r'\d', text[index:])
-            if not match: raise ValueError(
-                f'No number found in possession term: {text[index:]}',
-            )
+            if not match:
+                raise ValueError(
+                    f'No number found in possession term: {text[index:]}',
+                )
 
             number = int(match.group())
             number_index = match.start()
@@ -70,8 +74,8 @@ class Possessions(EventRule):
 
             index = text.find('(Possession:')
 
-        return { **text_and_terms, 'text': text, 'terms': terms }
-    
+        return {**text_and_terms, 'text': text, 'terms': terms}
+
     def handle_event_effects(
         self,
         game_state: GameRoundState,
@@ -88,7 +92,8 @@ class Possessions(EventRule):
     ):
         event = game_state['event']
 
-        if 'add_possessions' not in event: return
+        if 'add_possessions' not in event:
+            return
 
         tributes = text_and_terms.get('tributes', [])
 
@@ -102,8 +107,11 @@ class Possessions(EventRule):
             possession_type = possession['type']
 
             if possession_type in tribute['possessions']:
-                if possession_type not in (
-                    game_state['options']['possessions_without_duplicates']
+                if (
+                    possession_type
+                    not in (
+                        game_state['options']['possessions_without_duplicates']
+                    )
                 ):
                     tribute['possessions'][possession_type].append(value)
             else:
@@ -116,7 +124,8 @@ class Possessions(EventRule):
     ):
         event = game_state['event']
 
-        if 'remove_possessions' not in event: return
+        if 'remove_possessions' not in event:
+            return
 
         tributes = text_and_terms.get('tributes', [])
 
@@ -132,7 +141,7 @@ class Possessions(EventRule):
             if self.does_tribute_have_possession(
                 tribute,
                 possession_type,
-                value
+                value,
             ):
                 tribute['possessions'][possession_type].remove(value)
 

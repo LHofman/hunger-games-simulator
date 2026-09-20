@@ -1,6 +1,6 @@
-import pytest
-
 from typing import TypedDict
+
+import pytest
 
 from domain.event_rules.groups import Groups
 from domain.types import Event, GroupSizeType, Tribute
@@ -20,104 +20,180 @@ class ProviderType(TypedDict):
 
 
 providers: list[ProviderType] = [
-    ({
-        'id': 'an event without a required group size can be played',
-        'event': default_event,
-        'tribute': default_tribute,
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': True,
-    }),
-    ({
-        'id': 'an event with a required group size of 1 can be played',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.EXACT, 'amount': 1 } },
-        'tribute': { **default_tribute, 'grouped_with': [] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': True,
-    }),
-    ({
-        'id': 'an event with a required exact group size of 1 cannot be played if the tribute is grouped with another tribute',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.EXACT, 'amount': 1 } },
-        'tribute': { **default_tribute, 'grouped_with': [ 'Tribute 2' ] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': False,
-    }),
-    ({
-        'id': 'an event with a required exact group size of 2 can be played if the tribute is grouped with another tribute',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.EXACT, 'amount': 2 } },
-        'tribute': { **default_tribute, 'grouped_with': [ 'Tribute 2' ] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': True,
-    }),
-    ({
-        'id': 'an event with a required minimum group size of 1 can be played if the tribute is not grouped with another tribute',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.MIN, 'amount': 1 } },
-        'tribute': { **default_tribute, 'grouped_with': [] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': True,
-    }),
-    ({
-        'id': 'an event with a required minimum group size of 2 can be played if the tribute is grouped with another tribute',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.MIN, 'amount': 2 } },
-        'tribute': { **default_tribute, 'grouped_with': [ 'Tribute 2' ] },
-        'tributes_remaining': { 'Tribute 2': default_tribute },
-        'expected_complies_with_required_group_size': True,
-    }),
-    ({
-        'id': 'an event with a required minimum group size of 2 cannot be played if the tribute is not grouped with another tribute',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.MIN, 'amount': 2 } },
-        'tribute': { **default_tribute, 'grouped_with': [] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': False,
-    }),
-    ({
-        'id': 'an event with a required minimum group size of 2 cannot be played if the tribute is grouped with another tribute but no tributes are remaining',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.MIN, 'amount': 2 } },
-        'tribute': { **default_tribute, 'grouped_with': [ 'Tribute 2' ] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': False,
-    }),
-    ({
-        'id': 'an event with a required minimum group size of 2 cannot be played if the tribute is grouped with another tribute but that tribute is not remaining',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.MIN, 'amount': 2 } },
-        'tribute': { **default_tribute, 'grouped_with': [ 'Tribute 2' ] },
-        'tributes_remaining': { 'Tribute 3': default_tribute },
-        'expected_complies_with_required_group_size': False,
-    }),
-    ({
-        'id': 'an event with a required maximum group size of 1 can be played if the tribute is not grouped with another tribute',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.MAX, 'amount': 1 } },
-        'tribute': { **default_tribute, 'grouped_with': [] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': True,
-    }),
-    ({
-        'id': 'an event with a required maximum group size of 2 can be played if the tribute is not grouped with another tribute',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.MAX, 'amount': 2 } },
-        'tribute': { **default_tribute, 'grouped_with': [] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': True,
-    }),
-    ({
-        'id': 'an event with a required maximum group size of 2 can be played if the tribute is grouped with another tribute',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.MAX, 'amount': 2 } },
-        'tribute': { **default_tribute, 'grouped_with': [ 'Tribute 2' ] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': True,
-    }),
-    ({
-        'id': 'an event with a required maximum group size of 1 cannot be played if the tribute is grouped with another tribute',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.MAX, 'amount': 1 } },
-        'tribute': { **default_tribute, 'grouped_with': [ 'Tribute 2' ] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': False,
-    }),
-    ({
-        'id': 'an event with a required maximum group size of 1 cannot be played if the tribute is grouped with another tribute, even if not remaining',
-        'event': { **default_event, 'require_group_size': { 'type': GroupSizeType.MAX, 'amount': 1 } },
-        'tribute': { **default_tribute, 'grouped_with': [ 'Tribute 2' ] },
-        'tributes_remaining': {},
-        'expected_complies_with_required_group_size': False,
-    }),
+    (
+        {
+            'id': 'an event without a required group size can be played',
+            'event': default_event,
+            'tribute': default_tribute,
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required group size of 1 can be played',
+            'event': {
+                **default_event,
+                'require_group_size': {
+                    'type': GroupSizeType.EXACT,
+                    'amount': 1,
+                },
+            },
+            'tribute': {**default_tribute, 'grouped_with': []},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required exact group size of 1 cannot be played if the tribute is grouped with another tribute',
+            'event': {
+                **default_event,
+                'require_group_size': {
+                    'type': GroupSizeType.EXACT,
+                    'amount': 1,
+                },
+            },
+            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': False,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required exact group size of 2 can be played if the tribute is grouped with another tribute',
+            'event': {
+                **default_event,
+                'require_group_size': {
+                    'type': GroupSizeType.EXACT,
+                    'amount': 2,
+                },
+            },
+            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required minimum group size of 1 can be played if the tribute is not grouped with another tribute',
+            'event': {
+                **default_event,
+                'require_group_size': {'type': GroupSizeType.MIN, 'amount': 1},
+            },
+            'tribute': {**default_tribute, 'grouped_with': []},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required minimum group size of 2 can be played if the tribute is grouped with another tribute',
+            'event': {
+                **default_event,
+                'require_group_size': {'type': GroupSizeType.MIN, 'amount': 2},
+            },
+            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tributes_remaining': {'Tribute 2': default_tribute},
+            'expected_complies_with_required_group_size': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required minimum group size of 2 cannot be played if the tribute is not grouped with another tribute',
+            'event': {
+                **default_event,
+                'require_group_size': {'type': GroupSizeType.MIN, 'amount': 2},
+            },
+            'tribute': {**default_tribute, 'grouped_with': []},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': False,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required minimum group size of 2 cannot be played if the tribute is grouped with another tribute but no tributes are remaining',
+            'event': {
+                **default_event,
+                'require_group_size': {'type': GroupSizeType.MIN, 'amount': 2},
+            },
+            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': False,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required minimum group size of 2 cannot be played if the tribute is grouped with another tribute but that tribute is not remaining',
+            'event': {
+                **default_event,
+                'require_group_size': {'type': GroupSizeType.MIN, 'amount': 2},
+            },
+            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tributes_remaining': {'Tribute 3': default_tribute},
+            'expected_complies_with_required_group_size': False,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required maximum group size of 1 can be played if the tribute is not grouped with another tribute',
+            'event': {
+                **default_event,
+                'require_group_size': {'type': GroupSizeType.MAX, 'amount': 1},
+            },
+            'tribute': {**default_tribute, 'grouped_with': []},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required maximum group size of 2 can be played if the tribute is not grouped with another tribute',
+            'event': {
+                **default_event,
+                'require_group_size': {'type': GroupSizeType.MAX, 'amount': 2},
+            },
+            'tribute': {**default_tribute, 'grouped_with': []},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required maximum group size of 2 can be played if the tribute is grouped with another tribute',
+            'event': {
+                **default_event,
+                'require_group_size': {'type': GroupSizeType.MAX, 'amount': 2},
+            },
+            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required maximum group size of 1 cannot be played if the tribute is grouped with another tribute',
+            'event': {
+                **default_event,
+                'require_group_size': {'type': GroupSizeType.MAX, 'amount': 1},
+            },
+            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': False,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required maximum group size of 1 cannot be played if the tribute is grouped with another tribute, even if not remaining',
+            'event': {
+                **default_event,
+                'require_group_size': {'type': GroupSizeType.MAX, 'amount': 1},
+            },
+            'tribute': {**default_tribute, 'grouped_with': ['Tribute 2']},
+            'tributes_remaining': {},
+            'expected_complies_with_required_group_size': False,
+        }
+    ),
 ]
 
 

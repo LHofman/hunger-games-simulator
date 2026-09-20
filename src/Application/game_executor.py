@@ -38,12 +38,13 @@ class GameExecutor:
         """Play the game until there is a winner and returns the final game state."""
         self._play_round('The Bloodbath', 'bloodbath', False)
         day = 0
-        while (not self._is_game_over()):
+        while not self._is_game_over():
             day += 1
             self._play_round(f'Day {day}', 'day', True)
             self._show_fallen_tributes()
             self._play_round(f'Night {day}', 'night', True)
-            if day == 5: self._play_round('The Feast', 'feast', False)
+            if day == 5:
+                self._play_round('The Feast', 'feast', False)
 
         return self._game_state
 
@@ -53,7 +54,8 @@ class GameExecutor:
         time: str,
         play_standard_events: bool,
     ) -> None:
-        if self._is_game_over(): return
+        if self._is_game_over():
+            return
 
         self._shuffle_tributes()
         self._read_input()
@@ -70,10 +72,10 @@ class GameExecutor:
         tributes_left = self._game_state['tributes_alive'].copy()
         played = 0
         total = amount_left = len(tributes_left)
-        while (amount_left > 0 and len(self._game_state['tributes_alive']) > 1):
+        while amount_left > 0 and len(self._game_state['tributes_alive']) > 1:
             self._check_everyone_in_the_same_group()
 
-            tribute = list(tributes_left.values())[0]
+            tribute = next(iter(tributes_left.values()))
             del tributes_left[tribute['name']]
             percentage = self._percentage_of_playing(total, time)
             rnd = random.random()
@@ -86,7 +88,7 @@ class GameExecutor:
                     tributes_left,
                 )
                 played += 1
-                
+
             amount_left = len(tributes_left)
 
         if played == 0:
@@ -117,11 +119,11 @@ class GameExecutor:
         }
 
         text_and_terms = replace_text_terms(game_round_state)
-        
+
         handle_event_effects(game_round_state, text_and_terms)
-        
+
         self._game_state.update(
-            {k: game_round_state[k] for k in self._game_state}, # type: ignore
+            {k: game_round_state[k] for k in self._game_state},  # type: ignore
         )
 
         self.printer.print(text_and_terms['text'])
@@ -131,7 +133,8 @@ class GameExecutor:
             self._game_state['recent_deaths']
             and self._game_state['options']['show_fallen_tributes']
         ):
-            if not self._is_game_over(): self._read_input()
+            if not self._is_game_over():
+                self._read_input()
             self.printer.print(
                 f'{len(self._game_state["recent_deaths"])} cannon shots '
                 'can be heard in the distance.',
@@ -140,16 +143,21 @@ class GameExecutor:
                 self.printer.print(f'{tribute_name} from district {district}')
             self.printer.print('---')
 
-        self._game_state['deaths'].append(self._game_state['recent_deaths'].copy())
+        self._game_state['deaths'].append(
+            self._game_state['recent_deaths'].copy()
+        )
         self._game_state['recent_deaths'].clear()
 
     def _is_game_over(self) -> bool:
-        if len(self._game_state['tributes_alive']) <= 1: return True
+        if len(self._game_state['tributes_alive']) <= 1:
+            return True
 
         if self._game_state['options']['district_can_win_together']:
             is_everyone_in_same_district = True
             for name, tribute in self._game_state['tributes_alive'].items():
-                for name2, tribute2 in self._game_state['tributes_alive'].items():
+                for name2, tribute2 in self._game_state[
+                    'tributes_alive'
+                ].items():
                     if (
                         name2 != name
                         and tribute2['district'] != tribute['district']
@@ -157,9 +165,11 @@ class GameExecutor:
                         is_everyone_in_same_district = False
                         break
 
-                if not is_everyone_in_same_district: break
-        
-            if is_everyone_in_same_district: return True
+                if not is_everyone_in_same_district:
+                    break
+
+            if is_everyone_in_same_district:
+                return True
 
         return False
 
@@ -180,16 +190,17 @@ class GameExecutor:
         )
         self.printer.print('')
 
-        if user_input == 'stop': sys.exit()
+        if user_input == 'stop':
+            sys.exit()
 
         if user_input == 'status':
             self._print_status()
             self._read_input()
 
     def _print_status(self) -> None:
-        for (name, tribute) in sorted(self._game_state['tributes_alive'].items()):
+        for name, tribute in sorted(self._game_state['tributes_alive'].items()):
             possessions = ''
-            for (type, values) in tribute['possessions'].items():
+            for type, values in tribute['possessions'].items():
                 if Possessions.does_tribute_have_possession(
                     tribute,
                     type,
@@ -198,7 +209,7 @@ class GameExecutor:
                     possessions = f'{possessions}{type}: {", ".join(values)}, '
 
             if possessions:
-                possessions = f', has {possessions[0: -2]}'
+                possessions = f', has {possessions[0:-2]}'
 
             self.printer.print(
                 f'{name} from district {tribute["district"]} '
@@ -209,11 +220,11 @@ class GameExecutor:
 
     def _check_everyone_in_the_same_group(self) -> None:
         for name, tribute in self._game_state['tributes_alive'].items():
-            for name2 in self._game_state['tributes_alive'].keys():
+            for name2 in self._game_state['tributes_alive']:
                 if name2 != name and name2 not in tribute['grouped_with']:
                     return
 
-        for name, _ in self._game_state['tributes_alive'].items():
+        for name in self._game_state['tributes_alive']:
             self._game_state['tributes_alive'][name]['grouped_with'].clear()
 
         self.printer.print(
@@ -222,9 +233,13 @@ class GameExecutor:
         )
 
     def _percentage_of_playing(self, total: int, time: str) -> float:
-        if time in ['bloodbath', 'feast']: return 1
-        
-        if total > 25: return 15/total
-        if total > 15: return 0.5
-        if total > 5: return 0.75
+        if time in ['bloodbath', 'feast']:
+            return 1
+
+        if total > 25:
+            return 15 / total
+        if total > 15:
+            return 0.5
+        if total > 5:
+            return 0.75
         return 1

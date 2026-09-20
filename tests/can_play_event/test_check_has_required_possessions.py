@@ -1,6 +1,6 @@
-import pytest
-
 from typing import TypedDict
+
+import pytest
 
 from domain.event_rules.possessions import Possessions
 from domain.types import Event, GameRoundStateWithoutEvent
@@ -18,56 +18,160 @@ class ProviderType(TypedDict):
 
 
 providers: list[ProviderType] = [
-    ({
-        'id': 'an event without required possessions can be played',
-        'event': { **default_event, 'name': 'Test Event' },
-        'expected_has_required_possessions': True,
-    }),
-    ({
-        'id': 'an event with a required possession that the tribute has can be played',
-        'event': { **default_event, 'name': 'Test Event', 'requires_possessions': [{ 'tribute': 1, 'type': 'item', 'value': 'Test Item 1' }] },
-        'expected_has_required_possessions': True,
-    }),
-    ({
-        'id': 'an event with a required possession that the tribute does not have cannot be played',
-        'event': { **default_event, 'name': 'Test Event', 'requires_possessions': [{ 'tribute': 1, 'type': 'item', 'value': 'Test Item 3' }] },
-        'expected_has_required_possessions': False,
-    }),
-    ({
-        'id': 'an event with a required possession that the tribute does not have but is negated can be played',
-        'event': { **default_event, 'name': 'Test Event', 'requires_possessions': [{ 'tribute': 1, 'type': 'item', 'value': 'Test Item 3', 'inverse': True }] },
-        'expected_has_required_possessions': True,
-    }),
-    ({
-        'id': 'an event with a required possession that the tribute has but is negated cannot be played',
-        'event': { **default_event, 'name': 'Test Event', 'requires_possessions': [{ 'tribute': 1, 'type': 'item', 'value': 'Test Item 1', 'inverse': True }] },
-        'expected_has_required_possessions': False,
-    }),
-    ({
-        'id': 'an event with multiple required possessions that the tribute has can be played',
-        'event': { **default_event, 'name': 'Test Event', 'requires_possessions': [{ 'tribute': 1, 'type': 'item', 'value': 'Test Item 1' }, { 'tribute': 1, 'type': 'item', 'value': 'Test Item 2' }] },
-        'expected_has_required_possessions': True,
-    }),
-    ({
-        'id': 'an event with multiple required possessions that the tribute does not have cannot be played',
-        'event': { **default_event, 'name': 'Test Event', 'requires_possessions': [{ 'tribute': 1, 'type': 'item', 'value': 'Test Item 1' }, { 'tribute': 1, 'type': 'item', 'value': 'Test Item 3' }] },
-        'expected_has_required_possessions': False,
-    }),
-    ({
-        'id': 'an event with multiple required possessions that the tribute has and does not have but is negated can be played',
-        'event': { **default_event, 'name': 'Test Event', 'requires_possessions': [{ 'tribute': 1, 'type': 'item', 'value': 'Test Item 1' }, { 'tribute': 1, 'type': 'item', 'value': 'Test Item 3', 'inverse': True }] },
-        'expected_has_required_possessions': True,
-    }),
-    ({
-        'id': 'an event with multiple required possessions that the tribute has and does have but is negated cannot be played',
-        'event': { **default_event, 'name': 'Test Event', 'requires_possessions': [{ 'tribute': 1, 'type': 'item', 'value': 'Test Item 1' }, { 'tribute': 1, 'type': 'item', 'value': 'Test Item 2', 'inverse': True }] },
-        'expected_has_required_possessions': False,
-    }),
-    ({
-        'id': 'an event with multiple required possessions that the tribute does not have and does have but is negated cannot be played',
-        'event': { **default_event, 'name': 'Test Event', 'requires_possessions': [{ 'tribute': 1, 'type': 'item', 'value': 'Test Item 3' }, { 'tribute': 1, 'type': 'item', 'value': 'Test Item 4', 'inverse': True }] },
-        'expected_has_required_possessions': False,
-    }),
+    (
+        {
+            'id': 'an event without required possessions can be played',
+            'event': {**default_event, 'name': 'Test Event'},
+            'expected_has_required_possessions': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required possession that the tribute has can be played',
+            'event': {
+                **default_event,
+                'name': 'Test Event',
+                'requires_possessions': [
+                    {'tribute': 1, 'type': 'item', 'value': 'Test Item 1'}
+                ],
+            },
+            'expected_has_required_possessions': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required possession that the tribute does not have cannot be played',
+            'event': {
+                **default_event,
+                'name': 'Test Event',
+                'requires_possessions': [
+                    {'tribute': 1, 'type': 'item', 'value': 'Test Item 3'}
+                ],
+            },
+            'expected_has_required_possessions': False,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required possession that the tribute does not have but is negated can be played',
+            'event': {
+                **default_event,
+                'name': 'Test Event',
+                'requires_possessions': [
+                    {
+                        'tribute': 1,
+                        'type': 'item',
+                        'value': 'Test Item 3',
+                        'inverse': True,
+                    }
+                ],
+            },
+            'expected_has_required_possessions': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with a required possession that the tribute has but is negated cannot be played',
+            'event': {
+                **default_event,
+                'name': 'Test Event',
+                'requires_possessions': [
+                    {
+                        'tribute': 1,
+                        'type': 'item',
+                        'value': 'Test Item 1',
+                        'inverse': True,
+                    }
+                ],
+            },
+            'expected_has_required_possessions': False,
+        }
+    ),
+    (
+        {
+            'id': 'an event with multiple required possessions that the tribute has can be played',
+            'event': {
+                **default_event,
+                'name': 'Test Event',
+                'requires_possessions': [
+                    {'tribute': 1, 'type': 'item', 'value': 'Test Item 1'},
+                    {'tribute': 1, 'type': 'item', 'value': 'Test Item 2'},
+                ],
+            },
+            'expected_has_required_possessions': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with multiple required possessions that the tribute does not have cannot be played',
+            'event': {
+                **default_event,
+                'name': 'Test Event',
+                'requires_possessions': [
+                    {'tribute': 1, 'type': 'item', 'value': 'Test Item 1'},
+                    {'tribute': 1, 'type': 'item', 'value': 'Test Item 3'},
+                ],
+            },
+            'expected_has_required_possessions': False,
+        }
+    ),
+    (
+        {
+            'id': 'an event with multiple required possessions that the tribute has and does not have but is negated can be played',
+            'event': {
+                **default_event,
+                'name': 'Test Event',
+                'requires_possessions': [
+                    {'tribute': 1, 'type': 'item', 'value': 'Test Item 1'},
+                    {
+                        'tribute': 1,
+                        'type': 'item',
+                        'value': 'Test Item 3',
+                        'inverse': True,
+                    },
+                ],
+            },
+            'expected_has_required_possessions': True,
+        }
+    ),
+    (
+        {
+            'id': 'an event with multiple required possessions that the tribute has and does have but is negated cannot be played',
+            'event': {
+                **default_event,
+                'name': 'Test Event',
+                'requires_possessions': [
+                    {'tribute': 1, 'type': 'item', 'value': 'Test Item 1'},
+                    {
+                        'tribute': 1,
+                        'type': 'item',
+                        'value': 'Test Item 2',
+                        'inverse': True,
+                    },
+                ],
+            },
+            'expected_has_required_possessions': False,
+        }
+    ),
+    (
+        {
+            'id': 'an event with multiple required possessions that the tribute does not have and does have but is negated cannot be played',
+            'event': {
+                **default_event,
+                'name': 'Test Event',
+                'requires_possessions': [
+                    {'tribute': 1, 'type': 'item', 'value': 'Test Item 3'},
+                    {
+                        'tribute': 1,
+                        'type': 'item',
+                        'value': 'Test Item 4',
+                        'inverse': True,
+                    },
+                ],
+            },
+            'expected_has_required_possessions': False,
+        }
+    ),
 ]
 
 

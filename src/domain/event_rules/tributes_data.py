@@ -1,6 +1,6 @@
 """Event rule that handles effects on the gamestate based on tributes data in the event."""
 
-from typing import Union
+from __future__ import annotations
 
 from domain.event_rule import EventRule, TextAndTerms
 from domain.types import GameRoundState, Tribute
@@ -17,7 +17,8 @@ class TributesData(EventRule):
         """Handle the effects of tributes data in the event on the game state."""
         event = game_state['event']
 
-        if 'update_tributes_data' not in event: return
+        if 'update_tributes_data' not in event:
+            return
 
         tributes = text_and_terms.get('tributes', [])
 
@@ -27,7 +28,7 @@ class TributesData(EventRule):
                 game_state,
                 game_state['tributes_alive'][tribute_name],
                 data_to_add['type'],
-                data_to_add['operation'] if 'operation' in data_to_add else '',
+                data_to_add.get('operation', ''),
                 data_to_add['value'],
             )
 
@@ -37,20 +38,19 @@ class TributesData(EventRule):
         tribute: Tribute,
         type: str,
         operation: str,
-        value: Union[int, str],
+        value: int | str,
     ):
         """Update the tributes data in the game state based on the event effects."""
         if tribute['name'] not in game_state['tributes_data']:
             game_state['tributes_data'][tribute['name']] = {}
-        
+
         if type not in game_state['tributes_data'][tribute['name']]:
             game_state['tributes_data'][tribute['name']][type] = value
             return
 
         if operation == 'add':
-            game_state['tributes_data'][tribute['name']][type] += value # type: ignore
+            game_state['tributes_data'][tribute['name']][type] += value  # type: ignore
         elif operation == 'remove':
-            game_state['tributes_data'][tribute['name']][type] -= value # type: ignore
+            game_state['tributes_data'][tribute['name']][type] -= value  # type: ignore
         else:
             game_state['tributes_data'][tribute['name']][type] = value
-            

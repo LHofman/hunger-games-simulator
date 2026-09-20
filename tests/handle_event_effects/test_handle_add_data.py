@@ -1,5 +1,5 @@
-from domain.event_rules.tributes_data import TributesData
 from domain.event_rule import TextAndTerms
+from domain.event_rules.tributes_data import TributesData
 from domain.types import GameRoundState
 from tests.defaults import (
     default_event,
@@ -14,23 +14,23 @@ def test_handle_add_data():
         'event': {
             **default_event,
             'update_tributes_data': [
-                { 'tribute': 1, 'type': 'kills', 'operation': 'add', 'value': 1 },
-                { 'tribute': 3, 'type': 'other', 'value': 2 },
+                {'tribute': 1, 'type': 'kills', 'operation': 'add', 'value': 1},
+                {'tribute': 3, 'type': 'other', 'value': 2},
             ],
         },
         'tributes_alive': {
-            'Tribute1': { **default_tribute, 'name': 'Tribute1' },
-            'Tribute2': { **default_tribute, 'name': 'Tribute2' },
-            'Tribute3': { **default_tribute, 'name': 'Tribute3' },
+            'Tribute1': {**default_tribute, 'name': 'Tribute1'},
+            'Tribute2': {**default_tribute, 'name': 'Tribute2'},
+            'Tribute3': {**default_tribute, 'name': 'Tribute3'},
         },
     }
 
     text_and_terms: TextAndTerms = {
         'text': '',
         'tributes': [
-            { **default_tribute, 'name': 'Tribute1' },
-            { **default_tribute, 'name': 'Tribute2' },
-            { **default_tribute, 'name': 'Tribute3' },
+            {**default_tribute, 'name': 'Tribute1'},
+            {**default_tribute, 'name': 'Tribute2'},
+            {**default_tribute, 'name': 'Tribute3'},
         ],
     }
 

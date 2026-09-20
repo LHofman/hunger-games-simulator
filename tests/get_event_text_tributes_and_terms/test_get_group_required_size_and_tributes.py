@@ -1,10 +1,10 @@
-import pytest
-
-from pytest_mock import MockerFixture
 from typing import TypedDict
 
-from domain.event_rules.groups import Groups
+import pytest
+from pytest_mock import MockerFixture
+
 from domain.event_rule import TextAndTerms
+from domain.event_rules.groups import Groups
 from domain.types import Event, GameRoundState, GroupSizeType, Tribute
 from tests.defaults import (
     default_event,
@@ -27,62 +27,83 @@ def test_mock(mocker: MockerFixture):
     mocker.patch('random.random', return_value=0.5)
     mocker.patch(
         'random.choice',
-        side_effect=lambda list: list[0], # type: ignore
+        side_effect=lambda list: list[0],  # type: ignore
     )
 
 
 providers: list[ProviderType] = [
-    ({
-        'id': 'an event without require_group_size should not return any tributes',
-        'event': {
-            **default_event,
-            'name': 'Event without require_group_size',
-            'text': 'This is a test text with (Tribute1) and (Tribute2)',
-        },
-        'tribute': { **default_tribute, 'grouped_with': ['Tribute2', 'Tribute3'] },
-        'tributes_remaining': {
-            'Tribute3': { **default_tribute, 'name': 'Tribute3' },
-        },
-        'expected_text': 'This is a test text with Tribute1 and (Tribute2)',
-        'expected_tributes': [
-            { **default_tribute, 'grouped_with': ['Tribute2', 'Tribute3'] },
-        ],
-    }),
-    ({
-        'id': 'it should only return the tributes in the tribute\'s group that are still remaining',
-        'event': {
-            **default_event,
-            'require_group_size': { 'type': GroupSizeType.EXACT, 'amount': 2 },
-            'text': 'This is a test text with (Tribute1) and (Tribute2)',
-        },
-        'tribute': { **default_tribute, 'grouped_with': ['Tribute2', 'Tribute3'] },
-        'tributes_remaining': {
-            'Tribute3': { **default_tribute, 'name': 'Tribute3' },
-        },
-        'expected_text': 'This is a test text with Tribute1 and Tribute3',
-        'expected_tributes': [
-            { **default_tribute, 'grouped_with': ['Tribute2', 'Tribute3'] },
-            { **default_tribute, 'name': 'Tribute3' },
-        ],
-    }),
-    ({
-        'id': 'it should return the correct group size and tributes when there are multiple tributes remaining',
-        'event': {
-            **default_event,
-            'require_group_size': { 'type': GroupSizeType.EXACT, 'amount': 2 },
-            'text': 'This is a test text with (Tribute1) and (Tribute2)',
-        },
-        'tribute': { **default_tribute, 'grouped_with': ['Tribute2', 'Tribute3'] },
-        'tributes_remaining': {
-            'Tribute2': { **default_tribute, 'name': 'Tribute2' },
-            'Tribute3': { **default_tribute, 'name': 'Tribute3' },
-        },
-        'expected_text': 'This is a test text with Tribute1 and Tribute2',
-        'expected_tributes': [
-            { **default_tribute, 'grouped_with': ['Tribute2', 'Tribute3'] },
-            { **default_tribute, 'name': 'Tribute2' },
-        ],
-    }),
+    (
+        {
+            'id': 'an event without require_group_size should not return any tributes',
+            'event': {
+                **default_event,
+                'name': 'Event without require_group_size',
+                'text': 'This is a test text with (Tribute1) and (Tribute2)',
+            },
+            'tribute': {
+                **default_tribute,
+                'grouped_with': ['Tribute2', 'Tribute3'],
+            },
+            'tributes_remaining': {
+                'Tribute3': {**default_tribute, 'name': 'Tribute3'},
+            },
+            'expected_text': 'This is a test text with Tribute1 and (Tribute2)',
+            'expected_tributes': [
+                {**default_tribute, 'grouped_with': ['Tribute2', 'Tribute3']},
+            ],
+        }
+    ),
+    (
+        {
+            'id': "it should only return the tributes in the tribute's group that are still remaining",
+            'event': {
+                **default_event,
+                'require_group_size': {
+                    'type': GroupSizeType.EXACT,
+                    'amount': 2,
+                },
+                'text': 'This is a test text with (Tribute1) and (Tribute2)',
+            },
+            'tribute': {
+                **default_tribute,
+                'grouped_with': ['Tribute2', 'Tribute3'],
+            },
+            'tributes_remaining': {
+                'Tribute3': {**default_tribute, 'name': 'Tribute3'},
+            },
+            'expected_text': 'This is a test text with Tribute1 and Tribute3',
+            'expected_tributes': [
+                {**default_tribute, 'grouped_with': ['Tribute2', 'Tribute3']},
+                {**default_tribute, 'name': 'Tribute3'},
+            ],
+        }
+    ),
+    (
+        {
+            'id': 'it should return the correct group size and tributes when there are multiple tributes remaining',
+            'event': {
+                **default_event,
+                'require_group_size': {
+                    'type': GroupSizeType.EXACT,
+                    'amount': 2,
+                },
+                'text': 'This is a test text with (Tribute1) and (Tribute2)',
+            },
+            'tribute': {
+                **default_tribute,
+                'grouped_with': ['Tribute2', 'Tribute3'],
+            },
+            'tributes_remaining': {
+                'Tribute2': {**default_tribute, 'name': 'Tribute2'},
+                'Tribute3': {**default_tribute, 'name': 'Tribute3'},
+            },
+            'expected_text': 'This is a test text with Tribute1 and Tribute2',
+            'expected_tributes': [
+                {**default_tribute, 'grouped_with': ['Tribute2', 'Tribute3']},
+                {**default_tribute, 'name': 'Tribute2'},
+            ],
+        }
+    ),
 ]
 
 
@@ -92,7 +113,7 @@ def test_get_group_required_size_and_tributes(provider: ProviderType):
         **default_game_round_state_without_event,
         'event': provider['event'],
         'current_tribute': provider['tribute'],
-        'tributes_remaining_this_round': provider['tributes_remaining']  ,
+        'tributes_remaining_this_round': provider['tributes_remaining'],
     }
 
     text_and_terms: TextAndTerms = {

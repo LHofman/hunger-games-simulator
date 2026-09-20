@@ -1,6 +1,9 @@
 """Base class for event rules."""
 
 from abc import ABC
+from typing import TypedDict
+
+from typing_extensions import NotRequired, Required
 
 from domain.types import (
     Event,
@@ -8,8 +11,6 @@ from domain.types import (
     GameRoundStateWithoutEvent,
     Tribute,
 )
-from typing import TypedDict
-from typing_extensions import NotRequired, Required
 
 
 class TextAndTerms(TypedDict):

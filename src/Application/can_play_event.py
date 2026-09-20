@@ -11,7 +11,7 @@ def can_play_event(game_state: GameRoundStateWithoutEvent):
         for event_rule in event_rules_list:
             if not event_rule.can_play_event(event, game_state):
                 return False
-            
+
         return True
 
     return can_play_event_inner

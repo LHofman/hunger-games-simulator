@@ -1,9 +1,10 @@
 """Main entry point for the Hunger Games simulator."""
 
+from __future__ import annotations
+
 import json
 import re
-
-from typing import TypedDict, Union
+from typing import TypedDict
 
 from application.game_executor import GameExecutor
 from application.printer import Printer
@@ -26,20 +27,19 @@ def to_snake_case(text: str) -> str:
     return re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1_\2', s1).lower()
 
 
-def camel_to_snake_dict(d: dict) -> dict: # type: ignore
+def camel_to_snake_dict(d: dict) -> dict:  # type: ignore
     """Converts top-level dictionary keys to snake_case."""
-    return {to_snake_case(k): v for k, v in d.items()} # type: ignore
+    return {to_snake_case(k): v for k, v in d.items()}  # type: ignore
 
 
-def read_file(file_name: str, type: str = 'text') -> Union[dict, list, None]: # type: ignore
+def read_file(file_name: str, type: str = 'text') -> dict | list | None:  # type: ignore
     """Read a file and returns its contents as a dictionary (for JSON) or a list of lines (for text)."""
-    file = open(file_name, 'r', encoding='utf-8')
+    with open(file_name, 'r', encoding='utf-8') as file:
+        if type == 'json':
+            return json.load(file)
 
-    if type == 'json':
-        return json.load(file)
-
-    lines = file.readlines()
-    return list(map(lambda line: line.rstrip(), lines))
+        lines = file.readlines()
+        return [line.rstrip() for line in lines]  # type: ignore
 
 
 class GameDataFile(TypedDict):
@@ -53,21 +53,20 @@ class GameDataFile(TypedDict):
 
 def read_game_data_file(file_name: str) -> GameDataFile:
     """Read the game data file and returns its contents as a GameDataFile object."""
-    raw_game_data_file = read_file(file_name, 'json') # type: ignore
+    raw_game_data_file = read_file(file_name, 'json')  # type: ignore
 
-    formatted_events: dict[str, Event] = { # type: ignore
-        event_name: camel_to_snake_dict(event) # type: ignore
-        for event_name, event in raw_game_data_file['events'].items() # type: ignore
+    formatted_events: dict[str, Event] = {  # type: ignore
+        event_name: camel_to_snake_dict(event)  # type: ignore
+        for event_name, event in raw_game_data_file['events'].items()  # type: ignore
     }
 
     return {
-        'options': camel_to_snake_dict(raw_game_data_file['options']), # type: ignore
+        'options': camel_to_snake_dict(raw_game_data_file['options']),  # type: ignore
         'increase_event_odds': camel_to_snake_dict(
-            raw_game_data_file['increaseEventOdds'], # type: ignore
+            raw_game_data_file['increaseEventOdds'],  # type: ignore
         ),
-        'events': raw_game_data_file['events'], # type: ignore
         'events': formatted_events,
-        'replace_terms': raw_game_data_file['replaceTerms'], # type: ignore
+        'replace_terms': raw_game_data_file['replaceTerms'],  # type: ignore
     }
 
 
@@ -76,26 +75,27 @@ def read_tributes(
     tributes_file_name: str,
 ) -> dict[str, Tribute]:
     """Read the tributes from a file and returns a dictionary of Tribute objects."""
-    file = open(tributes_file_name, 'r', encoding='utf-8')
-    lines = file.readlines()
+    with open(tributes_file_name, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
 
     if game_options['districts'] > 0:
         tributes_per_district = len(lines) / game_options['districts']
     elif game_options['tributes_per_district'] > 0:
         tributes_per_district = game_options['tributes_per_district']
-    else: tributes_per_district = 0
-    
+    else:
+        tributes_per_district = 0
+
     tributes: dict[str, Tribute] = {}
-    ao_tributes = 0
-    for line in lines:
-        ao_tributes += 1
+    for ao_tributes, line in enumerate(lines, start=1):
         name = line.rstrip()
         tributes[name] = {
             'index': ao_tributes,
             'name': name,
-            'district': int(((ao_tributes - 1) / tributes_per_district) + 1)
+            'district': (
+                int(((ao_tributes - 1) / tributes_per_district) + 1)
                 if tributes_per_district > 0
-                else 0,
+                else 0
+            ),
             'grouped_with': [],
             'possessions': {},
         }
@@ -114,10 +114,10 @@ def read_tributes(
 
 def add_name_to_events(events: dict[str, Event]) -> dict[str, Event]:
     """Add the name of each event to its corresponding Event object."""
-    for (name, event) in events.items():
+    for name, event in events.items():
         event['name'] = name
         events[name] = event
-                
+
     return events
 
 
@@ -137,14 +137,13 @@ def print_rankings(game_state: GameState, printer: Printer):
     printer.print('\n\n\n---\nFinal Rankings')
 
     for tribute_deaths in game_state['deaths']:
-        for (tribute, district) in tribute_deaths:
+        for tribute, district in tribute_deaths:
             tribute_data = game_state['tributes_data'][tribute]
-            kills = tribute_data['kills'] if 'kills' in tribute_data else 0
             printer.print(
                 f'{game_state["total_tributes"]}. '
                 f'{tribute} from district {district}, '
                 f'died during {tribute_data["time of death"]}, '
-                f'has {kills} kills',
+                f'has {tribute_data.get("kills", 0)} kills',
             )
             game_state['total_tributes'] -= 1
 
@@ -161,14 +160,14 @@ if __name__ == '__main__':
         printer = FilePrinter('resources/output.txt')
 
     tributes = read_tributes(
-        game_data_file['options'], 'settings/tributes.txt',
+        game_data_file['options'],
+        'settings/tributes.txt',
     )
-    sponsors: list[str] = read_file('settings/sponsors.txt') # type: ignore
+    sponsors: list[str] = read_file('settings/sponsors.txt')  # type: ignore
 
     if game_data_file['options']['auto_play']:
-        output_file = open('resources/output.txt', 'w')
-        output_file.write('')
-        output_file.close()
+        with open('resources/output.txt', 'w') as output_file:
+            output_file.write('')
 
     printer.print('-' * 114)
 

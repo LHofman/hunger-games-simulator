@@ -19,13 +19,14 @@ class OtherTerms(EventRule):
         text = text_and_terms['text']
         terms = text_and_terms.get('terms', {})
 
-        for (key, values) in game_state.get('other_terms').items():
+        for key, values in game_state.get('other_terms').items():
             index = text.find(f'({key}')
-            while (index > -1):
+            while index > -1:
                 match = re.search(r'\d', text[index:])
-                if not match: raise ValueError(
-                    f'No number found in other term: {text[index:]}',
-                )
+                if not match:
+                    raise ValueError(
+                        f'No number found in other term: {text[index:]}',
+                    )
 
                 number = int(match.group())
                 term = f'({key}{number})'
@@ -37,4 +38,4 @@ class OtherTerms(EventRule):
 
                 index = text.find(f'({key}')
 
-        return { **text_and_terms, 'text': text, 'terms': terms }
+        return {**text_and_terms, 'text': text, 'terms': terms}

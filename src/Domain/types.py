@@ -1,7 +1,10 @@
 """Types used in the hunger games simulator."""
 
+from __future__ import annotations
+
 from enum import Enum
-from typing import TypedDict, Union
+from typing import TypedDict
+
 from typing_extensions import NotRequired, Required
 
 
@@ -41,7 +44,7 @@ class UpdateTributeData(TypedDict):
     tribute: Required[int]
     type: Required[str]
     operation: NotRequired[str]
-    value: Required[Union[int, str]]
+    value: Required[int | str]
 
 
 class Event(TypedDict):
@@ -55,7 +58,7 @@ class Event(TypedDict):
     tributes: NotRequired[int]
     deaths: NotRequired[list[str]]
     requires_possessions: NotRequired[list[RequiredPossession]]
-    time: NotRequired[Union[str, list[str]]]
+    time: NotRequired[str | list[str]]
     require_group_size: NotRequired[GroupSize]
     kill_teammates: NotRequired[bool]
     form_group: NotRequired[list[str]]
@@ -122,7 +125,7 @@ class GameState(GameConfig):
     tributes_alive: Required[dict[str, Tribute]]
     deaths: Required[list[list[tuple[str, int]]]]
     recent_deaths: Required[list[tuple[str, int]]]
-    tributes_data: Required[dict[str, dict[str, Union[int, str]]]]
+    tributes_data: Required[dict[str, dict[str, int | str]]]
 
 
 class GameRoundStateWithoutEvent(GameState):
@@ -139,4 +142,3 @@ class GameRoundState(GameRoundStateWithoutEvent):
     """Represent the state of the game during a round, including the current event."""
 
     event: Required[Event]
-    

@@ -3,7 +3,7 @@
 import random
 
 from application.can_play_event import can_play_event
-from domain.types import GameRoundStateWithoutEvent, Event, IncreaseEventOdds
+from domain.types import Event, GameRoundStateWithoutEvent, IncreaseEventOdds
 
 
 class EventPicker:
@@ -48,13 +48,14 @@ class EventPicker:
         game_state: GameRoundStateWithoutEvent,
     ) -> list[IncreaseEventOdds]:
         tribute = game_state['current_tribute']
-        increased_odds_events_options = (
-            game_state['increase_event_odds']['possessions']
-        )
+        increased_odds_events_options = game_state['increase_event_odds'][
+            'possessions'
+        ]
 
         increased_odds_events: list[IncreaseEventOdds] = []
-        for (type, values) in tribute['possessions'].items():
-            if type not in increased_odds_events_options: continue
+        for type, values in tribute['possessions'].items():
+            if type not in increased_odds_events_options:
+                continue
 
             for value in values:
                 if value in increased_odds_events_options[type]:
@@ -79,7 +80,7 @@ class EventPicker:
         diff = abs(game_speed - 5)
         multiplier = diff / 5
         percentage = (1 if game_speed > 5 else -1) * 100 * multiplier
-        for (name, event) in list(events.items()):
+        for name, event in list(events.items()):
             if 'deaths' in event:
                 increased_odds_events.append(
                     {'event': name, 'percentage': percentage},
@@ -96,17 +97,18 @@ class EventPicker:
 
         increased_odds_events: list[IncreaseEventOdds] = []
 
-        for (name, event) in events.items():
+        for name, event in events.items():
             if (
                 'max_occurances' in event
-                 and name in events_occured
-                 and event['max_occurances'] == events_occured[name]
-            ): increased_odds_events.append(
-                { 'event': name, 'percentage': -100 },
-            )
+                and name in events_occured
+                and event['max_occurances'] == events_occured[name]
+            ):
+                increased_odds_events.append(
+                    {'event': name, 'percentage': -100},
+                )
             elif 'percentage' in event:
                 increased_odds_events.append(
-                    { 'event': name, 'percentage': event['percentage'] },
+                    {'event': name, 'percentage': event['percentage']},
                 )
 
         return increased_odds_events
@@ -122,7 +124,7 @@ class EventPicker:
         for increase_event in increased_odds_events:
             percentage = increase_event['percentage']
             if percentage > 0:
-                while (percentage >= 100):
+                while percentage >= 100:
                     event_options.append(events[increase_event['event']])
                     percentage -= 100
                 rnd = random.random() * 100
@@ -133,6 +135,7 @@ class EventPicker:
                 if (
                     rnd < abs(percentage)
                     and events[increase_event['event']] in event_options
-                ): event_options.remove(events[increase_event['event']])
-        
+                ):
+                    event_options.remove(events[increase_event['event']])
+
         return event_options

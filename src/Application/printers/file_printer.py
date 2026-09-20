@@ -12,6 +12,5 @@ class FilePrinter(Printer):
 
     def print(self, message: str) -> None:
         """Print a message to a file."""
-        output_file = open(self.file_path, 'a', encoding='utf-8')
-        output_file.write(f'\n{str(message)}')
-        output_file.close()
+        with open(self.file_path, 'a') as output_file:
+            output_file.write(f'\n{message}')

@@ -1,6 +1,6 @@
-import pytest
-
 from typing import TypedDict
+
+import pytest
 
 from domain.event_rules.groups import Groups
 from domain.types import Event, GameRoundStateWithoutEvent, Tribute
@@ -20,42 +20,76 @@ class ProviderType(TypedDict):
 
 
 providers: list[ProviderType] = [
-    ({
-        'id': 'An event without deaths can be played',
-        'event': { **default_event, 'name': 'Event without deaths' },
-        'tribute': { **default_tribute, },
-        'expected_can_betray_teammates': True,
-    }),
-    ({
-        'id': 'An event with deaths but no kill_teammates can be played',
-        'event': { **default_event, 'deaths': ['Tribute2'] },
-        'tribute': { **default_tribute, },
-        'expected_can_betray_teammates': True,
-    }),
-    ({
-        'id': 'An event with deaths and kill_teammates set to false can be played',
-        'event': { **default_event, 'deaths': ['Tribute2'], 'kill_teammates': False },
-        'tribute': { **default_tribute, },
-        'expected_can_betray_teammates': True,
-    }),
-    ({
-        'id': 'An event kill_teammates can be played if the tribute is not grouped with any other tributes',
-        'event': { **default_event, 'deaths': ['Tribute2'], 'kill_teammates': True },
-        'tribute': { **default_tribute, 'grouped_with': [] },
-        'expected_can_betray_teammates': True,
-    }),
-    ({
-        'id': 'An event kill_teammates can be played if the tribute is not grouped with the tribute that is killed',
-        'event': { **default_event, 'deaths': ['Tribute2'], 'kill_teammates': True },
-        'tribute': { **default_tribute, 'grouped_with': ['Tribute3'] },
-        'expected_can_betray_teammates': True,
-    }),
-    ({
-        'id': 'An event kill_teammates cannot be played if the tribute is grouped with the tribute that is killed',
-        'event': { **default_event, 'deaths': ['Tribute2'], 'kill_teammates': True },
-        'tribute': { **default_tribute, 'grouped_with': ['Tribute2'] },
-        'expected_can_betray_teammates': False,
-    }),
+    (
+        {
+            'id': 'An event without deaths can be played',
+            'event': {**default_event, 'name': 'Event without deaths'},
+            'tribute': {
+                **default_tribute,
+            },
+            'expected_can_betray_teammates': True,
+        }
+    ),
+    (
+        {
+            'id': 'An event with deaths but no kill_teammates can be played',
+            'event': {**default_event, 'deaths': ['Tribute2']},
+            'tribute': {
+                **default_tribute,
+            },
+            'expected_can_betray_teammates': True,
+        }
+    ),
+    (
+        {
+            'id': 'An event with deaths and kill_teammates set to false can be played',
+            'event': {
+                **default_event,
+                'deaths': ['Tribute2'],
+                'kill_teammates': False,
+            },
+            'tribute': {
+                **default_tribute,
+            },
+            'expected_can_betray_teammates': True,
+        }
+    ),
+    (
+        {
+            'id': 'An event kill_teammates can be played if the tribute is not grouped with any other tributes',
+            'event': {
+                **default_event,
+                'deaths': ['Tribute2'],
+                'kill_teammates': True,
+            },
+            'tribute': {**default_tribute, 'grouped_with': []},
+            'expected_can_betray_teammates': True,
+        }
+    ),
+    (
+        {
+            'id': 'An event kill_teammates can be played if the tribute is not grouped with the tribute that is killed',
+            'event': {
+                **default_event,
+                'deaths': ['Tribute2'],
+                'kill_teammates': True,
+            },
+            'tribute': {**default_tribute, 'grouped_with': ['Tribute3']},
+            'expected_can_betray_teammates': True,
+        }
+    ),
+    (
+        {
+            'id': 'An event kill_teammates cannot be played if the tribute is grouped with the tribute that is killed',
+            'event': {
+                **default_event,
+                'deaths': ['Tribute2'],
+                'kill_teammates': True,
+            },
+            'tribute': {**default_tribute, 'grouped_with': ['Tribute2']},
+            'expected_can_betray_teammates': False,
+        }
+    ),
 ]
 
 

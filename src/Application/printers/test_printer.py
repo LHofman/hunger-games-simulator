@@ -7,7 +7,7 @@ class TestPrinter(Printer):
     """Print messages to an array for testing purposes."""
 
     __test__ = False
-    
+
     def __init__(self, output_array: list[str]):
         """Initialize the TestPrinter with the specified output array."""
         self.output_array = output_array

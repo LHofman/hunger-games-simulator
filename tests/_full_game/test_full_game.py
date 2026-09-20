@@ -1,26 +1,24 @@
 import pytest
-
 from pytest_mock import MockerFixture
 
 from application.game_executor import GameExecutor
 from application.printers.test_printer import TestPrinter
 from domain.types import GameConfig
-
 from index import (
+    GameDataFile,
+    add_name_to_events,
+    print_rankings,
+    print_winner,
     read_file,  # type: ignore
     read_game_data_file,
-    add_name_to_events,
     read_tributes,
-    print_winner,
-    print_rankings,
-    GameDataFile,
 )
 
 
-@pytest.fixture(autouse = True)
+@pytest.fixture(autouse=True)
 def test_mock(mocker: MockerFixture):
     mocker.patch('random.random', return_value=0)
-    mocker.patch('random.choice', side_effect=lambda list: list[0]) # type: ignore
+    mocker.patch('random.choice', side_effect=lambda list: list[0])  # type: ignore
     mocker.patch('random.shuffle')
 
 
@@ -44,7 +42,8 @@ def test_game_with_death():
 
     assert_output(
         output_array,
-        start_of_game_text + [
+        start_of_game_text
+        + [
             'Tribute 1 explores the arena.',
             'Tribute 2 dies.',
             '1 cannon shots can be heard in the distance.',
@@ -64,7 +63,8 @@ def test_game_with_kill():
 
     assert_output(
         output_array,
-        start_of_game_text + [
+        start_of_game_text
+        + [
             'Tribute 2 catches Tribute 1 off guard and kills them.',
             '1 cannon shots can be heard in the distance.',
             'Tribute 1 from district 1',
@@ -77,14 +77,14 @@ def test_game_with_kill():
 
 
 def set_up_full_game(test_folder: str) -> GameConfig:
-    game_data_file: GameDataFile = read_game_data_file( # type: ignore
+    game_data_file: GameDataFile = read_game_data_file(  # type: ignore
         f'tests/_full_game/{test_folder}/mock_game_data.json',
     )
     tributes = read_tributes(
         game_data_file['options'],
         f'tests/_full_game/{test_folder}/mock_tributes.txt',
     )
-    sponsors: list[str] = read_file( # type: ignore
+    sponsors: list[str] = read_file(  # type: ignore
         f'tests/_full_game/{test_folder}/mock_sponsors.txt',
     )
 
@@ -116,7 +116,7 @@ def assert_next_line(output_array: list[str], expected_line: str):
     actual_line = output_array.pop(0)
     actual_line = actual_line.strip('\n\r -')
 
-    while (actual_line == ''):
+    while actual_line == '':
         actual_line = output_array.pop(0)
         actual_line = actual_line.strip('\n\r -')
 

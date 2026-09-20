@@ -36,7 +36,7 @@ default_game_round_state_without_event: GameRoundStateWithoutEvent = {
     'total_tributes': 0,
     'all_tributes': {},
     'events': {},
-    'increase_event_odds': { 'possessions': {} },
+    'increase_event_odds': {'possessions': {}},
     'events_occured': {},
     'tributes_alive': {},
     'deaths': [],

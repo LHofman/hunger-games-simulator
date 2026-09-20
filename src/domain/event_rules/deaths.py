@@ -18,15 +18,17 @@ class Deaths(EventRule):
         """Handle the effects of deaths in the event on the game state."""
         event = game_state['event']
 
-        if 'deaths' not in event: return
+        if 'deaths' not in event:
+            return
 
         tributes = text_and_terms.get('tributes', [])
 
         for death in event['deaths']:
             match = re.search(r'\d+', death)
-            if not match: raise ValueError(
-                f'No number found in death term: {death}',
-            )
+            if not match:
+                raise ValueError(
+                    f'No number found in death term: {death}',
+                )
 
             index = int(match.group()) - 1
             tribute_name = tributes[index]['name']
@@ -48,7 +50,7 @@ class Deaths(EventRule):
                 tributes[index]['district'],
             )
 
-            for (name, _tribute) in game_state['tributes_alive'].items():
+            for name, _tribute in game_state['tributes_alive'].items():
                 if tribute_name in _tribute['grouped_with']:
                     game_state['tributes_alive'][name]['grouped_with'].remove(
                         tribute_name,

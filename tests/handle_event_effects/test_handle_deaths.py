@@ -1,5 +1,5 @@
-from domain.event_rules.deaths import Deaths
 from domain.event_rule import TextAndTerms
+from domain.event_rules.deaths import Deaths
 from domain.types import GameRoundState
 from tests.defaults import (
     default_event,
@@ -73,5 +73,10 @@ def test_handle_deaths():
     assert game_state['tributes_data']['Tribute3']['time of death'] == 'day'
     assert game_state['tributes_data']['Tribute3']['district'] == 3
     assert game_state['tributes_alive'] == {
-        'Tribute1': { **default_tribute, 'name': 'Tribute1', 'district': 1, 'grouped_with': [] },
+        'Tribute1': {
+            **default_tribute,
+            'name': 'Tribute1',
+            'district': 1,
+            'grouped_with': [],
+        },
     }

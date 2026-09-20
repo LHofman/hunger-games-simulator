@@ -16,14 +16,12 @@ from domain.event_rules.tributes_data import TributesData
 event_rules_list: list[EventRule] = [
     IgnoreComments(),
     TimedEvents(),
-
     # Needs to be before Groups and MultipleTributes.
     CurrentTribute(),
     # Needs to be after current_tribute and before MultipleTributes.
     Groups(),
     # Needs to be after current_tribute and Groups.
     MultipleTributes(),
-
     Possessions(),
     OtherTerms(),
     Sponsors(),

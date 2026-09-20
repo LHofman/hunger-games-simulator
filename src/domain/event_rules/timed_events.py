@@ -15,7 +15,7 @@ class TimedEvents(EventRule):
         """Check if the event can be played based on the time of the event."""
         if 'time' not in event:
             return game_state['play_standard_events']
-        
+
         times_list = event['time']
         if not isinstance(times_list, list):
             times_list = [times_list]

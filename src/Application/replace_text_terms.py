@@ -14,6 +14,9 @@ def replace_text_terms(game_state: GameRoundState) -> TextAndTerms:
     }
 
     for event_rule in event_rules_list:
-        text_and_terms = event_rule.replace_text_terms(game_state, text_and_terms)
-            
+        text_and_terms = event_rule.replace_text_terms(
+            game_state,
+            text_and_terms,
+        )
+
     return text_and_terms

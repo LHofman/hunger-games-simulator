@@ -1,5 +1,5 @@
-from domain.event_rules.groups import Groups
 from domain.event_rule import TextAndTerms
+from domain.event_rules.groups import Groups
 from domain.types import GameRoundState
 from tests.defaults import (
     default_event,
@@ -42,8 +42,8 @@ def test_handlesplit_group():
     text_and_terms: TextAndTerms = {
         'text': '',
         'tributes': [
-            { **default_tribute, 'name': 'Tribute1' },
-            { **default_tribute, 'name': 'Tribute2' },
+            {**default_tribute, 'name': 'Tribute1'},
+            {**default_tribute, 'name': 'Tribute2'},
         ],
     }
 
@@ -54,5 +54,9 @@ def test_handlesplit_group():
 
     assert game_state['tributes_alive']['Tribute1']['grouped_with'] == []
     assert game_state['tributes_alive']['Tribute2']['grouped_with'] == []
-    assert game_state['tributes_alive']['Tribute3']['grouped_with'] == ['Tribute4']
-    assert game_state['tributes_alive']['Tribute4']['grouped_with'] == ['Tribute3']
+    assert game_state['tributes_alive']['Tribute3']['grouped_with'] == [
+        'Tribute4'
+    ]
+    assert game_state['tributes_alive']['Tribute4']['grouped_with'] == [
+        'Tribute3'
+    ]

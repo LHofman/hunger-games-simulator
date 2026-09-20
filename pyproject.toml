@@ -1,0 +1,9 @@
+[tool.ruff]
+line-length = 80
+target-version = "py39"
+
+[tool.ruff.lint]
+ignore = ["SIM103"]
+
+[tool.ruff.format]
+quote-style = "single"
