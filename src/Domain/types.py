@@ -60,7 +60,6 @@ class Event(TypedDict):
     kill_teammates: NotRequired[bool]
     form_group: NotRequired[list[str]]
     split_group: NotRequired[list[str]]
-    deaths: NotRequired[list[str]]
     update_tributes_data: NotRequired[list[UpdateTributeData]]
     add_possessions: NotRequired[list[Possession]]
     remove_possessions: NotRequired[list[Possession]]
