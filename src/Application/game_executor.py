@@ -128,7 +128,7 @@ class GameExecutor:
 
     def _show_fallen_tributes(self) -> None:
         if (
-            len(self._game_state['recent_deaths']) > 0
+            self._game_state['recent_deaths']
             and self._game_state['options']['show_fallen_tributes']
         ):
             if not self._is_game_over(): self._read_input()

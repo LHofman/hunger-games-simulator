@@ -23,11 +23,6 @@ class EventPicker:
         # Remove events unable to occur at this moment.
         event_options = list(filter(can_play_event(game_state), event_options))
 
-        if len(event_options) == 0:
-            print('hi')
-            print(increase_odds_events)
-            print(game_state)
-
         # Get random event.
         event = random.choice(event_options)
 
