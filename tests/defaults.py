@@ -1,4 +1,4 @@
-from Domain.types import (
+from domain.types import (
     Event,
     GameOptions,
     GameRoundState,
@@ -6,49 +6,49 @@ from Domain.types import (
     Tribute,
 )
 
-defaultEvent: Event = {
+default_event: Event = {
     'name': 'Event Name',
     'text': 'Event Text',
 }
-defaultTribute: Tribute = {
+default_tribute: Tribute = {
     'index': 1,
     'name': 'Player1',
     'district': 1,
-    'groupedWith': [],
+    'grouped_with': [],
     'possessions': {},
 }
-defaultGameOptions: GameOptions = {
-    'betrayTeammates': False,
+default_game_options: GameOptions = {
+    'betray_teammates': False,
     'speed': 1,
-    'districtCanWinTogether': False,
-    'autoPlay': False,
-    'showFallenTributes': False,
-    'possessionsWithoutDuplicates': [],
+    'district_can_win_together': False,
+    'auto_play': False,
+    'show_fallen_tributes': False,
+    'possessions_without_duplicates': [],
     'districts': 0,
-    'playersPerDistrict': 0,
-    'districtsAreTeammates': False,
-    'oneSponsorPerTribute': False,
+    'players_per_district': 0,
+    'districts_are_teammates': False,
+    'one_sponsor_per_tribute': False,
 }
-defaultGameRoundStateWithoutEvent: GameRoundStateWithoutEvent = {
-    'options': defaultGameOptions,
-    'otherTerms': {},
+default_game_round_state_without_event: GameRoundStateWithoutEvent = {
+    'options': default_game_options,
+    'other_terms': {},
     'sponsors': [],
-    'totalTributes': 0,
-    'allTributes': {},
+    'total_tributes': 0,
+    'all_tributes': {},
     'events': {},
-    'increaseEventOdds': { 'possessions': {} },
-    'eventsOccured': {},
-    'playersAlive': {},
+    'increase_event_odds': { 'possessions': {} },
+    'events_occured': {},
+    'players_alive': {},
     'deaths': [],
-    'recentDeaths': [],
-    'tributesData': {},
+    'recent_deaths': [],
+    'tributes_data': {},
     'time': '',
-    'exactTime': '',
-    'currentTribute': defaultTribute,
-    'playersRemainingThisRound': {},
-    'playStandardEvents': True,
+    'exact_time': '',
+    'current_tribute': default_tribute,
+    'players_remaining_this_round': {},
+    'play_standard_events': True,
 }
-defaultGameRoundState: GameRoundState = {
-    **defaultGameRoundStateWithoutEvent,
-    'event': defaultEvent,
+default_game_round_state: GameRoundState = {
+    **default_game_round_state_without_event,
+    'event': default_event,
 }

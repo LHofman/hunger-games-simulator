@@ -32,7 +32,7 @@ class GroupSize(TypedDict):
 
     type: Required[GroupSizeType]
     amount: Required[int]
-    groupedWith: NotRequired[list[str]]
+    grouped_with: NotRequired[list[str]]
 
 
 class UpdateTributeData(TypedDict):
@@ -50,20 +50,20 @@ class Event(TypedDict):
     name: Required[str]
     text: Required[str]
     ignore: NotRequired[bool]
-    maxOccurances: NotRequired[int]
+    max_occurances: NotRequired[int]
     percentage: NotRequired[float]
     players: NotRequired[int]
     deaths: NotRequired[list[str]]
-    requiresPossessions: NotRequired[list[RequiredPossession]]
+    requires_possessions: NotRequired[list[RequiredPossession]]
     time: NotRequired[Union[str, list[str]]]
-    requireGroupSize: NotRequired[GroupSize]
-    killTeammates: NotRequired[bool]
-    formGroup: NotRequired[list[str]]
-    splitGroup: NotRequired[list[str]]
+    require_group_size: NotRequired[GroupSize]
+    kill_teammates: NotRequired[bool]
+    form_group: NotRequired[list[str]]
+    split_group: NotRequired[list[str]]
     deaths: NotRequired[list[str]]
-    updateTributesData: NotRequired[list[UpdateTributeData]]
-    addPossessions: NotRequired[list[Possession]]
-    removePossessions: NotRequired[list[Possession]]
+    update_tributes_data: NotRequired[list[UpdateTributeData]]
+    add_possessions: NotRequired[list[Possession]]
+    remove_possessions: NotRequired[list[Possession]]
 
 
 class Tribute(TypedDict):
@@ -72,23 +72,23 @@ class Tribute(TypedDict):
     index: int
     name: str
     district: int
-    groupedWith: Required[list[str]]
+    grouped_with: Required[list[str]]
     possessions: Required[dict[str, list[str]]]
 
 
 class GameOptions(TypedDict):
     """Represent the configuration options for the game."""
 
-    betrayTeammates: bool
+    betray_teammates: bool
     speed: int
-    districtCanWinTogether: bool
-    autoPlay: bool
-    showFallenTributes: bool
-    possessionsWithoutDuplicates: list[str]
+    district_can_win_together: bool
+    auto_play: bool
+    show_fallen_tributes: bool
+    possessions_without_duplicates: list[str]
     districts: int
-    playersPerDistrict: int
-    districtsAreTeammates: bool
-    oneSponsorPerTribute: bool
+    players_per_district: int
+    districts_are_teammates: bool
+    one_sponsor_per_tribute: bool
 
 
 class IncreaseEventOdds(TypedDict):
@@ -108,32 +108,32 @@ class GameConfig(TypedDict):
     """Represent the configuration of the game."""
 
     options: Required[GameOptions]
-    otherTerms: Required[dict[str, list[str]]]
+    other_terms: Required[dict[str, list[str]]]
     sponsors: Required[list[str]]
-    totalTributes: Required[int]
-    allTributes: Required[dict[str, Tribute]]
+    total_tributes: Required[int]
+    all_tributes: Required[dict[str, Tribute]]
     events: Required[dict[str, Event]]
-    increaseEventOdds: Required[IncreaseEventOddsMap]
+    increase_event_odds: Required[IncreaseEventOddsMap]
 
 
 class GameState(GameConfig):
     """Represent the current state of the game."""
 
-    eventsOccured: Required[dict[str, int]]
-    playersAlive: Required[dict[str, Tribute]]
+    events_occured: Required[dict[str, int]]
+    players_alive: Required[dict[str, Tribute]]
     deaths: Required[list[list[tuple[str, int]]]]
-    recentDeaths: Required[list[tuple[str, int]]]
-    tributesData: Required[dict[str, dict[str, Union[int, str]]]]
+    recent_deaths: Required[list[tuple[str, int]]]
+    tributes_data: Required[dict[str, dict[str, Union[int, str]]]]
 
 
 class GameRoundStateWithoutEvent(GameState):
     """Represent the state of the game during a round, without the current event."""
 
     time: Required[str]
-    exactTime: Required[str]
-    currentTribute: Required[Tribute]
-    playersRemainingThisRound: Required[dict[str, Tribute]]
-    playStandardEvents: Required[bool]
+    exact_time: Required[str]
+    current_tribute: Required[Tribute]
+    players_remaining_this_round: Required[dict[str, Tribute]]
+    play_standard_events: Required[bool]
 
 
 class GameRoundState(GameRoundStateWithoutEvent):
